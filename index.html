@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Strategy Suite - VoltEcuador</title>
+    <title>Suite de Planificación Estratégica - UCuenca Edition</title>
     <style>
         :root {
-            --brand-blue: #0f2a4a;
-            --brand-red: #a81c1c;
-            --brand-electric-blue: #0070f3;
-            --brand-electric-green: #00df89;
-            --brand-light: #f4f6f9;
+            /* Colores Institucionales de la Universidad de Cuenca */
+            --brand-blue: #0f2c59;       /* Azul Institucional Principal */
+            --brand-red: #da291c;        /* Rojo de Acento Institucional */
+            --brand-light-blue: #1d4480; /* Azul Secundario */
+            --brand-light: #f4f7fa;      /* Fondo Claro */
             --brand-white: #ffffff;
             --brand-border: #cbd5e1;
             --text-main: #1e293b;
@@ -28,23 +28,25 @@
         
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
         .project-card { background: var(--brand-white); border-radius: 12px; border: 1px solid var(--brand-border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
-        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(15,42,74,0.1); border-color: var(--brand-electric-green); }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(15,44,89,0.15); border-color: var(--brand-blue); }
         .project-card h3 { color: var(--brand-blue); font-size: 20px; margin-bottom: 10px; }
         .project-card p { color: #64748b; font-size: 13px; margin-bottom: 20px; line-height: 1.5; }
         .project-badge { display: inline-block; background: #e2e8f0; color: var(--brand-blue); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
         
         .btn-primary { background: var(--brand-blue); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary:hover { background: #1a3e68; }
+        .btn-primary:hover { background: var(--brand-light-blue); }
         .btn-accent { background: var(--brand-red); color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-accent:hover { background: #b51f15; }
 
         /* ESPACIO DE TRABAJO */
         #workspace-container { display: none; }
-        nav { width: 320px; background-color: var(--brand-blue); color: white; padding: 30px 20px; position: fixed; height: 100vh; overflow-y: auto; border-right: 4px solid var(--brand-electric-green); z-index: 100; }
+        nav { width: 320px; background-color: var(--brand-blue); color: white; padding: 30px 20px; position: fixed; height: 100vh; overflow-y: auto; border-right: 4px solid var(--brand-red); z-index: 100; }
         nav .back-hub { display: block; color: var(--brand-white); background: rgba(255,255,255,0.1); text-align: center; padding: 10px; border-radius: 6px; font-weight: bold; text-decoration: none; margin-bottom: 25px; font-size: 12px; }
-        nav h2 { font-size: 18px; text-align: center; margin-bottom: 5px; text-transform: uppercase; }
-        nav p { font-size: 11px; text-align: center; margin-bottom: 25px; color: #94a3b8; border-bottom: 1px solid #1e3a5f; padding-bottom: 15px; }
-        nav a { display: block; color: #cbd5e1; padding: 11px 15px; text-decoration: none; border-radius: 6px; font-size: 13px; margin-bottom: 5px; border-left: 3px solid transparent; }
-        nav a:hover, nav a.active { background-color: rgba(255,255,255,0.08); color: white; border-left-color: var(--brand-electric-green); font-weight: 600; }
+        nav .back-hub:hover { background: rgba(255,255,255,0.2); }
+        nav h2 { font-size: 18px; text-align: center; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        nav p { font-size: 11px; text-align: center; margin-bottom: 25px; color: #94a3b8; border-bottom: 1px solid var(--brand-light-blue); padding-bottom: 15px; }
+        nav a { display: block; color: #cbd5e1; padding: 11px 15px; text-decoration: none; border-radius: 6px; font-size: 13px; margin-bottom: 5px; border-left: 3px solid transparent; transition: all 0.2s; }
+        nav a:hover, nav a.active { background-color: rgba(255,255,255,0.08); color: white; border-left-color: var(--brand-red); font-weight: 600; }
 
         main { margin-left: 320px; padding: 40px; width: calc(100% - 320px); }
         header { background: var(--brand-white); padding: 25px 35px; border-radius: 8px; margin-bottom: 30px; border-bottom: 3px solid var(--brand-blue); box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
@@ -59,45 +61,46 @@
         .card { background: var(--brand-white); border-radius: 8px; border: 1px solid var(--brand-border); padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .card h3 { color: var(--brand-blue); font-size: 16px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid var(--brand-light); text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* ANALYTICAL REMARK BOX */
-        .observation-box { background: #f8fafc; border-left: 4px solid var(--brand-electric-blue); padding: 15px; margin-top: 15px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.5; color: #334155; }
+        /* BOXES DE OBSERVACIONES */
+        .observation-box { background: #f8fafc; border-left: 4px solid var(--brand-blue); padding: 15px; margin-top: 15px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.5; color: #334155; }
         .observation-box strong { color: var(--brand-blue); display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; }
 
-        /* FORMULARIOS */
+        /* FORMULARIOS E IDENTIDAD */
         .identity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         .identity-field { display: flex; flex-direction: column; gap: 6px; }
         .identity-field label { font-size: 12px; font-weight: bold; color: var(--brand-blue); text-transform: uppercase; }
 
+        /* TABLAS E INPUTS */
         table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
         th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: #f1f5f9; color: var(--brand-blue); font-weight: 700; }
         
         .input-text { width: 100%; border: 1px dashed transparent; padding: 6px; background: transparent; font-size: 13px; color: var(--text-main); }
-        .input-text:hover { border-color: var(--brand-border); background: #fffbfa; }
+        .input-text:hover { border-color: var(--brand-border); background: #f0f4fc; }
         .input-text:focus { border-color: var(--brand-blue); background: white; outline: none; border-style: solid; }
-        .input-num { width: 65px; text-align: center; padding: 5px; border: 1px solid var(--brand-border); border-radius: 4px; font-weight: bold; color: var(--brand-blue); background: #fffbeb; }
+        .input-num { width: 65px; text-align: center; padding: 5px; border: 1px solid var(--brand-border); border-radius: 4px; font-weight: bold; color: var(--brand-blue); background: #f0f4fc; }
 
-        /* CANVAS INTERACTIVOS */
+        /* CONTENEDORES VISUALES / CANVAS */
         .visual-display { background: #fafafa; border: 1px dashed var(--brand-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 360px; }
-        .coordinate-label { font-size: 13px; font-weight: bold; color: var(--brand-blue); margin-bottom: 10px; background: #e2e8f0; padding: 4px 12px; border-radius: 12px; }
+        .coordinate-label { font-size: 13px; font-weight: bold; color: var(--brand-white); margin-bottom: 10px; background: var(--brand-blue); padding: 4px 12px; border-radius: 12px; }
         .matrix-status-box { width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; text-align: center; font-size: 13px; margin-top: 15px; border: 1px solid; }
         
         #peyeaCanvasReal, #mckinseyCanvas, #budgetCanvas { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
 
-        /* GRID SECCIONES COMPONENTES */
+        /* SECCIONES S.M.A.R.T. */
         .smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .smart-card { background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); border-top: 4px solid var(--brand-electric-blue); }
+        .smart-card { background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); border-top: 4px solid var(--brand-blue); }
         .smart-card h4 { color: var(--brand-blue); font-size: 15px; margin-bottom: 10px; font-weight: 700; }
         .smart-item { font-size: 12px; margin-bottom: 6px; color: #475569; line-height: 1.4; }
         .smart-item strong { color: var(--brand-blue); font-weight: 600; }
 
-        /* LINEA DE TIEMPO */
+        /* CRONOGRAMA / TIMELINE */
         .timeline-container { display: flex; justify-content: space-between; background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 8px; padding: 20px; overflow-x: auto; margin-bottom: 35px; }
         .timeline-month { flex: 1; min-width: 160px; text-align: center; padding: 10px; border-right: 1px solid #e2e8f0; }
         .timeline-month:last-child { border-right: none; }
-        .timeline-month h5 { color: var(--brand-blue); font-size: 14px; margin-bottom: 8px; border-bottom: 3px solid var(--brand-electric-green); padding-bottom: 4px; text-transform: uppercase; font-weight: bold; }
+        .timeline-month h5 { color: var(--brand-blue); font-size: 14px; margin-bottom: 8px; border-bottom: 3px solid var(--brand-red); padding-bottom: 4px; text-transform: uppercase; font-weight: bold; }
 
-        /* FODA */
+        /* MATRIZ FODA */
         .foda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .foda-box { padding: 20px; border-radius: 8px; border: 1px solid var(--brand-border); }
         .foda-f { background: #ecfdf5; border-left: 5px solid var(--success); }
@@ -106,18 +109,22 @@
         .foda-a { background: #fffbeb; border-left: 5px solid var(--warning); }
         .foda-box h4 { margin-bottom: 10px; color: var(--brand-blue); font-size: 15px; text-transform: uppercase; }
 
-        .btn-add { background: #f1f5f9; color: var(--brand-blue); border: 1px solid var(--brand-border); padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 12px; }
-        .btn-add:hover { background: var(--brand-blue); color: white; }
+        /* BOTONES DINÁMICOS */
+        .btn-add { background: #f1f5f9; color: var(--brand-blue); border: 1px solid var(--brand-border); padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 12px; transition: all 0.2s; }
+        .btn-add:hover { background: var(--brand-blue); color: white; border-color: var(--brand-blue); }
         .btn-del { color: var(--brand-red); cursor: pointer; font-weight: bold; border: none; background: none; font-size: 14px; margin-left: 8px; }
         .btn-col-del { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; margin-left: 5px; }
+        .btn-col-del:hover { background: var(--brand-red); color: white; }
         .weight-alert { font-size: 12px; font-weight: bold; margin-top: 8px; }
         
+        /* BARRAS DE PROGRESO */
         .progress-bar-container { background: #e2e8f0; border-radius: 10px; height: 12px; overflow: hidden; margin-top: 8px; }
-        .progress-bar-fill { background: linear-gradient(90deg, var(--brand-blue), var(--brand-electric-green)); height: 100%; width: 0%; transition: width 0.3s; }
+        .progress-bar-fill { background: linear-gradient(90deg, var(--brand-blue), var(--brand-red)); height: 100%; width: 0%; transition: width 0.3s; }
     </style>
 </head>
 <body>
 
+    <!-- CONTROL HUB -->
     <div id="project-hub">
         <div class="hub-header">
             <div>
@@ -129,10 +136,11 @@
         <div class="project-grid" id="hub-grid"></div>
     </div>
 
+    <!-- WORKSPACE PRINCIPAL -->
     <div id="workspace-container">
         <nav>
             <a href="#" class="back-hub" onclick="exitWorkspace()">← Volver al Panel Global</a>
-            <h2 id="nav-project-title">VoltEcuador</h2>
+            <h2 id="nav-project-title">Cargando...</h2>
             <p>Planificación Corporativa</p>
             <a href="#" class="nav-item active" onclick="showPanel('identidad', this)">1. Identidad Organizacional</a>
             <a href="#" class="nav-item" onclick="showPanel('foda-analisis', this)">2. Matriz de Diagnóstico FODA</a>
@@ -150,12 +158,13 @@
         <main>
             <header>
                 <div>
-                    <h1 id="main-project-title">Cargando Dashboard...</h1>
+                    <h1 id="main-project-title">Cargando Entorno Corporativo...</h1>
                     <div style="font-size:12px; color:#64748b; margin-top:4px;">Control Multifuncional Corporativo en Tiempo Real</div>
                 </div>
                 <button class="btn-accent" onclick="deleteCurrentProject()">Eliminar Entorno</button>
             </header>
 
+            <!-- PANEL 1: IDENTIDAD -->
             <div id="identidad" class="panel active">
                 <div class="card">
                     <h3>Atributos Corporativos de Identidad</h3>
@@ -200,6 +209,7 @@
                 </div>
             </div>
 
+            <!-- PANEL 2: FODA -->
             <div id="foda-analisis" class="panel">
                 <div class="card">
                     <h3>Análisis de Matriz FODA</h3>
@@ -223,11 +233,12 @@
                     </div>
                     <div class="observation-box">
                         <strong>Observación sobre Diagnóstico FODA:</strong>
-                        El cruce de variables evidencia que el alto conocimiento empírico local y el servicio al cliente deben ser blindajes directos contra la guerra de precios externa. Las estrategias FO y DO priorizan la aceleración del ecosistema digital B2B para mitigar la baja visibilidad y bloquear la entrada de sustitutos convencionales de bajo costo.
+                        El cruce estratégico de variables evidencia que el know-how operativo y el posicionamiento de marca deben actuar como escudos inmediatos ante las amenazas externas. Las estrategias se enfocan en mitigar debilidades organizacionales mediante el aprovechamiento óptimo de tendencias emergentes detectadas en el entorno comercial actual.
                     </div>
                 </div>
             </div>
 
+            <!-- PANEL 3: EFI Y EFE -->
             <div id="matrices-auditoria" class="panel">
                 <div class="split-container">
                     <div class="card">
@@ -237,13 +248,13 @@
                             <tbody></tbody>
                         </table>
                         <div id="efi-alert" class="weight-alert"></div>
-                        <button class="btn-add" onclick="addNewRowToDataset('efi', ['Nuevo factor estratégico', 0.10, 3])">+ Añadir Elemento EFI</button>
+                        <button class="btn-add" onclick="addNewRowToDataset('efi', ['Nuevo factor estratégico interno', 0.10, 3])">+ Añadir Elemento EFI</button>
                     </div>
                     <div class="card">
                         <h3>Resultado Balanceado EFI</h3>
                         <div class="visual-display">
                             <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR SINTETIZADO EFI</div>
-                            <div id="score-efi" style="font-size:48px; font-weight:800; color:var(--brand-blue);">2.98</div>
+                            <div id="score-efi" style="font-size:48px; font-weight:800; color:var(--brand-blue);">0.00</div>
                             <div id="status-efi" class="matrix-status-box">...</div>
                         </div>
                     </div>
@@ -256,25 +267,20 @@
                             <tbody></tbody>
                         </table>
                         <div id="efe-alert" class="weight-alert"></div>
-                        <button class="btn-add" onclick="addNewRowToDataset('efe', ['Nuevo factor del entorno', 0.10, 3])">+ Añadir Elemento EFE</button>
+                        <button class="btn-add" onclick="addNewRowToDataset('efe', ['Nuevo factor del entorno externo', 0.10, 3])">+ Añadir Elemento EFE</button>
                     </div>
                     <div class="card">
                         <h3>Resultado Balanceado EFE</h3>
                         <div class="visual-display">
                             <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR SINTETIZADO EFE</div>
-                            <div id="score-efe" style="font-size:48px; font-weight:800; color:var(--brand-blue);">2.85</div>
+                            <div id="score-efe" style="font-size:48px; font-weight:800; color:var(--brand-blue);">0.00</div>
                             <div id="status-efe" class="matrix-status-box">...</div>
                         </div>
                     </div>
                 </div>
-                <div class="card" style="margin-top:-10px;">
-                    <div class="observation-box">
-                        <strong>Observación de Resultados EFI y EFE:</strong>
-                        Con una puntuación interna EFI de 2.98, la organización demuestra una sólida base de fortalezas corporativas superando eficazmente los vacíos de control operativos. Por otra parte, la calificación EFE de 2.85 indica que la empresa responde de manera favorable a las fuerzas del entorno externo, situándose por encima de la media de respuesta de la industria de electromovilidad y validando el enfoque expansivo.
-                    </div>
-                </div>
             </div>
 
+            <!-- PANEL 4: MPC -->
             <div id="mpc-panel" class="panel">
                 <div class="full-container">
                     <div class="card">
@@ -290,14 +296,11 @@
                         </div>
                         <div id="mpc-alert" class="weight-alert"></div>
                         <button class="btn-add" onclick="addNewRowToMPC()">+ Añadir Factor Crítico de Éxito</button>
-                        <div class="observation-box">
-                            <strong>Observación de Competitividad (MPC):</strong>
-                            La matriz sitúa a la empresa en una posición competitiva media-alta gracias a los pilares de fidelización y calidad en servicio postventa. La brecha estratégica crítica frente a los principales competidores del mercado radica en el reconocimiento de marca masivo y la madurez de las campañas de marketing digital, áreas donde se concentrará el capital de penetración.
-                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- PANEL 5: PEYEA -->
             <div id="peyea-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
@@ -306,14 +309,14 @@
                             <thead><tr><th>Dimensión de la Matriz</th><th style="width:40%">Calificación Promedio</th></tr></thead>
                             <tbody>
                                 <tr><td>Fuerza Financiera (FF) [1 a 6]</td><td><input type="number" step="0.1" min="1" max="6" class="input-num" id="input-peyea-ff" oninput="updatePEYEANum('ff', this.value)"></td></tr>
-                                <tr><td>Fuerza de la Estabilidad (FI) [1 a 6]</td><td><input type="number" step="0.1" min="1" max="6" class="input-num" id="input-peyea-fi" oninput="updatePEYEANum('fi', this.value)"></td></tr>
+                                <tr><td>Fuerza de la Industria (FI) [1 a 6]</td><td><input type="number" step="0.1" min="1" max="6" class="input-num" id="input-peyea-fi" oninput="updatePEYEANum('fi', this.value)"></td></tr>
                                 <tr><td>Ventaja Competitiva (VC) [-6 a -1]</td><td><input type="number" step="0.1" min="-6" max="-1" class="input-num" id="input-peyea-vc" oninput="updatePEYEANum('vc', this.value)"></td></tr>
                                 <tr><td>Estabilidad Ambiental (EA) [-6 a -1]</td><td><input type="number" step="0.1" min="-6" max="-1" class="input-num" id="input-peyea-ea" oninput="updatePEYEANum('ea', this.value)"></td></tr>
                             </tbody>
                         </table>
                         <div class="observation-box">
-                            <strong>Observación Vectorial PEYEA:</strong>
-                            El vector resultante (X: 2.2, Y: 0.8) localiza inequívocamente a VoltEcuador en el Cuadrante Agresivo. Esto demuestra estabilidad sectorial y un entorno comercial de movilidad sostenible receptivo que permite apalancar estrategias intensivas de penetración rápida de mercado y alianzas sin comprometer la salud financiera.
+                            <strong>Dirección Vectorial Resultante:</strong>
+                            El modelo matemático proyecta un vector cartesiano que determina el perfil de postura de la organización en el mercado (Agresivo, Competitivo, Conservador o Defensivo).
                         </div>
                     </div>
                     <div class="card">
@@ -327,6 +330,7 @@
                 </div>
             </div>
 
+            <!-- PANEL 6: MCKINSEY -->
             <div id="mckinsey-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
@@ -338,14 +342,14 @@
                             </tbody>
                         </table>
                         <div class="observation-box">
-                            <strong>Observación de Portafolio McKinsey:</strong>
-                            La interacción de Atractivo Alto (4.0) y Fuerza Competitiva Media-Alta (3.8) posiciona el núcleo de negocio en la celda de Invertir / Crecer. La recomendación corporativa imperativa consiste en desplegar inversiones agresivas de capital en infraestructura de carga y canales de marketing para consolidar la ventaja antes de la saturación de competidores entrantes.
+                            <strong>Ubicación de Portafolio Estratégico:</strong>
+                            Permite categorizar la unidad de negocio en cuadrantes de inversión, retención selectiva o desinversión según las capacidades internas versus las condiciones industriales del sector.
                         </div>
                     </div>
                     <div class="card">
                         <h3>Matriz McKinsey-GE (9 Celdas)</h3>
                         <div class="visual-display">
-                            <div class="coordinate-label" id="mckinsey-coords">Posición (X: 3.5, Y: 3.5)</div>
+                            <div class="coordinate-label" id="mckinsey-coords">Posición (X: 3.0, Y: 3.0)</div>
                             <canvas id="mckinseyCanvas" width="270" height="270"></canvas>
                             <div id="status-mckinsey" class="matrix-status-box">...</div>
                         </div>
@@ -353,6 +357,7 @@
                 </div>
             </div>
 
+            <!-- PANEL 7: MPEC -->
             <div id="mpec-panel" class="panel">
                 <div class="full-container">
                     <div class="card">
@@ -368,39 +373,31 @@
                         </div>
                         <div id="mpec-alert" class="weight-alert"></div>
                         <button class="btn-add" onclick="addNewRowToMPEC()">+ Añadir Factor de Decisión</button>
-                        <div class="observation-box">
-                            <strong>Observación y Decisión Estratégica MPEC:</strong>
-                            Tras evaluar las alternativas frente a los factores críticos del entorno e internos, la Estrategia de Penetración de Mercado obtiene el puntaje total de atractivo más alto de la matriz. Queda sólidamente validada como el vector de ejecución prioritaria de la organización para el ciclo comercial vigente.
-                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- PANEL 8: SMART -->
             <div id="smart-panel" class="panel">
                 <div class="card">
                     <h3>Metas de Gestión Corporativa (E-S.M.A.R.T.)</h3>
-                    <p style="font-size:12px; color:#64748b; margin-bottom:20px;">Estructuración detallada de objetivos de acuerdo con sus dimensiones de control estratégico.</p>
+                    <p style="font-size:12px; color:#64748b; margin-bottom:20px;">Estructuración de objetivos estratégicos de acuerdo con sus métricas y temporalidad.</p>
                     <div class="smart-grid" id="smart-cards-container"></div>
-                    <div class="observation-box">
-                        <strong>Observación de Objetivos S.M.A.R.T.:</strong>
-                        El desglose asegura que cada meta de incremento de ventas (12%) e interacciones esté respaldado por un horizonte temporal preciso y mecanismos de medición estrictamente asignados a sus respectivas áreas funcionales responsables.
-                    </div>
                 </div>
             </div>
 
+            <!-- PANEL 9: POA -->
             <div id="poa-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
                         <h3>Plan Operativo Anual (POA 2026)</h3>
-                        <p style="font-size:12px; color:#64748b; margin-bottom:15px;">Cronograma unificado de actividades del ciclo de operaciones corporativas.</p>
                         <div style="overflow-x:auto;">
                             <table id="table-poa-operative">
                                 <thead>
                                     <tr>
                                         <th>Actividad Operativa</th>
-                                        <th>Estrategia</th>
-                                        <th>Cronograma sugerido</th>
-                                        <th>Encargado</th>
+                                        <th>Estrategia Asociada</th>
+                                        <th>Responsable</th>
                                         <th>Prioridad</th>
                                     </tr>
                                 </thead>
@@ -409,785 +406,736 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3>Presupuesto por Estrategia (Inversión POA)</h3>
+                        <h3>Distribución de Presupuestos Operativos</h3>
                         <div class="visual-display">
                             <canvas id="budgetCanvas" width="380" height="280"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <h3>Línea de Tiempo de Ejecución Física (Julio - Diciembre 2026)</h3>
+                    <h3>Línea de Tiempo de Ejecución</h3>
                     <div class="timeline-container" id="timeline-wrapper"></div>
                 </div>
             </div>
 
+            <!-- PANEL 10: FINANZAS DUALES -->
             <div id="finanzas-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
                         <h3>Estructura de Entradas Financieras</h3>
                         <table>
                             <tbody>
-                                <tr><td>Ingresos Totales Operativos ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-ingresos" value="32000" oninput="recalcFinanzasDual()"></td></tr>
-                                <tr><td>Costos Explícitos / Contables ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-explicitos" value="18500" oninput="recalcFinanzasDual()"></td></tr>
-                                <tr><td>Costos Implícitos / Oportunidad ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-implicitos" value="5000" oninput="recalcFinanzasDual()"></td></tr>
+                                <tr><td>Ingresos Totales Operativos ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-ingresos" value="25000" oninput="recalcFinanzasDual()"></td></tr>
+                                <tr><td>Costos Explícitos / Contables ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-costos-ex" value="14000" oninput="recalcFinanzasDual()"></td></tr>
+                                <tr><td>Costos Implícitos / Oportunidad ($)</td><td><input type="number" class="input-num" style="width:100px;" id="fin-costos-im" value="4500" oninput="recalcFinanzasDual()"></td></tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="card">
-                        <h3>Resultados del Análisis Dual</h3>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:10px;">
-                            <div style="background:#f1f5f9; padding:20px; border-radius:6px; text-align:center;">
-                                <div style="font-size:11px; color:#64748b; font-weight:bold;">UTILIDAD CONTABLE</div>
-                                <div id="calc-u-contable" style="font-size:26px; font-weight:800; color:var(--brand-blue); margin-top:5px;">$0.00</div>
+                        <h3>Análisis de Rendimiento Dual</h3>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:10px;">
+                            <div style="background:#f8fafc; padding:15px; border-radius:6px; text-align:center; border-top: 4px solid var(--brand-blue);">
+                                <div style="font-size:11px; font-weight:bold; color:#64748b;">UTILIDAD CONTABLE</div>
+                                <div id="calc-util-contable" style="font-size:24px; font-weight:800; color:var(--brand-blue); margin-top:5px;">$0.00</div>
                             </div>
-                            <div style="background:#fffbeb; padding:20px; border-radius:6px; text-align:center; border:1px solid #fde68a;">
-                                <div style="font-size:11px; color:#b45309; font-weight:bold;">UTILIDAD ECONÓMICA</div>
-                                <div id="calc-u-economica" style="font-size:26px; font-weight:800; color:var(--brand-red); margin-top:5px;">$0.00</div>
+                            <div style="background:#f8fafc; padding:15px; border-radius:6px; text-align:center; border-top: 4px solid var(--brand-red);">
+                                <div style="font-size:11px; font-weight:bold; color:#64748b;">BENEFICIO ECONÓMICO</div>
+                                <div id="calc-util-economica" style="font-size:24px; font-weight:800; color:var(--brand-red); margin-top:5px;">$0.00</div>
                             </div>
                         </div>
-                        <div id="fin-status-desc" style="font-size:12px; font-style:italic; line-height:1.4; color:#475569; margin-top:15px; text-align:center;"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- PANEL 11: KPIS -->
             <div id="kpis-panel" class="panel">
-                <div class="split-container">
-                    <div class="card">
-                        <h3>Tablero Integral de Control e Indicadores</h3>
-                        <table id="table-kpis">
-                            <thead><tr><th>Indicador Estratégico</th><th style="width:22%">Meta</th><th style="width:25%">Avance</th></tr></thead>
-                            <tbody></tbody>
-                        </table>
-                        <button class="btn-add" onclick="addNewRowToDataset('kpis', ['Nueva Métrica de Control', 100, 0])">+ Agregar Métrica KPI</button>
-                    </div>
-                    <div class="card">
-                        <h3>Análisis de Brecha de Rendimiento</h3>
-                        <div class="visual-display" id="kpi-progress-bars" style="justify-content: flex-start; align-items: stretch; gap: 15px;"></div>
-                    </div>
+                <div class="card">
+                    <h3>Cuadro de Mando Integral & Seguimiento de KPIs</h3>
+                    <table id="table-kpi-tracker">
+                        <thead>
+                            <tr>
+                                <th>Indicador de Gestión (KPI)</th>
+                                <th>Meta Esperada</th>
+                                <th>Valor Actual</th>
+                                <th style="width:30%">Cumplimiento Real</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-kpi-tracker"></tbody>
+                    </table>
                 </div>
             </div>
 
         </main>
     </div>
 
+    <!-- CONTROLADORES LÓGICOS DE LA SUITE -->
     <script>
-        // BASE DE DATOS ESTRATÉGICA CONSOLIDADA (VOLTECUADOR)
-        const BUSINESS_TEMPLATE = {
-            name: "VoltEcuador",
-            foundation_year: "5 años de operación en el mercado nacional",
-            sector: "Movilidad eléctrica y comercialización de vehículos eléctricos",
-            star_product: "Motocicletas y scooters eléctricos de alta gama",
-            scope: "Nacional / Base Cuenca, Ecuador",
-            mision: "Brindar soluciones de movilidad eléctrica mediante la comercialización de motocicletas y scooters eléctricos de alta calidad, ofreciendo un servicio confiable, innovador y sostenible que contribuya al cuidado del medio ambiente y a la satisfacción de nuestros clientes.",
-            vision: "Ser la empresa líder en movilidad eléctrica en la ciudad de Cuenca y una de las principales referencias del Ecuador, destacándose por su innovación, calidad, sostenibilidad y compromiso con el desarrollo de un transporte más limpio y eficiente.",
-            valores: "Innovación, Sostenibilidad, Responsabilidad ambiental, Calidad, Compromiso con el cliente, Honestidad, Trabajo en equipo, Profesionalismo, Seguridad, Mejora continua.",
-            foda_f: "Conocimiento del mercado local ecuatoriano, Capacidad para ofrecer atención cercana al cliente, Experiencia comercial y operativa, Flexibilidad para adaptar la oferta.",
-            foda_d: "Necesidad de fortalecer posicionamiento de marca, Limitaciones en comunicación o visibilidad, Dependencia de clientes, zonas o líneas, Falta de indicadores constantes.",
-            foda_o: "Crecimiento de la demanda en segmentos específicos, Uso de canales digitales para captar y fidelizar clientes, Posibilidad de alianzas con empresas o instituciones, Mayor interés por soluciones confiables.",
-            foda_a: "Competencia intensa en Ecuador, Cambios económicos que afectan el consumo, Presión por precios bajos, Cambios en preferencias de clientes.",
-            peyea: { ff: 4.0, fi: 4.6, vc: -2.4, ea: -3.2 },
-            mckinsey: { Atractivo: 4.0, Fuerza: 3.8 },
-            efi: [
-                ["Conocimiento empírico avanzado de la plaza local de Cuenca", 0.35, 4],
-                ["Modelo de atención personalizada de alta confianza", 0.30, 4],
-                ["Bajo posicionamiento de la marca a escala nacional", 0.20, 2],
-                ["Carencia de herramientas analíticas de seguimiento comercial continuo", 0.15, 2]
-            ],
-            efe: [
-                ["Aceleración de la adopción de transporte limpio en mercados urbanos", 0.40, 4],
-                ["Aumento en los canales de captación digital disponibles", 0.25, 3],
-                ["Guerra de precios agresiva desatada por importadores directos sustitutos", 0.35, 2]
-            ],
-            mpc_competitors: ["VoltEcuador", "Competidor A", "Competidor B"],
-            mpc_rows: [
-                ["Calidad del servicio", 0.20, [4, 3, 3]],
-                ["Precio competitivo", 0.15, [3, 4, 3]],
-                ["Reconocimiento de marca", 0.20, [3, 4, 3]],
-                ["Cobertura comercial", 0.15, [3, 3, 4]],
-                ["Fidelización", 0.15, [4, 3, 3]],
-                ["Canales digitales", 0.15, [3, 4, 3]]
-            ],
-            mpec_strategies: ["Penetración de Mercado", "Diferenciación de Servicio", "Desarrollo de Mercado"],
-            mpec_rows: [
-                ["Conocimiento del mercado ecuatoriano", 0.20, [4, 3, 3]],
-                ["Necesidad de mejorar posicionamiento", 0.20, [4, 3, 4]],
-                ["Competencia intensa de la plaza", 0.15, [3, 3, 4]],
-                ["Oportunidad de captar clientes digitales", 0.20, [4, 4, 3]],
-                ["Capacidad financiera moderada", 0.15, [4, 3, 3]],
-                ["Necesidad crítica de fidelización", 0.10, [4, 2, 4]]
-            ],
-            finanzas: { ingresos: 32000, explicitos: 18500, implicitos: 5000 },
-            smart_metas: [
-                { title: "Incrementar ventas 12%", e: "Aumentar ventas de motos y scooters eléctricos en Cuenca.", m: "Porcentaje de ventas vs base del año anterior.", a: "Mediante despliegue de campañas, referidos y ferias logísticas.", r: "Mejora ingresos brutos y la participación directa en el mercado.", t: "31 de Diciembre de 2026 (Revisión a 12 meses)." },
-                { title: "Interacción redes +20%", e: "Aumentar likes, comentarios, mensajes directos y consultas de cotización.", m: "Interacciones digitales mensuales registradas en Meta Business.", a: "2 campañas de pauta digital optimizada y generación regular de contenido.", r: "Aumenta significativamente la visibilidad orgánica y los leads calificados.", t: "31 de Diciembre de 2026 (Monitoreo mensual)." },
-                { title: "Clientes recurrentes +10%", e: "Elevar la tasa de recompra, servicios postventa y referidos.", m: "Porcentaje de clientes recurrentes dentro de facturación.", a: "Estrategia estricta de seguimiento postventa y encuestas programadas.", r: "Mejora la fidelización general y el valor del ciclo de vida del cliente (LTV).", t: "31 de Diciembre de 2026 (Ciclo activo de 7 meses)." },
-                { title: "3 alianzas estratégicas", e: "Establecer convenios corporativos estables con universidades, empresas o municipio.", m: "Número neto de convenios de beneficio mutuo firmados.", a: "Gestión directa del equipo ejecutivo con propuestas claras de valor.", r: "Amplía los canales comerciales de tracción y eleva la confianza institucional.", t: "31 de Diciembre de 2026 (Plazo de 10 meses)." },
-                { title: "4 campañas de movilidad", e: "Ejecutar activaciones educativas y promocionales de impacto en la ciudad de Cuenca.", m: "Número de campañas masivas finalizadas con evidencia de métricas.", a: "Calendario de ejecución trimestral estructurado con marcas aliadas.", r: "Refuerza directamente el posicionamiento sostenible y estimula la demanda local.", t: "31 de Diciembre de 2026 (Frecuencia trimestral)." }
-            ],
-            poa_operative: [
-                { activity: "Diseñar campañas digitales primarias", strategy: "Penetración", schedule: "Enero 2026", leader: "Marketing", priority: "Alta" },
-                { activity: "Estructurar programa formal de referidos", strategy: "Penetración", schedule: "Febrero 2026", leader: "Marketing y Ventas", priority: "Alta" },
-                { activity: "Primera campaña masiva de movilidad sostenible", strategy: "Alianzas", schedule: "Marzo 2026", leader: "Marketing y Gerencia", priority: "Media" },
-                { activity: "Negociar convenios con universidades locales", strategy: "Alianzas", schedule: "Abril 2026", leader: "Gerencia General", priority: "Alta" },
-                { activity: "Logística y participación activa en ferias sectoriales", strategy: "Desarrollo Mercado", schedule: "Mayo 2026", leader: "Ventas y Marketing", priority: "Media" },
-                { activity: "Implementación de protocolos de seguimiento postventa", strategy: "Penetración", schedule: "Junio 2026", leader: "Atención y Operaciones", priority: "Alta" },
-                { activity: "Lanzamiento de encuesta masiva de satisfacción de clientes", strategy: "Penetración", schedule: "Julio 2026", leader: "Atención al cliente", priority: "Media" },
-                { activity: "Despliegue de la segunda campaña digital de pauta", strategy: "Penetración", schedule: "Agosto 2026", leader: "Marketing", priority: "Media" },
-                { activity: "Auditoría formal intermedia y evaluación de KPIs", strategy: "Penetración", schedule: "Septiembre 2026", leader: "Analítica / Sistemas", priority: "Media" },
-                { activity: "Activación de la campaña promocional multicanal de cierre", strategy: "Penetración", schedule: "Octubre 2026", leader: "Marketing y Ventas", priority: "Alta" },
-                { activity: "Consolidación de resultados comerciales y medición", strategy: "Penetración", schedule: "Noviembre 2026", leader: "Analítica / Sistemas", priority: "Media" },
-                { activity: "Emisión del informe anual estratégico definitivo", strategy: "Penetración", schedule: "Diciembre 2026", leader: "Gerencia General", priority: "Media" }
-            ],
-            timeline: {
-                "Julio": "Encuesta de satisfacción de clientes y levantamiento de propuestas comerciales de mejora.",
-                "Agosto": "Despliegue optimizado de la segunda gran campaña digital enfocada en conversión de leads.",
-                "Septiembre": "Auditoría integral de KPIs operativos y afinamiento de embudos comerciales de venta.",
-                "Octubre": "Lanzamiento multicanal de la campaña promocional de cierre para aceleración de inventario.",
-                "Noviembre": "Medición masiva, consolidación y tabulación analítica de resultados del ciclo anual.",
-                "Diciembre": "Elaboración y entrega del informe estratégico definitivo a la dirección."
-            },
-            kpis: [
-                ["Tasa de Crecimiento de Ventas (%)", 12, 4.5],
-                ["Porcentaje de Interacción en Redes (%)", 20, 8.2],
-                ["Retención de Clientes Recurrentes (%)", 10, 3.0],
-                ["Campañas de Movilidad Ejecutadas", 4, 1],
-                ["Alianzas Estratégicas Firmadas", 3, 1],
-                ["Índice de Satisfacción del Cliente (%)", 90, 88.5]
-            ],
-            budget_data: {
-                labels: ["Mkt Digital", "Campañas Prom.", "Infra. Carga", "Fidelización", "Innovación Tec.", "Postventa/Cap."],
-                values: [8000, 12000, 35000, 5000, 15000, 5000]
+        // BASE DE DATOS LOCAL INICIAL (ESTRUCTURA COMPLETA)
+        let defaultDatabase = {
+            "proyectos": {
+                "proj_1": {
+                    "id": "proj_1",
+                    "name": "VoltEcuador",
+                    "foundation_year": "2024",
+                    "sector": "Movilidad Sostenible y Conversión Eléctrica",
+                    "star_product": "Sistemas de Propulsión de Alta Eficiencia",
+                    "scope": "Nacional y Andino",
+                    "mision": "Acelerar la transición ecológica del transporte comercial en el Ecuador a través de soluciones de ingeniería avanzadas.",
+                    "vision": "Ser la marca referente en conversión vehicular sostenible y desarrollo tecnológico verde a nivel regional.",
+                    "valores": "Innovación de Impacto, Rigor Técnico, Compromiso Ecológico, Transparencia Operativa.",
+                    "foda_f": "- Patentes de conversión propietarias.\n- Equipo técnico especializado en alta tensión.\n- Alianzas estratégicas con proveedores clave.",
+                    "foda_d": "- Capacidad instalada limitada para alta producción.\n- Presupuesto inicial restringido para marketing digital.\n- Dependencia de importación de celdas de litio.",
+                    "foda_o": "- Incentivos gubernamentales para flotas de transporte limpio.\n- Incremento en precios de combustibles tradicionales.\n- Nicho desatendido en transporte pesado.",
+                    "foda_a": "- Cambios en normativas de importación de repuestos.\n- Ingreso de competidores internacionales masivos.\n- Fluctuación en los costos de materias primas.",
+                    "efi": [
+                        {"factor": "Equipo de ingeniería altamente cualificado y certificado", "weight": 0.15, "score": 4},
+                        {"factor": "Estructura de costos fijos controlada en fase inicial", "weight": 0.10, "score": 3},
+                        {"factor": "Capacidad limitada de distribución en zonas periféricas", "weight": 0.15, "score": 2},
+                        {"factor": "Tiempos de entrega extendidos en proyectos a medida", "weight": 0.10, "score": 2}
+                    ],
+                    "efe": [
+                        {"factor": "Nuevas regulaciones que promueven la reconversión limpia", "weight": 0.20, "score": 4},
+                        {"factor": "Aumento sostenido en la demanda corporativa de reportes ESG", "weight": 0.15, "score": 3},
+                        {"factor": "Inestabilidad en las cadenas de distribución logística global", "weight": 0.10, "score": 2},
+                        {"factor": "Ingreso inminente de competidores con subsidios extranjeros", "weight": 0.15, "score": 1}
+                    ],
+                    "competitors": ["VoltEcuador", "EcoMotores Inc", "NeoTracción"],
+                    "mpc": [
+                        {"factor": "Calidad Técnica del Producto", "weight": 0.20, "ratings": [4, 3, 2]},
+                        {"factor": "Soporte de Servicio Postventa", "weight": 0.15, "ratings": [4, 2, 3]},
+                        {"factor": "Estrategia de Comunicación Digital", "weight": 0.10, "ratings": [2, 4, 3]},
+                        {"factor": "Estructura Financiera Operativa", "weight": 0.15, "ratings": [3, 3, 4]}
+                    ],
+                    "peyea": {"ff": 4.5, "fi": 4.2, "vc": -2.1, "ea": -2.8},
+                    "mckinsey": {"atractivo": 4.2, "fuerza": 3.9},
+                    "strategies": ["Penetración Comercial B2B", "Expansión Geográfica de Talleres"],
+                    "mpec": [
+                        {"factor": "Oportunidad de crecimiento industrial alto", "weight": 0.15, "as": [4, 3]},
+                        {"factor": "Nivel de inversión inicial requerido", "weight": 0.10, "as": [3, 2]},
+                        {"factor": "Alineación con las capacidades técnicas clave", "weight": 0.15, "as": [4, 2]}
+                    ],
+                    "smart": [
+                        {"title": "Meta Comercial Core", "s": "Incrementar las ventas de kits de conversión", "m": "Lograr un aumento del 15% mensual", "a": "Asignado a equipo de ventas corporativas", "r": "Viable por incentivos fiscales vigentes", "t": "Corto Plazo (Q3 2026)"},
+                        {"title": "Meta de Posicionamiento", "s": "Desarrollar canales digitales optimizados", "m": "Alcanzar 5,000 interacciones mensuales cualificadas", "a": "Gestión directa de marketing estratégico", "r": "Requiere reestructuración de pauta", "t": "Mediano Plazo (Fin de Año)"}
+                    ],
+                    "poa": [
+                        {"act": "Despliegue de Campañas de Marketing Segmentadas", "strategy": "Penetración Comercial B2B", "owner": "Marketing", "priority": "Alta", "budget": 3500, "months": [1,1,1,0,0,0]},
+                        {"act": "Certificación de Técnicos en Nuevas Normativas", "strategy": "Penetración Comercial B2B", "owner": "Operaciones", "priority": "Media", "budget": 2000, "months": [0,1,1,1,0,0]},
+                        {"act": "Apertura de Punto de Atención Piloto Regional", "strategy": "Expansión Geográfica de Talleres", "owner": "Dirección", "priority": "Alta", "budget": 8500, "months": [0,0,0,1,1,1]}
+                    ],
+                    "kpis": [
+                        {"name": "Porcentaje de Crecimiento de Ventas Mensuales", "target": 15, "actual": 12},
+                        {"name": "Tasa de Retención de Clientes Flotistas", "target": 90, "actual": 88},
+                        {"name": "Eficiencia en Entrega de Conversiones (Días)", "target": 10, "actual": 12}
+                    ]
+                }
             }
         };
 
-        let storageData = { projects: [] };
-        let activeBizIndex = null;
-        let isDraggingPEYEA = false;
-        let isDraggingMcK = false;
+        let appDatabase = JSON.parse(localStorage.getItem('suite_ee_db')) || defaultDatabase;
+        let currentProjectID = null;
 
-        function initApp() {
-            let stored = localStorage.getItem('voltecuador_suite_v8');
-            if (stored) {
-                storageData = JSON.parse(stored);
-            } else {
-                storageData.projects.push(JSON.parse(JSON.stringify(BUSINESS_TEMPLATE)));
-                localStorage.setItem('voltecuador_suite_v8', JSON.stringify(storageData));
-            }
-            renderProjectHub();
-            setupCanvasInteraction();
-            setupMcKinseyInteraction();
+        function saveStateToStorage() {
+            localStorage.setItem('suite_ee_db', JSON.stringify(appDatabase));
         }
 
-        function saveState() {
-            localStorage.setItem('voltecuador_suite_v8', JSON.stringify(storageData));
-        }
+        // CONTROLADOR DE NAVEGACIÓN Y PANELES
+        function showPanel(panelID, element) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(panelID).classList.add('active');
+            if(element) element.classList.add('active');
 
-        function renderProjectHub() {
-            document.getElementById('project-hub').style.display = 'block';
-            document.getElementById('workspace-container').style.display = 'none';
-            let grid = document.getElementById('hub-grid');
-            let h = "";
-            storageData.projects.forEach((proj, idx) => {
-                h += `<div class="project-card" onclick="enterWorkspace(${idx})">
-                    <h3>${proj.name}</h3>
-                    <p><strong>Operación:</strong> ${proj.sector}<br><strong>Base Operativa:</strong> ${proj.scope}</p>
-                    <span class="project-badge">Dashboard Corporativo Activo</span>
-                </div>`;
-            });
-            grid.innerHTML = h;
+            if(panelID === 'matrices-auditoria') { recalcEFIEFE(); }
+            if(panelID === 'mpc-panel') { renderMPC(); }
+            if(panelID === 'peyea-panel') { drawPEYEAGraph(); }
+            if(panelID === 'mckinsey-panel') { drawMcKinseyGraph(); }
+            if(panelID === 'mpec-panel') { renderMPEC(); }
+            if(panelID === 'smart-panel') { renderSMARTCards(); }
+            if(panelID === 'poa-panel') { renderPOAPanel(); }
+            if(panelID === 'finanzas-panel') { recalcFinanzasDual(); }
+            if(panelID === 'kpis-panel') { renderKPIs(); }
         }
 
         function createNewProject() {
-            let newBiz = JSON.parse(JSON.stringify(BUSINESS_TEMPLATE));
-            newBiz.name = "VoltEcuador Filial " + (storageData.projects.length + 1);
-            storageData.projects.push(newBiz);
-            saveState();
-            renderProjectHub();
-        }
-
-        function enterWorkspace(idx) {
-            activeBizIndex = idx;
-            document.getElementById('project-hub').style.display = 'none';
-            document.getElementById('workspace-container').style.display = 'block';
-            
-            let biz = storageData.projects[activeBizIndex];
-            document.getElementById('nav-project-title').innerText = biz.name;
-            document.getElementById('main-project-title').innerText = biz.name;
-            
-            document.getElementById('edit-biz-name').value = biz.name;
-            document.getElementById('edit-biz-year').value = biz.foundation_year;
-            document.getElementById('edit-biz-sector').value = biz.sector;
-            document.getElementById('edit-biz-product').value = biz.star_product;
-            document.getElementById('edit-biz-scope').value = biz.scope;
-            document.getElementById('edit-biz-mision').value = biz.mision;
-            document.getElementById('edit-biz-vision').value = biz.vision;
-            document.getElementById('edit-biz-valores').value = biz.valores;
-            
-            document.getElementById('edit-foda-f').value = biz.foda_f;
-            document.getElementById('edit-foda-d').value = biz.foda_d;
-            document.getElementById('edit-foda-o').value = biz.foda_o;
-            document.getElementById('edit-foda-a').value = biz.foda_a;
-
-            document.getElementById('input-mck-atractivo').value = biz.mckinsey.Atractivo.toFixed(1);
-            document.getElementById('input-mck-fuerza').value = biz.mckinsey.Fuerza.toFixed(1);
-
-            document.getElementById('fin-ingresos').value = biz.finanzas.ingresos;
-            document.getElementById('fin-explicitos').value = biz.finanzas.explicitos;
-            document.getElementById('fin-implicitos').value = biz.finanzas.implicitos;
-
-            updatePEYEAInputFields();
-            renderWorkspacePanels();
-        }
-
-        function updatePEYEAInputFields() {
-            let biz = storageData.projects[activeBizIndex];
-            document.getElementById('input-peyea-ff').value = biz.peyea.ff.toFixed(1);
-            document.getElementById('input-peyea-fi').value = biz.peyea.fi.toFixed(1);
-            document.getElementById('input-peyea-vc').value = biz.peyea.vc.toFixed(1);
-            document.getElementById('input-peyea-ea').value = biz.peyea.ea.toFixed(1);
-        }
-
-        function exitWorkspace() {
-            activeBizIndex = null;
-            renderProjectHub();
+            let id = 'proj_' + Date.now();
+            let newProj = JSON.parse(JSON.stringify(defaultDatabase.proyectos.proj_1));
+            newProj.id = id;
+            newProj.name = prompt("Ingrese el nombre de la nueva organización:", "Nueva Empresa S.A.");
+            if(!newProj.name) return;
+            appDatabase.proyectos[id] = newProj;
+            saveStateToStorage();
+            renderHub();
         }
 
         function deleteCurrentProject() {
-            if(confirm("¿Deseas eliminar definitivamente este entorno estratégico corporativo?")) {
-                storageData.projects.splice(activeBizIndex, 1);
-                saveState();
+            if(confirm("¿Está seguro de eliminar este entorno estratégico permanentemente?")) {
+                delete appDatabase.proyectos[currentProjectID];
+                saveStateToStorage();
                 exitWorkspace();
             }
         }
 
+        function enterWorkspace(id) {
+            currentProjectID = id;
+            let proj = appDatabase.proyectos[id];
+            document.getElementById('nav-project-title').innerText = proj.name;
+            document.getElementById('main-project-title').innerText = proj.name;
+            
+            // Cargar Identidad
+            document.getElementById('edit-biz-name').value = proj.name || '';
+            document.getElementById('edit-biz-year').value = proj.foundation_year || '';
+            document.getElementById('edit-biz-sector').value = proj.sector || '';
+            document.getElementById('edit-biz-product').value = proj.star_product || '';
+            document.getElementById('edit-biz-scope').value = proj.scope || '';
+            document.getElementById('edit-biz-mision').value = proj.mision || '';
+            document.getElementById('edit-biz-vision').value = proj.vision || '';
+            document.getElementById('edit-biz-valores').value = proj.valores || '';
+            
+            // Cargar FODA
+            document.getElementById('edit-foda-f').value = proj.foda_f || '';
+            document.getElementById('edit-foda-d').value = proj.foda_d || '';
+            document.getElementById('edit-foda-o').value = proj.foda_o || '';
+            document.getElementById('edit-foda-a').value = proj.foda_a || '';
+
+            document.getElementById('project-hub').style.display = 'none';
+            document.getElementById('workspace-container').style.display = 'block';
+            showPanel('identidad', document.querySelector('nav a.nav-item'));
+        }
+
+        function exitWorkspace() {
+            document.getElementById('workspace-container').style.display = 'none';
+            document.getElementById('project-hub').style.display = 'block';
+            currentProjectID = null;
+            renderHub();
+        }
+
         function updateCurrentBizData(field, val) {
-            storageData.projects[activeBizIndex][field] = val;
-            saveState();
+            appDatabase.proyectos[currentProjectID][field] = val;
             if(field === 'name') {
                 document.getElementById('nav-project-title').innerText = val;
                 document.getElementById('main-project-title').innerText = val;
             }
+            saveStateToStorage();
         }
 
-        function updatePEYEANum(field, val) {
-            let num = parseFloat(val);
-            if (field === 'ff' || field === 'fi') { num = Math.max(1, Math.min(6, num)); }
-            if (field === 'vc' || field === 'ea') { num = Math.max(-6, Math.min(-1, num)); }
-            storageData.projects[activeBizIndex].peyea[field] = num || 0;
-            saveState();
-            recalcPEYEAReal();
-        }
+        // LÓGICA DE AUDITORÍA EFI / EFE
+        function recalcEFIEFE() {
+            let proj = appDatabase.proyectos[currentProjectID];
+            ['efi', 'efe'].forEach(type => {
+                let tbody = document.querySelector(`#table-${type} tbody`);
+                tbody.innerHTML = '';
+                let totalWeight = 0;
+                let weightedScore = 0;
 
-        function updateMcKinseyData(field, val) {
-            let num = parseFloat(val);
-            num = Math.max(1.0, Math.min(5.0, num));
-            storageData.projects[activeBizIndex].mckinsey[field] = num || 1.0;
-            saveState();
-            recalcMcKinsey();
-        }
+                proj[type].forEach((item, idx) => {
+                    totalWeight += item.weight;
+                    weightedScore += (item.weight * item.score);
 
-        function renderWorkspacePanels() {
-            let biz = storageData.projects[activeBizIndex];
-            renderTableWithCalculations('table-efi', biz.efi, 'efi');
-            renderTableWithCalculations('table-efe', biz.efe, 'efe');
-            renderMPC();
-            renderMPEC();
-            renderSMARTCards();
-            renderPOAOperativeTable();
-            renderTimeline();
-            renderKPITable();
-            drawBudgetChart();
-            recalcAudits();
-            recalcPEYEAReal();
-            recalcMcKinsey();
-            recalcFinanzasDual();
-        }
-
-        function renderTableWithCalculations(id, dataset, type) {
-            let tbody = document.getElementById(id).querySelector('tbody');
-            let h = "";
-            dataset.forEach((row, i) => {
-                h += `<tr>
-                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].${type}[${i}][0]=this.value; saveState();"></td>
-                    <td><input type="number" step="0.01" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].${type}[${i}][1]=parseFloat(this.value); saveState(); recalcAudits();"></td>
-                    <td><input type="number" class="input-num" value="${row[2]}" onchange="storageData.projects[activeBizIndex].${type}[${i}][2]=parseInt(this.value); saveState(); recalcAudits();"></td>
-                    <td><button class="btn-del" onclick="deleteRowFromDataset('${type}', ${i})">×</button></td>
-                </tr>`;
-            });
-            tbody.innerHTML = h;
-        }
-
-        function recalcAudits() {
-            let biz = storageData.projects[activeBizIndex];
-            
-            let wEfi = biz.efi.reduce((a,b)=>a+b[1], 0);
-            document.getElementById('efi-alert').innerText = Math.abs(wEfi - 1) > 0.01 ? `Alerta: Pesos suman ${(wEfi*100).toFixed(0)}%/100%` : "✔ Ponderación Convalidada (100%)";
-            document.getElementById('efi-alert').style.color = Math.abs(wEfi - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
-            let scoreEfi = biz.efi.reduce((a,b)=>a+(b[1]*b[2]), 0);
-            document.getElementById('score-efi').innerText = scoreEfi.toFixed(2);
-            document.getElementById('status-efi').innerText = scoreEfi >= 2.5 ? "FORTALEZA ORGANIZACIONAL" : "DEBILIDAD INTERNA CONTROLADA";
-            document.getElementById('status-efi').style.color = scoreEfi >= 2.5 ? varCss('--success') : varCss('--brand-red');
-
-            let wEfe = biz.efe.reduce((a,b)=>a+b[1], 0);
-            document.getElementById('efe-alert').innerText = Math.abs(wEfe - 1) > 0.01 ? `Alerta: Pesos suman ${(wEfe*100).toFixed(0)}%/100%` : "✔ Ponderación Convalidada (100%)";
-            document.getElementById('efe-alert').style.color = Math.abs(wEfe - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
-            let scoreEfe = biz.efe.reduce((a,b)=>a+(b[1]*b[2]), 0);
-            document.getElementById('score-efe').innerText = scoreEfe.toFixed(2);
-            document.getElementById('status-efe').innerText = scoreEfe >= 2.5 ? "RESPUESTA EXTERNA EFICAZ" : "ENTORNO VULNERABLE";
-            document.getElementById('status-efe').style.color = scoreEfe >= 2.5 ? varCss('--success') : varCss('--brand-red');
-        }
-
-        function renderMPC() {
-            let biz = storageData.projects[activeBizIndex];
-            let thead = document.getElementById('thead-mpc');
-            let tbody = document.getElementById('tbody-mpc');
-            
-            let thHtml = `<tr><th>Factor Crítico de Éxito</th><th style="width:12%">Peso</th>`;
-            biz.mpc_competitors.forEach((comp, idx) => {
-                thHtml += `<th>
-                    <input type="text" class="input-text" style="font-weight:bold; text-align:center;" value="${comp}" onchange="storageData.projects[activeBizIndex].mpc_competitors[${idx}]=this.value; saveState();">
-                    ${idx > 0 ? `<button class="btn-col-del" onclick="deleteCompetitorColumn(${idx})">Eliminar</button>` : ''}
-                </th>`;
-            });
-            thHtml += `<th></th></tr>`;
-            thead.innerHTML = thHtml;
-
-            let trHtml = "";
-            let totals = new Array(biz.mpc_competitors.length).fill(0);
-            let totalWeight = 0;
-
-            biz.mpc_rows.forEach((row, rIdx) => {
-                totalWeight += row[1];
-                trHtml += `<tr>
-                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][0]=this.value; saveState();"></td>
-                    <td><input type="number" step="0.01" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][1]=parseFloat(this.value); saveState(); renderMPC();"></td>`;
-                
-                biz.mpc_competitors.forEach((_, cIdx) => {
-                    let val = row[2][cIdx] || 0;
-                    totals[cIdx] += row[1] * val;
-                    trHtml += `<td><input type="number" class="input-num" min="1" max="4" value="${val}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][2][${cIdx}]=parseInt(this.value); saveState(); renderMPC();"></td>`;
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><input type="text" class="input-text" value="${item.factor}" onchange="updateEFIEFERow('${type}', ${idx}, 'factor', this.value)"></td>
+                        <td><input type="number" step="0.01" class="input-num" value="${item.weight}" onchange="updateEFIEFERow('${type}', ${idx}, 'weight', parseFloat(this.value))"></td>
+                        <td><input type="number" min="1" max="4" class="input-num" value="${item.score}" onchange="updateEFIEFERow('${type}', ${idx}, 'score', parseInt(this.value))"></td>
+                        <td><button class="btn-del" onclick="removeEFIEFERow('${type}', ${idx})">×</button></td>
+                    `;
+                    tbody.appendChild(tr);
                 });
 
-                trHtml += `<td><button class="btn-del" onclick="deleteRowFromMPC(${rIdx})">×</button></td></tr>`;
+                document.getElementById(`score-${type}`).innerText = weightedScore.toFixed(2);
+                let alertBox = document.getElementById(`${type}-alert`);
+                if(Math.abs(totalWeight - 1.0) > 0.001) {
+                    alertBox.innerText = `Suma de pesos: ${totalWeight.toFixed(2)} (Debe ser 1.00)`;
+                    alertBox.style.color = 'var(--brand-red)';
+                } else {
+                    alertBox.innerText = `Suma de pesos: 1.00 (Correcto)`;
+                    alertBox.style.color = 'var(--success)';
+                }
+
+                let statusBox = document.getElementById(`status-${type}`);
+                if(weightedScore >= 2.5) {
+                    statusBox.innerText = type === 'efi' ? "FORTALEZA INTERNA" : "RESPUESTA EXTERNA EFICAZ";
+                    statusBox.style.background = "#ecfdf5"; statusBox.style.borderColor = "var(--success)"; statusBox.style.color = "var(--success)";
+                } else {
+                    statusBox.innerText = type === 'efi' ? "DEBILIDAD INTERNA CRÍTICA" : "RESPUESTA EXTERNA DEFICIENTE";
+                    statusBox.style.background = "#fff5f5"; statusBox.style.borderColor = "var(--brand-red)"; statusBox.style.color = "var(--brand-red)";
+                }
+            });
+        }
+
+        function updateEFIEFERow(type, idx, key, val) {
+            appDatabase.proyectos[currentProjectID][type][idx][key] = val;
+            saveStateToStorage(); recalcEFIEFE();
+        }
+        function addNewRowToDataset(type, defaultArr) {
+            appDatabase.proyectos[currentProjectID][type].push({"factor": defaultArr[0], "weight": defaultArr[1], "score": defaultArr[2]});
+            saveStateToStorage(); recalcEFIEFE();
+        }
+        function removeEFIEFERow(type, idx) {
+            appDatabase.proyectos[currentProjectID][type].splice(idx, 1);
+            saveStateToStorage(); recalcEFIEFE();
+        }
+
+        // LÓGICA DE MATRIZ DE PERFIL COMPETITIVO (MPC)
+        function renderMPC() {
+            let proj = appDatabase.proyectos[currentProjectID];
+            let thead = document.getElementById('thead-mpc');
+            let tbody = document.getElementById('tbody-mpc');
+            thead.innerHTML = ''; tbody.innerHTML = '';
+
+            let headTr = document.createElement('tr');
+            headTr.innerHTML = `<th>Factor Crítico de Éxito</th><th style="width:12%">Peso</th>`;
+            proj.competitors.forEach((comp, cIdx) => {
+                headTr.innerHTML += `
+                    <th>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <input type="text" class="input-text" style="font-weight:bold; color:var(--brand-blue);" value="${comp}" onchange="updateCompetitorName(${cIdx}, this.value)">
+                            ${cIdx > 0 ? `<button class="btn-col-del" onclick="removeCompetitorColumn(${cIdx})">Eliminar</button>` : ''}
+                        </div>
+                    </th>
+                    <th style="width:10%">Punt.</th>
+                `;
+            });
+            headTr.innerHTML += `<th></th>`;
+            thead.appendChild(headTr);
+
+            let totalWeight = 0;
+            let compTotals = new Array(proj.competitors.length).fill(0);
+
+            proj.mpc.forEach((row, rIdx) => {
+                totalWeight += row.weight;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td><input type="text" class="input-text" value="${row.factor}" onchange="updateMPCRowValue(${rIdx}, 'factor', null, this.value)"></td>
+                                <td><input type="number" step="0.01" class="input-num" value="${row.weight}" onchange="updateMPCRowValue(${rIdx}, 'weight', null, parseFloat(this.value))"></td>`;
+                
+                proj.competitors.forEach((comp, cIdx) => {
+                    let rating = row.ratings[cIdx] || 3;
+                    let weighted = row.weight * rating;
+                    compTotals[cIdx] += weighted;
+                    tr.innerHTML += `<td><input type="number" min="1" max="4" class="input-num" value="${rating}" onchange="updateMPCRowValue(${rIdx}, 'rating', ${cIdx}, parseInt(this.value))"></td>
+                                     <td style="font-weight:bold; color:var(--brand-blue);">${weighted.toFixed(2)}</td>`;
+                });
+
+                tr.innerHTML += `<td><button class="btn-del" onclick="removeMPCRow(${rIdx})">×</button></td>`;
+                tbody.appendChild(tr);
             });
 
-            trHtml += `<tr style="background:#f1f5f9; font-weight:bold;"><td>Resultado Indexado MPC</td><td>${totalWeight.toFixed(2)}</td>`;
-            totals.forEach(t => { trHtml += `<td>${t.toFixed(2)}</td>`; });
-            trHtml += `<td></td></tr>`;
-            tbody.innerHTML = trHtml;
+            let totalTr = document.createElement('tr');
+            totalTr.style.background = '#f8fafc';
+            totalTr.innerHTML = `<td style="font-weight:bold; color:var(--brand-blue);">TOTALES BALANCEADOS</td><td style="font-weight:bold;">${totalWeight.toFixed(2)}</td>`;
+            compTotals.forEach(tot => {
+                totalTr.innerHTML += `<td></td><td style="font-size:16px; font-weight:800; color:var(--brand-blue); border-bottom:3px double var(--brand-blue);">${tot.toFixed(2)}</td>`;
+            });
+            totalTr.innerHTML += `<td></td>`;
+            tbody.appendChild(totalTr);
 
-            document.getElementById('mpc-alert').innerText = Math.abs(totalWeight - 1) > 0.01 ? `Alerta: Pesos suman ${(totalWeight*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
-            document.getElementById('mpc-alert').style.color = Math.abs(totalWeight - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
-        }
-
-        function addCompetitorColumn() {
-            let biz = storageData.projects[activeBizIndex];
-            biz.mpc_competitors.push("Competidor Rival " + (biz.mpc_competitors.length));
-            biz.mpc_rows.forEach(row => { row[2].push(3); });
-            saveState();
-            renderMPC();
-        }
-
-        function deleteCompetitorColumn(idx) {
-            let biz = storageData.projects[activeBizIndex];
-            if(confirm(`¿Deseas remover la columna estratégica "${biz.mpc_competitors[idx]}"?`)){
-                biz.mpc_competitors.splice(idx, 1);
-                biz.mpc_rows.forEach(row => { row[2].splice(idx, 1); });
-                saveState();
-                renderMPC();
+            let alertBox = document.getElementById('mpc-alert');
+            if(Math.abs(totalWeight - 1.0) > 0.001) {
+                alertBox.innerText = `Suma de pesos MPC: ${totalWeight.toFixed(2)} (Debe ser 1.00)`; alertBox.style.color = 'var(--brand-red)';
+            } else {
+                alertBox.innerText = `Suma de pesos MPC: 1.00 (Correcto)`; alertBox.style.color = 'var(--success)';
             }
         }
 
+        function updateCompetitorName(cIdx, val) { appDatabase.proyectos[currentProjectID].competitors[cIdx] = val; saveStateToStorage(); renderMPC(); }
+        function addCompetitorColumn() { 
+            let name = prompt("Nombre del competidor rival:"); if(!name) return;
+            let proj = appDatabase.proyectos[currentProjectID];
+            proj.competitors.push(name);
+            proj.mpc.forEach(row => row.ratings.push(3));
+            saveStateToStorage(); renderMPC();
+        }
+        function removeCompetitorColumn(cIdx) {
+            let proj = appDatabase.proyectos[currentProjectID];
+            proj.competitors.splice(cIdx, 1);
+            proj.mpc.forEach(row => row.ratings.splice(cIdx, 1));
+            saveStateToStorage(); renderMPC();
+        }
+        function updateMPCRowValue(rIdx, type, cIdx, val) {
+            let row = appDatabase.proyectos[currentProjectID].mpc[rIdx];
+            if(type === 'factor') row.factor = val;
+            if(type === 'weight') row.weight = val;
+            if(type === 'rating') row.ratings[cIdx] = val;
+            saveStateToStorage(); renderMPC();
+        }
         function addNewRowToMPC() {
-            let biz = storageData.projects[activeBizIndex];
-            let newRatings = new Array(biz.mpc_competitors.length).fill(3);
-            biz.mpc_rows.push(["Nuevo Atributo Crítico", 0.10, newRatings]);
-            saveState();
-            renderMPC();
+            let count = appDatabase.proyectos[currentProjectID].competitors.length;
+            appDatabase.proyectos[currentProjectID].mpc.push({"factor": "Nuevo Factor Crítico", "weight": 0.10, "ratings": new Array(count).fill(3)});
+            saveStateToStorage(); renderMPC();
+        }
+        function removeMPCRow(rIdx) { appDatabase.proyectos[currentProjectID].mpc.splice(rIdx, 1); saveStateToStorage(); renderMPC(); }
+
+        // LÓGICA GRÁFICA MATRIZ PEYEA INTERACTIVA
+        function updatePEYEANum(key, val) {
+            appDatabase.proyectos[currentProjectID].peyea[key] = parseFloat(val);
+            saveStateToStorage(); drawPEYEAGraph();
         }
 
-        function deleteRowFromMPC(idx) {
-            storageData.projects[activeBizIndex].mpc_rows.splice(idx, 1);
-            saveState();
-            renderMPC();
-        }
+        function drawPEYEAGraph() {
+            let peyea = appDatabase.proyectos[currentProjectID].peyea;
+            document.getElementById('input-peyea-ff').value = peyea.ff;
+            document.getElementById('input-peyea-fi').value = peyea.fi;
+            document.getElementById('input-peyea-vc').value = peyea.vc;
+            document.getElementById('input-peyea-ea').value = peyea.ea;
 
-        function recalcPEYEAReal() {
-            let biz = storageData.projects[activeBizIndex];
-            let x = biz.peyea.fi + biz.peyea.vc;
-            let y = biz.peyea.ff + biz.peyea.ea;
+            let x = peyea.ff + peyea.vc;
+            let y = peyea.fi + peyea.ea;
+            document.getElementById('peyea-coords').innerText = `Vector de Impacto (X: ${x.toFixed(2)}, Y: ${y.toFixed(2)})`;
 
-            document.getElementById('peyea-coords').innerText = `Vector de Coordenadas: (X: ${x.toFixed(2)}, Y: ${y.toFixed(2)})`;
-
-            let box = document.getElementById('status-peyea');
-            if(x >= 0 && y >= 0) { box.innerText = "PERFIL AGRESIVO (Ataque de Penetración Directa)"; box.style.color=varCss('--success'); }
-            else if(x < 0 && y >= 0) { box.innerText = "PERFIL CONSERVADOR (Protección de Nicho Comercial)"; box.style.color=varCss('--warning'); }
-            else if(x >= 0 && y < 0) { box.innerText = "PERFIL COMPETITIVO (Estrategias de Financiamiento)"; box.style.color=varCss('--brand-electric-blue'); }
-            else { box.innerText = "PERFIL DEFENSIVO (Estrategias de Retracción y Alianzas)"; box.style.color=varCss('--brand-red'); }
-
-            let cv = document.getElementById('peyeaCanvasReal'); if(!cv) return;
-            let ctx = cv.getContext('2d'); ctx.clearRect(0,0,280,280);
-
-            ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,280,280);
-            ctx.strokeStyle = varCss('--brand-border'); ctx.lineWidth = 1;
+            let canvas = document.getElementById('peyeaCanvasReal');
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 280, 280);
+            
+            // Dibujar plano cartesiano institucional
+            ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(140, 10); ctx.lineTo(140, 270); ctx.stroke();
             ctx.beginPath(); ctx.moveTo(10, 140); ctx.lineTo(270, 140); ctx.stroke();
 
-            ctx.fillStyle = "#94a3b8"; ctx.font = "10px sans-serif";
-            ctx.fillText("FF", 145, 20); ctx.fillText("FI", 255, 135);
-            ctx.fillText("VC", 15, 135); ctx.fillText("EA", 145, 265);
+            // Dibujar etiquetas de cuadrantes en gris suave
+            ctx.font = '9px Arial'; ctx.fillStyle = '#94a3b8';
+            ctx.fillText('FF (+Y)', 145, 20); ctx.fillText('EA (-Y)', 145, 265);
+            ctx.fillText('VC (-X)', 15, 135); ctx.fillText('FI (+X)', 235, 135);
 
-            let mapX = 140 + (x * 20);
-            let mapY = 140 - (y * 20);
+            // Escalar coordenadas del vector corporativo (Rango -6 a 6 mapeado a un radio de 120px)
+            let drawX = 140 + (x / 6) * 120;
+            let drawY = 140 - (y / 6) * 120; // Invertido para pantalla gráfica
 
-            ctx.strokeStyle = varCss('--brand-electric-green'); ctx.lineWidth = 4;
-            ctx.beginPath(); ctx.moveTo(140, 140); ctx.lineTo(mapX, mapY); ctx.stroke();
-            ctx.fillStyle = varCss('--brand-blue'); ctx.beginPath(); ctx.arc(mapX, mapY, 7, 0, 2 * Math.PI); ctx.fill();
+            // Dibujar línea del vector de color azul institucional
+            ctx.strokeStyle = '#0f2c59'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(140, 140); ctx.lineTo(drawX, drawY); ctx.stroke();
+
+            // Punto indicador rojo institucional
+            ctx.fillStyle = '#da291c'; ctx.beginPath(); ctx.arc(drawX, drawY, 6, 0, 2 * Math.PI); ctx.fill();
+
+            let statusBox = document.getElementById('status-peyea');
+            if(x >= 0 && y >= 0) { statusBox.innerText = "CUADRANTE AGRESIVO (Estrategias Intensivas)"; statusBox.style.background = "#ecfdf5"; statusBox.style.color = "var(--success)"; statusBox.style.borderColor = "var(--success)"; }
+            else if(x < 0 && y >= 0) { statusBox.innerText = "CUADRANTE CONSERVADOR (Estrategias de Retención)"; statusBox.style.background = "#eff6ff"; statusBox.style.color = "#3b82f6"; statusBox.style.borderColor = "#3b82f6"; }
+            else if(x >= 0 && y < 0) { statusBox.innerText = "CUADRANTE COMPETITIVO (Estrategias de Integración)"; statusBox.style.background = "#fffbeb"; statusBox.style.color = "var(--warning)"; statusBox.style.borderColor = "var(--warning)"; }
+            else { statusBox.innerText = "CUADRANTE DEFENSIVO (Estrategias de Supervivencia)"; statusBox.style.background = "#fff5f5"; statusBox.style.color = "var(--brand-red)"; statusBox.style.borderColor = "var(--brand-red)"; }
         }
 
-        function setupCanvasInteraction() {
-            let cv = document.getElementById('peyeaCanvasReal');
-            function handlePointer(e) {
-                if(!activeBizIndex) return;
-                let rect = cv.getBoundingClientRect();
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                let targetX = ((clientX - rect.left) - 140) / 20;
-                let targetY = (140 - (clientY - rect.top)) / 20;
-
-                let biz = storageData.projects[activeBizIndex];
-                biz.peyea.fi = Math.max(1, Math.min(6, 3.5 + (targetX / 2)));
-                biz.peyea.vc = Math.max(-6, Math.min(-1, -3.5 + (targetX / 2)));
-                biz.peyea.ff = Math.max(1, Math.min(6, 3.5 + (targetY / 2)));
-                biz.peyea.ea = Math.max(-6, Math.min(-1, -3.5 + (targetY / 2)));
-
-                saveState();
-                updatePEYEAInputFields();
-                recalcPEYEAReal();
-            }
-            cv.addEventListener('mousedown', (e) => { isDraggingPEYEA = true; handlePointer(e); });
-            window.addEventListener('mousemove', (e) => { if(isDraggingPEYEA) handlePointer(e); });
-            window.addEventListener('mouseup', () => { isDraggingPEYEA = false; });
+        // LÓGICA GRÁFICA MATRIZ MCKINSEY-GE
+        function updateMcKinseyData(key, val) {
+            appDatabase.proyectos[currentProjectID].mckinsey[key] = parseFloat(val);
+            saveStateToStorage(); drawMcKinseyGraph();
         }
 
-        function recalcMcKinsey() {
-            let biz = storageData.projects[activeBizIndex];
-            let f = biz.mckinsey.Fuerza;
-            let a = biz.mckinsey.Atractivo;
+        function drawMcKinseyGraph() {
+            let mck = appDatabase.proyectos[currentProjectID].mckinsey;
+            document.getElementById('input-mck-atractivo').value = mck.atractivo;
+            document.getElementById('input-mck-fuerza').value = mck.fuerza;
+            document.getElementById('mckinsey-coords').innerText = `Posición en Portafolio (Fuerza: ${mck.fuerza.toFixed(2)}, Atractivo: ${mck.atractivo.toFixed(2)})`;
 
-            document.getElementById('mckinsey-coords').innerText = `Ejes GE (Fuerza Competitiva: ${f.toFixed(2)}, Atractivo: ${a.toFixed(2)})`;
-            let box = document.getElementById('status-mckinsey');
+            let canvas = document.getElementById('mckinseyCanvas');
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,270,270);
 
-            if(a >= 3.67 && f >= 3.67) { box.innerText = "Invertir / Crecer de Forma Intensiva"; box.style.color = varCss('--success'); }
-            else if(a >= 3.67 && f >= 2.33) { box.innerText = "Invertir / Crecer de Forma Selectiva"; box.style.color = varCss('--success'); }
-            else if(a >= 2.33 && f >= 3.67) { box.innerText = "Invertir / Crecer de Forma Focalizada"; box.style.color = varCss('--success'); }
-            else if(a <= 2.33 && f <= 2.33) { box.innerText = "Cosechar / Retirar Operaciones"; box.style.color = varCss('--brand-red'); }
-            else { box.innerText = "Retener / Mantener Posición Defensiva"; box.style.color = varCss('--warning'); }
-
-            let cv = document.getElementById('mckinseyCanvas'); if(!cv) return;
-            let ctx = cv.getContext('2d'); ctx.clearRect(0,0,270,270);
-
-            for(let i=0; i<3; i++) {
-                for(let j=0; j<3; j++) {
-                    ctx.strokeStyle = "#e2e8f0";
-                    ctx.strokeRect(i*90, j*90, 90, 90);
-                }
+            // Dibujar rejilla de 3x3 para las 9 celdas
+            ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+            for(let i=1; i<=2; i++) {
+                ctx.beginPath(); ctx.moveTo(i*90, 0); ctx.lineTo(i*90, 270); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i*90); ctx.lineTo(270, i*90); ctx.stroke();
             }
 
-            let mapX = ((f - 1) / 4) * 270;
-            let mapY = 270 - (((a - 1) / 4) * 270);
+            // Mapeo matemático inverso (ejes 1.0-5.0 distribuidos en 270 píxeles de pantalla)
+            let drawX = ((mck.fuerza - 1) / 4) * 270;
+            let drawY = 270 - (((mck.atractivo - 1) / 4) * 270);
 
-            ctx.fillStyle = "rgba(0, 223, 137, 0.15)";
-            ctx.beginPath(); ctx.arc(mapX, mapY, 15, 0, 2*Math.PI); ctx.fill();
-            ctx.fillStyle = varCss('--brand-blue');
-            ctx.beginPath(); ctx.arc(mapX, mapY, 6, 0, 2*Math.PI); ctx.fill();
-        }
+            // Sombreado interno estructural según posición zonal
+            ctx.fillStyle = 'rgba(15, 44, 89, 0.05)';
+            ctx.fillRect(drawX - 20, drawY - 20, 40, 40);
 
-        function setupMcKinseyInteraction() {
-            let cv = document.getElementById('mckinseyCanvas');
-            function handleMcK(e) {
-                if(!activeBizIndex) return;
-                let rect = cv.getBoundingClientRect();
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                let f = 1 + (((clientX - rect.left) / 270) * 4);
-                let a = 1 + (((270 - (clientY - rect.top)) / 270) * 4);
+            // Marcador corporativo de la unidad de negocio en azul institucional
+            ctx.fillStyle = '#0f2c59'; ctx.beginPath(); ctx.arc(drawX, drawY, 9, 0, 2*Math.PI); ctx.fill();
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
 
-                let biz = storageData.projects[activeBizIndex];
-                biz.mckinsey.Fuerza = Math.max(1, Math.min(5, f));
-                biz.mckinsey.Atractivo = Math.max(1, Math.min(5, a));
-
-                saveState();
-                document.getElementById('input-mck-atractivo').value = biz.mckinsey.Atractivo.toFixed(1);
-                document.getElementById('input-mck-fuerza').value = biz.mckinsey.Fuerza.toFixed(1);
-                recalcMcKinsey();
+            let statusBox = document.getElementById('status-mckinsey');
+            if((mck.atractivo > 3.66 && mck.fuerza > 3.66) || (mck.atractivo > 3.66 && mck.fuerza > 2.33) || (mck.atractivo > 2.33 && mck.fuerza > 3.66)) {
+                statusBox.innerText = "ZONA ALTA: INVERTIR / CRECER"; statusBox.style.background = "#ecfdf5"; statusBox.style.color = "var(--success)"; statusBox.style.borderColor = "var(--success)";
+            } else if ((mck.atractivo < 2.33 && mck.fuerza < 2.33) || (mck.atractivo < 2.33 && mck.fuerza < 3.66) || (mck.atractivo < 3.66 && mck.fuerza < 2.33)) {
+                statusBox.innerText = "ZONA BAJA: COSECHAR / DESINVERTIR"; statusBox.style.background = "#fff5f5"; statusBox.style.color = "var(--brand-red)"; statusBox.style.borderColor = "var(--brand-red)";
+            } else {
+                statusBox.innerText = "ZONA MEDIA: RETENCIÓN SELECTIVA"; statusBox.style.background = "#fffbeb"; statusBox.style.color = "var(--warning)"; statusBox.style.borderColor = "var(--warning)";
             }
-            cv.addEventListener('mousedown', (e) => { isDraggingMcK = true; handleMcK(e); });
-            window.addEventListener('mousemove', (e) => { if(isDraggingMcK) handleMcK(e); });
-            window.addEventListener('mouseup', () => { isDraggingMcK = false; });
         }
 
+        // LÓGICA DE MATRIZ CUANTITATIVA DE PLANIFICACIÓN (MPEC)
         function renderMPEC() {
-            let biz = storageData.projects[activeBizIndex];
+            let proj = appDatabase.proyectos[currentProjectID];
             let thead = document.getElementById('thead-mpec');
             let tbody = document.getElementById('tbody-mpec');
+            thead.innerHTML = ''; tbody.innerHTML = '';
 
-            let thHtml = `<tr><th>Factor Crítico MPEC</th><th style="width:12%">Peso</th>`;
-            biz.mpec_strategies.forEach((strat, idx) => {
-                thHtml += `<th>
-                    <input type="text" class="input-text" style="font-weight:bold; text-align:center;" value="${strat}" onchange="storageData.projects[activeBizIndex].mpec_strategies[${idx}]=this.value; saveState();">
-                    ${idx > 0 ? `<button class="btn-col-del" onclick="deleteStrategyColumn(${idx})">Eliminar</button>` : ''}
-                </th>`;
+            let headTr = document.createElement('tr');
+            headTr.innerHTML = `<th>Factor Clave de Decisión</th><th style="width:12%">Peso</th>`;
+            proj.strategies.forEach((strat, sIdx) => {
+                headTr.innerHTML += `
+                    <th>
+                        <div style="display:flex; align-items:center; justify-content:space-between;">
+                            <input type="text" class="input-text" style="font-weight:bold; color:var(--brand-blue);" value="${strat}" onchange="updateStrategyName(${sIdx}, this.value)">
+                            ${sIdx > 0 ? `<button class="btn-col-del" onclick="removeStrategyColumn(${sIdx})">Eliminar</button>` : ''}
+                        </div>
+                    </th>
+                    <th style="width:10%">PA</th>
+                `;
             });
-            thHtml += `<th></th></tr>`;
-            thead.innerHTML = thHtml;
+            headTr.innerHTML += `<th></th>`;
+            thead.appendChild(headTr);
 
-            let trHtml = "";
-            let totals = new Array(biz.mpec_strategies.length).fill(0);
             let totalWeight = 0;
+            let stratTotals = new Array(proj.strategies.length).fill(0);
 
-            biz.mpec_rows.forEach((row, rIdx) => {
-                totalWeight += row[1];
-                trHtml += `<tr>
-                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][0]=this.value; saveState();"></td>
-                    <td><input type="number" step="0.01" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][1]=parseFloat(this.value); saveState(); renderMPEC();"></td>`;
+            proj.mpec.forEach((row, rIdx) => {
+                totalWeight += row.weight;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td><input type="text" class="input-text" value="${row.factor}" onchange="updateMPECRowValue(${rIdx}, 'factor', null, this.value)"></td>
+                                <td><input type="number" step="0.01" class="input-num" value="${row.weight}" onchange="updateMPECRowValue(${rIdx}, 'weight', null, parseFloat(this.value))"></td>`;
                 
-                biz.mpec_strategies.forEach((_, cIdx) => {
-                    let val = row[2][cIdx] || 0;
-                    totals[cIdx] += row[1] * val;
-                    trHtml += `<td><input type="number" class="input-num" min="1" max="4" value="${val}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][2][${cIdx}]=parseInt(this.value); saveState(); renderMPEC();"></td>`;
+                proj.strategies.forEach((strat, sIdx) => {
+                    let scoreAS = row.as[sIdx] || 0;
+                    let totalPA = row.weight * scoreAS;
+                    stratTotals[sIdx] += totalPA;
+                    tr.innerHTML += `<td><input type="number" min="0" max="4" class="input-num" value="${scoreAS}" onchange="updateMPECRowValue(${rIdx}, 'as', ${sIdx}, parseInt(this.value))"></td>
+                                     <td style="font-weight:bold; color:var(--brand-blue);">${totalPA.toFixed(2)}</td>`;
                 });
 
-                trHtml += `<td><button class="btn-del" onclick="deleteRowFromMPEC(${rIdx})">×</button></td></tr>`;
+                tr.innerHTML += `<td><button class="btn-del" onclick="removeMPECRow(${rIdx})">×</button></td>`;
+                tbody.appendChild(tr);
             });
 
-            trHtml += `<tr style="background:#f1f5f9; font-weight:bold;"><td>Calificación de Atractivo Total</td><td>${totalWeight.toFixed(2)}</td>`;
-            totals.forEach(t => { trHtml += `<td>${t.toFixed(2)}</td>`; });
-            trHtml += `<td></td></tr>`;
-            tbody.innerHTML = trHtml;
-
-            document.getElementById('mpec-alert').innerText = Math.abs(totalWeight - 1) > 0.01 ? `Alerta: Pesos suman ${(totalWeight*100).toFixed(0)}%/100%` : "✔ Pesos Validados";
-            document.getElementById('mpec-alert').style.color = Math.abs(totalWeight - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
-        }
-
-        function addStrategyColumn() {
-            let biz = storageData.projects[activeBizIndex];
-            biz.mpec_strategies.push("Estrategia " + (biz.mpec_strategies.length + 1));
-            biz.mpec_rows.forEach(row => { row[2].push(3); });
-            saveState();
-            renderMPEC();
-        }
-
-        function deleteStrategyColumn(idx) {
-            let biz = storageData.projects[activeBizIndex];
-            if(confirm(`¿Deseas eliminar la alternativa estratégica "${biz.mpec_strategies[idx]}"?`)){
-                biz.mpec_strategies.splice(idx, 1);
-                biz.mpec_rows.forEach(row => { row[2].splice(idx, 1); });
-                saveState();
-                renderMPEC();
-            }
-        }
-
-        function addNewRowToMPEC() {
-            let biz = storageData.projects[activeBizIndex];
-            let newRatings = new Array(biz.mpec_strategies.length).fill(3);
-            biz.mpec_rows.push(["Nuevo Atributo Decisivo", 0.10, newRatings]);
-            saveState();
-            renderMPEC();
-        }
-
-        function deleteRowFromMPEC(idx) {
-            storageData.projects[activeBizIndex].mpec_rows.splice(idx, 1);
-            saveState();
-            renderMPEC();
-        }
-
-        function renderSMARTCards() {
-            let container = document.getElementById('smart-cards-container');
-            let h = "";
-            storageData.projects[activeBizIndex].smart_metas.forEach((meta, idx) => {
-                h += `<div class="smart-card">
-                    <h4><input type="text" class="input-text" style="font-weight:bold; color:var(--brand-blue); padding:0;" value="${meta.title}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].title=this.value; saveState();"></h4>
-                    <div class="smart-item"><strong>E/S (Específica):</strong> <input type="text" class="input-text" value="${meta.e}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].e=this.value; saveState();"></div>
-                    <div class="smart-item"><strong>M (Medible):</strong> <input type="text" class="input-text" value="${meta.m}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].m=this.value; saveState();"></div>
-                    <div class="smart-item"><strong>A (Alcanzable):</strong> <input type="text" class="input-text" value="${meta.a}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].a=this.value; saveState();"></div>
-                    <div class="smart-item"><strong>R (Relevante):</strong> <input type="text" class="input-text" value="${meta.r}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].r=this.value; saveState();"></div>
-                    <div class="smart-item"><strong>T (Temporal):</strong> <input type="text" class="input-text" value="${meta.t}" onchange="storageData.projects[activeBizIndex].smart_metas[${idx}].t=this.value; saveState();"></div>
-                </div>`;
+            let totalTr = document.createElement('tr');
+            totalTr.style.background = '#f8fafc';
+            totalTr.innerHTML = `<td style="font-weight:bold; color:var(--brand-blue);">SUMA DE PUNTAJES DE ATRACTIVO</td><td style="font-weight:bold;">${totalWeight.toFixed(2)}</td>`;
+            stratTotals.forEach(tot => {
+                totalTr.innerHTML += `<td></td><td style="font-size:16px; font-weight:800; color:var(--brand-blue); border-bottom:3px double var(--brand-blue);">${tot.toFixed(2)}</td>`;
             });
-            container.innerHTML = h;
-        }
+            totalTr.innerHTML += `<td></td>`;
+            tbody.appendChild(totalTr);
 
-        function renderPOAOperativeTable() {
-            let tbody = document.getElementById('tbody-poa-operative');
-            let h = "";
-            storageData.projects[activeBizIndex].poa_operative.forEach((row, idx) => {
-                h += `<tr>
-                    <td><strong>${row.activity}</strong></td>
-                    <td><span style="font-size:11px; padding:3px 8px; background:#e0f2fe; color:#0369a1; border-radius:12px; font-weight:bold;">${row.strategy}</span></td>
-                    <td>${row.schedule}</td>
-                    <td>${row.leader}</td>
-                    <td><span style="font-weight:bold; color:${row.priority==='Alta'?'var(--brand-red)':'var(--warning)'}">${row.priority}</span></td>
-                </tr>`;
-            });
-            tbody.innerHTML = h;
-        }
-
-        function renderTimeline() {
-            let wrapper = document.getElementById('timeline-wrapper');
-            let h = "";
-            let biz = storageData.projects[activeBizIndex];
-            for (let month in biz.timeline) {
-                h += `<div class="timeline-month">
-                    <h5>${month}</h5>
-                    <textarea class="input-text" style="font-size:12px; height:65px; line-height:1.3;" onchange="storageData.projects[activeBizIndex].timeline['${month}']=this.value; saveState();">${biz.timeline[month]}</textarea>
-                </div>`;
-            }
-            wrapper.innerHTML = h;
-        }
-
-        function renderKPITable() {
-            let tbody = document.getElementById('table-kpis').querySelector('tbody');
-            let h = "";
-            storageData.projects[activeBizIndex].kpis.forEach((row, i) => {
-                h += `<tr>
-                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].kpis[${i}][0]=this.value; saveState();"></td>
-                    <td><input type="number" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].kpis[${i}][1]=parseFloat(this.value); saveState(); updateKPIProgressDisplay();"></td>
-                    <td><input type="number" class="input-num" value="${row[2]}" oninput="storageData.projects[activeBizIndex].kpis[${i}][2]=parseFloat(this.value); saveState(); updateKPIProgressDisplay();"></td>
-                </tr>`;
-            });
-            tbody.innerHTML = h;
-            updateKPIProgressDisplay();
-        }
-
-        function updateKPIProgressDisplay() {
-            let container = document.getElementById('kpi-progress-bars');
-            let h = `<h4 style="font-size:12px; font-weight:bold; color:var(--brand-blue); text-transform:uppercase; margin-bottom:10px;">Cumplimiento Operativo Anual</h4>`;
-            storageData.projects[activeBizIndex].kpis.forEach(k => {
-                let pct = Math.min((k[2] / k[1]) * 100, 100);
-                h += `<div style="width:100%">
-                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
-                        <span>${k[0]}</span>
-                        <span style="color:var(--brand-electric-blue);">${pct.toFixed(1)}%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: ${pct}%"></div>
-                    </div>
-                </div>`;
-            });
-            container.innerHTML = h;
-        }
-
-        function drawBudgetChart() {
-            let canvas = document.getElementById('budgetCanvas');
-            if (!canvas) return;
-            let ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            let data = BUSINESS_TEMPLATE.budget_data;
-            let paddingLeft = 40;
-            let paddingBottom = 40;
-            let chartWidth = canvas.width - paddingLeft - 20;
-            let chartHeight = canvas.height - paddingBottom - 40;
-
-            // Encontrar el valor máximo para escalar correctamente
-            let maxVal = Math.max(...data.values);
-            let barCount = data.values.length;
-            let spacing = 14;
-            let barWidth = (chartWidth - (spacing * (barCount - 1))) / barCount;
-
-            // Título de la Gráfica
-            ctx.fillStyle = "#0f2a4a";
-            ctx.font = "bold 13px sans-serif";
-            ctx.fillText("Presupuesto por estrategia", paddingLeft, 25);
-
-            // Dibujar las barras y los valores
-            data.values.forEach((val, idx) => {
-                let pctOfMax = val / maxVal;
-                let barHeight = chartHeight * pctOfMax;
-                let x = paddingLeft + (idx * (barWidth + spacing));
-                let y = canvas.height - paddingBottom - barHeight;
-
-                // Alternar colores modernos entre Azul Eléctrico y Verde Eléctrico
-                ctx.fillStyle = (idx % 2 === 0) ? "#0070f3" : "#00df89";
-                
-                // Dibujar la barra con bordes estilizados
-                ctx.fillRect(x, y, barWidth, barHeight);
-
-                // Imprimir el valor sobre la barra
-                ctx.fillStyle = "#1e293b";
-                ctx.font = "bold 10px sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText(`$${val.toLocaleString()}`, x + (barWidth / 2), y - 6);
-
-                // Etiquetas de categorías simplificadas en la base
-                ctx.fillStyle = "#64748b";
-                ctx.font = "9px sans-serif";
-                ctx.fillText(data.labels[idx], x + (barWidth / 2), canvas.height - paddingBottom + 16);
-            });
-
-            // Eje base limpio
-            ctx.strokeStyle = "#cbd5e1";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(paddingLeft, canvas.height - paddingBottom);
-            ctx.lineTo(canvas.width - 20, canvas.height - paddingBottom);
-            ctx.stroke();
-        }
-
-        function recalcFinanzasDual() {
-            if (activeBizIndex === null) return;
-            let ingresos = parseFloat(document.getElementById('fin-ingresos').value) || 0;
-            let explicitos = parseFloat(document.getElementById('fin-explicitos').value) || 0;
-            let implicitos = parseFloat(document.getElementById('fin-implicitos').value) || 0;
-
-            storageData.projects[activeBizIndex].finanzas = { ingresos, explicitos, implicitos };
-            saveState();
-
-            let uContable = ingresos - explicitos;
-            let uEconomica = uContable - implicitos;
-
-            document.getElementById('calc-u-contable').innerText = `$${uContable.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById('calc-u-economica').innerText = `$${uEconomica.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-
-            let descBox = document.getElementById('fin-status-desc');
-            if(uEconomica > 0) {
-                descBox.innerText = "Análisis Económico: Excelente. La empresa genera rendimientos extraordinarios, cubriendo costes operativos y superando el retorno alternativo del capital invertido.";
-                descBox.style.color = varCss('--success');
-            } else if (uEconomica === 0) {
-                descBox.innerText = "Análisis Económico: Equilibrio de Oportunidad. La rentabilidad es idéntica al uso alternativo de los recursos de la plaza.";
-                descBox.style.color = varCss('--text-main');
+            let alertBox = document.getElementById('mpec-alert');
+            if(Math.abs(totalWeight - 1.0) > 0.001) {
+                alertBox.innerText = `Suma de pesos MPEC: ${totalWeight.toFixed(2)} (Debe ser 1.00)`; alertBox.style.color = 'var(--brand-red)';
             } else {
-                descBox.innerText = "Alerta Operativa: A pesar de reflejar utilidad contable positiva, el beneficio económico es destructivo. Sería financieramente superior reasignar el capital a la alternativa de oportunidad evaluada.";
-                descBox.style.color = varCss('--brand-red');
+                alertBox.innerText = `Suma de pesos MPEC: 1.00 (Correcto)`; alertBox.style.color = 'var(--success)';
             }
         }
 
-        function addNewRowToDataset(type, template) {
-            storageData.projects[activeBizIndex][type].push(template);
-            saveState();
-            renderWorkspacePanels();
+        function updateStrategyName(sIdx, val) { appDatabase.proyectos[currentProjectID].strategies[sIdx] = val; saveStateToStorage(); renderMPEC(); }
+        function addStrategyColumn() {
+            let text = prompt("Ingrese el enunciado de la nueva alternativa estratégica:"); if(!text) return;
+            let proj = appDatabase.proyectos[currentProjectID];
+            proj.strategies.push(text);
+            proj.mpec.forEach(row => row.as.push(0));
+            saveStateToStorage(); renderMPEC();
+        }
+        function removeStrategyColumn(sIdx) {
+            let proj = appDatabase.proyectos[currentProjectID];
+            proj.strategies.splice(sIdx, 1);
+            proj.mpec.forEach(row => row.as.splice(sIdx, 1));
+            saveStateToStorage(); renderMPEC();
+        }
+        function updateMPECRowValue(rIdx, type, sIdx, val) {
+            let row = appDatabase.proyectos[currentProjectID].mpec[rIdx];
+            if(type === 'factor') row.factor = val;
+            if(type === 'weight') row.weight = val;
+            if(type === 'as') row.as[sIdx] = val;
+            saveStateToStorage(); renderMPEC();
+        }
+        function addNewRowToMPEC() {
+            let count = appDatabase.proyectos[currentProjectID].strategies.length;
+            appDatabase.proyectos[currentProjectID].mpec.push({"factor": "Nuevo factor clave", "weight": 0.10, "as": new Array(count).fill(0)});
+            saveStateToStorage(); renderMPEC();
+        }
+        function removeMPECRow(rIdx) { appDatabase.proyectos[currentProjectID].mpec.splice(rIdx, 1); saveStateToStorage(); renderMPEC(); }
+
+        // LÓGICA DE METAS S.M.A.R.T.
+        function renderSMARTCards() {
+            let proj = appDatabase.proyectos[currentProjectID];
+            let container = document.getElementById('smart-cards-container');
+            container.innerHTML = '';
+
+            proj.smart.forEach((card, idx) => {
+                let div = document.createElement('div');
+                div.className = 'smart-card';
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:between; align-items:center; margin-bottom:12px;">
+                        <input type="text" value="${card.title}" style="font-weight:800; font-size:15px; color:var(--brand-blue);" class="input-text" onchange="updateSMARTCard(${idx}, 'title', this.value)">
+                        <button class="btn-del" onclick="removeSMARTCard(${idx})">×</button>
+                    </div>
+                    <div class="smart-item"><strong>S (Específico):</strong> <input type="text" class="input-text" value="${card.s}" onchange="updateSMARTCard(${idx}, 's', this.value)"></div>
+                    <div class="smart-item"><strong>M (Medible):</strong> <input type="text" class="input-text" value="${card.m}" onchange="updateSMARTCard(${idx}, 'm', this.value)"></div>
+                    <div class="smart-item"><strong>A (Alcanzable):</strong> <input type="text" class="input-text" value="${card.a}" onchange="updateSMARTCard(${idx}, 'a', this.value)"></div>
+                    <div class="smart-item"><strong>R (Relevante):</strong> <input type="text" class="input-text" value="${card.r}" onchange="updateSMARTCard(${idx}, 'r', this.value)"></div>
+                    <div class="smart-item"><strong>T (Temporal):</strong> <input type="text" class="input-text" value="${card.t}" onchange="updateSMARTCard(${idx}, 't', this.value)"></div>
+                `;
+                container.appendChild(div);
+            });
+
+            let addBtn = document.createElement('button');
+            addBtn.className = 'btn-add'; addBtn.style.height = '60px';
+            addBtn.innerText = "+ Estructurar Nuevo Objetivo S.M.A.R.T.";
+            addBtn.onclick = () => {
+                proj.smart.push({"title": "Nuevo Objetivo Corporativo", "s": "Definir acción", "m": "Definir métrica", "a": "Asignar responsable", "r": "Justificar impacto", "t": "Establecer plazo"});
+                saveStateToStorage(); renderSMARTCards();
+            };
+            container.appendChild(addBtn);
         }
 
-        function deleteRowFromDataset(type, idx) {
-            storageData.projects[activeBizIndex][type].splice(idx, 1);
-            saveState();
-            renderWorkspacePanels();
+        function updateSMARTCard(idx, key, val) { appDatabase.proyectos[currentProjectID].smart[idx][key] = val; saveStateToStorage(); }
+        function removeSMARTCard(idx) { appDatabase.proyectos[currentProjectID].smart.splice(idx, 1); saveStateToStorage(); renderSMARTCards(); }
+
+        // LÓGICA DEL PLAN OPERATIVO ANUAL (POA) Y GRÁFICOS DE PRESUPUESTO
+        function renderPOAPanel() {
+            let proj = appDatabase.proyectos[currentProjectID];
+            let tbody = document.getElementById('tbody-poa-operative');
+            tbody.innerHTML = '';
+
+            proj.poa.forEach((row, idx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" class="input-text" value="${row.act}" onchange="updatePOARow(${idx}, 'act', this.value)"></td>
+                    <td>
+                        <select style="padding:4px; font-size:12px; border-radius:4px;" onchange="updatePOARow(${idx}, 'strategy', this.value)">
+                            ${proj.strategies.map(s => `<option value="${s}" ${row.strategy === s ? 'selected' : ''}>${s.substring(0,25)}...</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><input type="text" class="input-text" value="${row.owner}" onchange="updatePOARow(${idx}, 'owner', this.value)"></td>
+                    <td><input type="text" class="input-text" style="font-weight:bold; color:var(--brand-red);" value="${row.priority}" onchange="updatePOARow(${idx}, 'priority', this.value)"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Generar ebanistería del gráfico de barras presupuestario vía Canvas
+            let canvas = document.getElementById('budgetCanvas');
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,380,280);
+
+            let strategyBudgets = {};
+            proj.strategies.forEach(s => strategyBudgets[s] = 0);
+            proj.poa.forEach(row => { if(strategyBudgets[row.strategy] !== undefined) strategyBudgets[row.strategy] += row.budget; });
+
+            let entries = Object.entries(strategyBudgets);
+            ctx.font = '11px Segoe UI';
+            entries.forEach((ent, i) => {
+                let name = ent[0].substring(0, 15) + '...';
+                let amt = ent[1];
+                
+                ctx.fillStyle = '#1e293b'; ctx.fillText(`${name} ($${amt})`, 15, 35 + (i * 55));
+                
+                // Fondo de la barra en gris suave
+                ctx.fillStyle = '#e2e8f0'; ctx.fillRect(15, 45 + (i * 55), 340, 15);
+                
+                // Llenado de barra con el azul de la Universidad de Cuenca
+                ctx.fillStyle = '#0f2c59';
+                let width = Math.min(340, (amt / 15000) * 340);
+                ctx.fillRect(15, 45 + (i * 55), width, 15);
+            });
+
+            // Renderizar la matriz temporal física (Gantt)
+            let wrapper = document.getElementById('timeline-wrapper');
+            wrapper.innerHTML = '';
+            let monthsNames = ['Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            
+            monthsNames.forEach((mName, mIdx) => {
+                let mDiv = document.createElement('div');
+                mDiv.className = 'timeline-month';
+                mDiv.innerHTML = `<h5>${mName}</h5>`;
+                
+                proj.poa.forEach((row, rIdx) => {
+                    if(row.months && row.months[mIdx] === 1) {
+                        mDiv.innerHTML += `
+                            <div style="background:rgba(15, 44, 89, 0.08); border-left:3px solid var(--brand-blue); padding:6px; font-size:10px; margin-bottom:6px; text-align:left; border-radius:0 4px 4px 0;">
+                                <strong>${row.owner}:</strong> ${row.act.substring(0,20)}...
+                            </div>
+                        `;
+                    }
+                });
+                wrapper.appendChild(mDiv);
+            });
         }
 
-        function varCss(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+        function updatePOARow(idx, key, val) { appDatabase.proyectos[currentProjectID].poa[idx][key] = val; saveStateToStorage(); renderPOAPanel(); }
 
-        function showPanel(id, link) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            link.classList.add('active');
-            if(id === 'peyea-panel') { setTimeout(() => { recalcPEYEAReal(); }, 20); }
-            if(id === 'mckinsey-panel') { setTimeout(() => { recalcMcKinsey(); }, 20); }
-            if(id === 'poa-panel') { setTimeout(() => { drawBudgetChart(); }, 20); }
+        // LÓGICA DE VISIÓN FINANCIERA DUAL
+        function recalcFinanzasDual() {
+            let ingresos = parseFloat(document.getElementById('fin-ingresos').value) || 0;
+            let costosEx = parseFloat(document.getElementById('fin-costos-ex').value) || 0;
+            let costosIm = parseFloat(document.getElementById('fin-costos-im').value) || 0;
+
+            let utilContable = ingresos - costosEx;
+            let utilEconomica = ingresos - costosEx - costosIm;
+
+            let cContable = document.getElementById('calc-util-contable');
+            let cEconomica = document.getElementById('calc-util-economica');
+
+            cContable.innerText = `$${utilContable.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            cEconomica.innerText = `$${utilEconomica.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+            cContable.style.color = utilContable >= 0 ? 'var(--brand-blue)' : 'var(--brand-red)';
+            cEconomica.style.color = utilEconomica >= 0 ? 'var(--success)' : 'var(--brand-red)';
         }
 
-        window.onload = initApp;
+        // LÓGICA DE BALANCE DE KPIS (CUADRO DE MANDO)
+        function renderKPIs() {
+            let proj = appDatabase.proyectos[currentProjectID];
+            let tbody = document.getElementById('tbody-kpi-tracker');
+            tbody.innerHTML = '';
+
+            proj.kpis.forEach((kpi, idx) => {
+                let pct = Math.min(100, Math.round((kpi.actual / kpi.target) * 100));
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" class="input-text" value="${kpi.name}" onchange="updateKPIRow(${idx}, 'name', this.value)"></td>
+                    <td><input type="number" class="input-num" value="${kpi.target}" onchange="updateKPIRow(${idx}, 'target', parseFloat(this.value))"></td>
+                    <td><input type="number" class="input-num" value="${kpi.actual}" onchange="updateKPIRow(${idx}, 'actual', parseFloat(this.value))"></td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-weight:bold; width:35px; font-size:12px; color:var(--brand-blue);">${pct}%</span>
+                            <div class="progress-bar-container" style="flex:1; margin:0;">
+                                <div class="progress-bar-fill" style="width: ${pct}%;"></div>
+                            </div>
+                            <button class="btn-del" onclick="removeKPIRow(${idx})">×</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            let trAdd = document.createElement('tr');
+            trAdd.innerHTML = `<td colspan="4"><button class="btn-add" onclick="addNewKPIRow()">+ Vincular Nuevo Indicador de Control (KPI)</button></td>`;
+            tbody.appendChild(trAdd);
+        }
+
+        function updateKPIRow(idx, key, val) { appDatabase.proyectos[currentProjectID].kpis[idx][key] = val; saveStateToStorage(); renderKPIs(); }
+        function addNewKPIRow() { appDatabase.proyectos[currentProjectID].kpis.push({"name": "Nuevo Indicador Operativo", "target": 100, "actual": 0}); saveStateToStorage(); renderKPIs(); }
+        function removeKPIRow(idx) { appDatabase.proyectos[currentProjectID].kpis.splice(idx, 1); saveStateToStorage(); renderKPIs(); }
+
+        // RENDERIZADOR DEL HUB DE CONTROL INICIAL
+        function renderHub() {
+            let grid = document.getElementById('hub-grid');
+            grid.innerHTML = '';
+            
+            Object.values(appDatabase.proyectos).forEach(proj => {
+                let card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => enterWorkspace(proj.id);
+                card.innerHTML = `
+                    <h3>${proj.name}</h3>
+                    <p><strong>Sector:</strong> ${proj.sector || 'No definido'}<br>
+                    <strong>Línea:</strong> ${proj.star_product || 'No definida'}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="project-badge">Modelo Estratégico</span>
+                        <span style="font-size:12px; font-weight:bold; color:var(--brand-blue);">Abrir Entorno →</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Arranque de la Suite en tiempo de ejecución
+        window.onload = function() {
+            renderHub();
+        };
     </script>
 </body>
 </html>
