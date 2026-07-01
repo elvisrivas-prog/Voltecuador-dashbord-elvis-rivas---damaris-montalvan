@@ -1109,4 +1109,85 @@
                 let y = canvas.height - paddingBottom - barHeight;
 
                 // Alternar colores modernos entre Azul Eléctrico y Verde Eléctrico
-                ctx.fillStyle = (idx % 2 === 0) ? "#
+                ctx.fillStyle = (idx % 2 === 0) ? "#0070f3" : "#00df89";
+                
+                // Dibujar la barra con bordes estilizados
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Imprimir el valor sobre la barra
+                ctx.fillStyle = "#1e293b";
+                ctx.font = "bold 10px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(`$${val.toLocaleString()}`, x + (barWidth / 2), y - 6);
+
+                // Etiquetas de categorías simplificadas en la base
+                ctx.fillStyle = "#64748b";
+                ctx.font = "9px sans-serif";
+                ctx.fillText(data.labels[idx], x + (barWidth / 2), canvas.height - paddingBottom + 16);
+            });
+
+            // Eje base limpio
+            ctx.strokeStyle = "#cbd5e1";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(paddingLeft, canvas.height - paddingBottom);
+            ctx.lineTo(canvas.width - 20, canvas.height - paddingBottom);
+            ctx.stroke();
+        }
+
+        function recalcFinanzasDual() {
+            if (activeBizIndex === null) return;
+            let ingresos = parseFloat(document.getElementById('fin-ingresos').value) || 0;
+            let explicitos = parseFloat(document.getElementById('fin-explicitos').value) || 0;
+            let implicitos = parseFloat(document.getElementById('fin-implicitos').value) || 0;
+
+            storageData.projects[activeBizIndex].finanzas = { ingresos, explicitos, implicitos };
+            saveState();
+
+            let uContable = ingresos - explicitos;
+            let uEconomica = uContable - implicitos;
+
+            document.getElementById('calc-u-contable').innerText = `$${uContable.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            document.getElementById('calc-u-economica').innerText = `$${uEconomica.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+
+            let descBox = document.getElementById('fin-status-desc');
+            if(uEconomica > 0) {
+                descBox.innerText = "Análisis Económico: Excelente. La empresa genera rendimientos extraordinarios, cubriendo costes operativos y superando el retorno alternativo del capital invertido.";
+                descBox.style.color = varCss('--success');
+            } else if (uEconomica === 0) {
+                descBox.innerText = "Análisis Económico: Equilibrio de Oportunidad. La rentabilidad es idéntica al uso alternativo de los recursos de la plaza.";
+                descBox.style.color = varCss('--text-main');
+            } else {
+                descBox.innerText = "Alerta Operativa: A pesar de reflejar utilidad contable positiva, el beneficio económico es destructivo. Sería financieramente superior reasignar el capital a la alternativa de oportunidad evaluada.";
+                descBox.style.color = varCss('--brand-red');
+            }
+        }
+
+        function addNewRowToDataset(type, template) {
+            storageData.projects[activeBizIndex][type].push(template);
+            saveState();
+            renderWorkspacePanels();
+        }
+
+        function deleteRowFromDataset(type, idx) {
+            storageData.projects[activeBizIndex][type].splice(idx, 1);
+            saveState();
+            renderWorkspacePanels();
+        }
+
+        function varCss(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+        function showPanel(id, link) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            link.classList.add('active');
+            if(id === 'peyea-panel') { setTimeout(() => { recalcPEYEAReal(); }, 20); }
+            if(id === 'mckinsey-panel') { setTimeout(() => { recalcMcKinsey(); }, 20); }
+            if(id === 'poa-panel') { setTimeout(() => { drawBudgetChart(); }, 20); }
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
