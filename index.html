@@ -53,6 +53,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .split-container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; margin-bottom: 30px; align-items: start; }
+        .full-container { width: 100%; margin-bottom: 30px; }
         .card { background: var(--brand-white); border-radius: 8px; border: 1px solid var(--brand-border); padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .card h3 { color: var(--brand-blue); font-size: 16px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid var(--brand-light); text-transform: uppercase; letter-spacing: 0.5px; }
 
@@ -62,7 +63,7 @@
         .identity-field label { font-size: 12px; font-weight: bold; color: var(--brand-blue); text-transform: uppercase; }
 
         /* FORMULARIOS EDITABLES */
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
         th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: #f1f5f9; color: var(--brand-blue); font-weight: 700; }
         
@@ -105,6 +106,7 @@
         .btn-add { background: #f1f5f9; color: var(--brand-blue); border: 1px solid var(--brand-border); padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 12px; }
         .btn-add:hover { background: var(--brand-blue); color: white; }
         .btn-del { color: var(--brand-red); cursor: pointer; font-weight: bold; border: none; background: none; font-size: 14px; margin-left: 8px; }
+        .btn-col-del { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; margin-left: 5px; }
         .weight-alert { font-size: 12px; font-weight: bold; margin-top: 8px; }
         
         .progress-bar-container { background: #e2e8f0; border-radius: 10px; height: 12px; overflow: hidden; margin-top: 8px; }
@@ -134,9 +136,11 @@
             <a href="#" class="nav-item active" onclick="showPanel('identidad', this)">1. Identidad Organizacional</a>
             <a href="#" class="nav-item" onclick="showPanel('foda-analisis', this)">2. Matriz de Diagnóstico FODA</a>
             <a href="#" class="nav-item" onclick="showPanel('matrices-auditoria', this)">3. Matrices EFI y EFE</a>
-            <a href="#" class="nav-item" onclick="showPanel('peyea-panel', this)">4. Matriz PEYEA Interactiva</a>
-            <a href="#" class="nav-item" onclick="showPanel('poa-panel', this)">5. Plan Operativo Anual (POA)</a>
-            <a href="#" class="nav-item" onclick="showPanel('kpis-panel', this)">6. Cuadro de Mando & KPIs</a>
+            <a href="#" class="nav-item" onclick="showPanel('mpc-panel', this)">4. Matriz de Perfil Competitivo (MPC)</a>
+            <a href="#" class="nav-item" onclick="showPanel('peyea-panel', this)">5. Matriz PEYEA Interactiva</a>
+            <a href="#" class="nav-item" onclick="showPanel('mpec-panel', this)">6. Matriz Cuantitativa (MPEC)</a>
+            <a href="#" class="nav-item" onclick="showPanel('poa-panel', this)">7. Plan Operativo Anual (POA)</a>
+            <a href="#" class="nav-item" onclick="showPanel('kpis-panel', this)">8. Cuadro de Mando & KPIs</a>
         </nav>
 
         <main>
@@ -156,6 +160,10 @@
                         <div class="identity-field">
                             <label>Nombre de la Organización</label>
                             <input type="text" class="input-text" id="edit-biz-name" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('name', this.value)">
+                        </div>
+                        <div class="identity-field">
+                            <label>Año de Fundación / Trayectoria</label>
+                            <input type="text" class="input-text" id="edit-biz-year" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('foundation_year', this.value)">
                         </div>
                         <div class="identity-field">
                             <label>Sector / Giro del Negocio</label>
@@ -214,7 +222,7 @@
                     <div class="card">
                         <h3>Matriz EFI (Auditoría Interna)</h3>
                         <table id="table-efi">
-                            <thead><tr><th>Factor Interno Crave</th><th style="width:22%">Peso</th><th style="width:22%">Calif</th><th></th></tr></thead>
+                            <thead><tr><th>Factor Interno Clave</th><th style="width:22%">Peso</th><th style="width:22%">Calif</th><th></th></tr></thead>
                             <tbody></tbody>
                         </table>
                         <div id="efi-alert" class="weight-alert"></div>
@@ -251,7 +259,28 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 4: MATRIZ PEYEA INTERACTIVA BIDIRECCIONAL -->
+            <!-- SECCIÓN 4: MATRIZ DE PERFIL COMPETITIVO (MPC) COLUMNAS DINÁMICAS -->
+            <div id="mpc-panel" class="panel">
+                <div class="full-container">
+                    <div class="card">
+                        <h3>Matriz de Perfil Competitivo (MPC)</h3>
+                        <p style="font-size:12px; color:#64748b; margin-bottom:15px;">Gestiona dinámicamente competidores añadiendo o eliminando columnas enteras del mercado.</p>
+                        <div style="margin-bottom:15px;">
+                            <button class="btn-primary" style="padding:6px 12px; font-size:12px;" onclick="addCompetitorColumn()">+ Añadir Competidor</button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table id="table-mpc">
+                                <thead id="thead-mpc"></thead>
+                                <tbody id="tbody-mpc"></tbody>
+                            </table>
+                        </div>
+                        <div id="mpc-alert" class="weight-alert"></div>
+                        <button class="btn-add" onclick="addNewRowToMPC()">+ Añadir Factor Crítico de Éxito</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5: MATRIZ PEYEA INTERACTIVA BIDIRECCIONAL -->
             <div id="peyea-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
@@ -278,7 +307,28 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 5: PLAN OPERATIVO ANUAL (POA) -->
+            <!-- SECCIÓN 6: MATRIZ CUANTITATIVA DE LA PLANIFICACIÓN ESTRATÉGICA (MPEC) COLUMNAS DINÁMICAS -->
+            <div id="mpec-panel" class="panel">
+                <div class="full-container">
+                    <div class="card">
+                        <h3>Matriz Cuantitativa de la Planificación Estratégica (MPEC)</h3>
+                        <p style="font-size:12px; color:#64748b; margin-bottom:15px;">Evalúa diferentes alternativas estratégicas añadiendo o quitando columnas dinámicamente.</p>
+                        <div style="margin-bottom:15px;">
+                            <button class="btn-primary" style="padding:6px 12px; font-size:12px;" onclick="addStrategyColumn()">+ Añadir Alternativa Estratégica</button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table id="table-mpec">
+                                <thead id="thead-mpec"></thead>
+                                <tbody id="tbody-mpec"></tbody>
+                            </table>
+                        </div>
+                        <div id="mpec-alert" class="weight-alert"></div>
+                        <button class="btn-add" onclick="addNewRowToMPEC()">+ Añadir Factor de Auditoría Interna/Externa</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 7: PLAN OPERATIVO ANUAL (POA) -->
             <div id="poa-panel" class="panel">
                 <div class="card">
                     <h3>Líneas Estratégicas y Objetivos Tácticos del POA</h3>
@@ -291,7 +341,7 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 6: CUADRO DE MANDO & KPIS -->
+            <!-- SECCIÓN 8: CUADRO DE MANDO & KPIS -->
             <div id="kpis-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
@@ -313,9 +363,10 @@
     </div>
 
     <script>
-        // DATOS DE FÁBRICA ORIGINALES DEL CASO VOLTECUADOR
+        // DATOS ESTRATÉGICOS COMPLETOS - CASO VOLTECUADOR S.A.
         const BUSINESS_TEMPLATE = {
             name: "VoltEcuador S.A.",
+            foundation_year: "2024 (2 años de trayectoria en el mercado nacional)",
             sector: "Energía y Soluciones de Movilidad Sostenible",
             star_product: "Ecosistema de Carga Rápida Corporativa",
             scope: "Regional / Cobertura de Infraestructura Eléctrica",
@@ -335,6 +386,23 @@
                 ["Aumento en la tasa de adopción de flotas comerciales eléctricas", 0.45, 4],
                 ["Marco regulatorio ambiental favorable a la movilidad limpia", 0.30, 3],
                 ["Inestabilidad de costos en insumos críticos de importación tecnológica", 0.25, 2]
+            ],
+            // DATOS MPC COMPLETO ORIGINAL
+            mpc_competitors: ["VoltEcuador (Propio)", "Competidor Alfa", "Competidor Beta"],
+            mpc_rows: [
+                ["Participación de Mercado", 0.20, [3, 4, 2]],
+                ["Competitividad de Precios", 0.15, [4, 3, 4]],
+                ["Posición Financiera", 0.20, [3, 4, 3]],
+                ["Calidad del Producto/Servicio", 0.25, [4, 3, 3]],
+                ["Lealtad del Cliente", 0.20, [3, 3, 2]]
+            ],
+            // DATOS MPEC COMPLETO ORIGINAL
+            mpec_strategies: ["Estrategia de Penetración de Mercado", "Estrategia de Desarrollo de Productos"],
+            mpec_rows: [
+                ["Capacidad técnica certificada en infraestructura eléctrica avanzada", 0.20, [4, 3]],
+                ["Acuerdos estables de proveeduría de equipos de carga", 0.15, [3, 4]],
+                ["Aumento en la tasa de adopción de flotas comerciales", 0.30, [4, 4]],
+                ["Marco regulatorio ambiental favorable", 0.35, [3, 2]]
             ],
             poa: [
                 { id: 1, icon: "📣", title: "Marketing Digital", desc: "Desarrollo y posicionamiento de campañas B2B para flotas corporativas en canales digitales dirigidos.", meta: "Generar 40 leads empresariales calificados" },
@@ -366,20 +434,20 @@
         let isDraggingPEYEA = false;
 
         function initApp() {
-            let stored = localStorage.getItem('voltecuador_suite_store_v4');
+            let stored = localStorage.getItem('voltecuador_suite_store_v5');
             if (stored) {
                 storageData = JSON.parse(stored);
             } else {
                 let defaultBiz = JSON.parse(JSON.stringify(BUSINESS_TEMPLATE));
                 storageData.projects.push(defaultBiz);
-                localStorage.setItem('voltecuador_suite_store_v4', JSON.stringify(storageData));
+                localStorage.setItem('voltecuador_suite_store_v5', JSON.stringify(storageData));
             }
             renderProjectHub();
             setupCanvasInteraction();
         }
 
         function saveState() {
-            localStorage.setItem('voltecuador_suite_store_v4', JSON.stringify(storageData));
+            localStorage.setItem('voltecuador_suite_store_v5', JSON.stringify(storageData));
         }
 
         function renderProjectHub() {
@@ -390,7 +458,7 @@
             storageData.projects.forEach((proj, idx) => {
                 h += `<div class="project-card" onclick="enterWorkspace(${idx})">
                     <h3>${proj.name}</h3>
-                    <p><strong>Operación:</strong> ${proj.sector}<br><strong>Solución:</strong> ${proj.star_product}</p>
+                    <p><strong>Trayectoria:</strong> ${proj.foundation_year}<br><strong>Operación:</strong> ${proj.sector}</p>
                     <span class="project-badge">Dashboard Estratégico Activo</span>
                 </div>`;
             });
@@ -415,6 +483,7 @@
             document.getElementById('main-project-title').innerText = biz.name;
             
             document.getElementById('edit-biz-name').value = biz.name;
+            document.getElementById('edit-biz-year').value = biz.foundation_year || '';
             document.getElementById('edit-biz-sector').value = biz.sector;
             document.getElementById('edit-biz-product').value = biz.star_product;
             document.getElementById('edit-biz-scope').value = biz.scope;
@@ -474,6 +543,8 @@
             let biz = storageData.projects[activeBizIndex];
             renderTableWithCalculations('table-efi', biz.efi, 'efi');
             renderTableWithCalculations('table-efe', biz.efe, 'efe');
+            renderMPC();
+            renderMPEC();
             renderKPITable();
             renderPOACards();
             renderTimeline();
@@ -515,6 +586,174 @@
             document.getElementById('status-efe').style.color = scoreEfe >= 2.5 ? varCss('--success') : varCss('--brand-red');
         }
 
+        // --- GESTIÓN INTERACTIVA MATRIZ MPC (COLUMNAS DINÁMICAS) ---
+        function renderMPC() {
+            let biz = storageData.projects[activeBizIndex];
+            let thead = document.getElementById('thead-mpc');
+            let tbody = document.getElementById('tbody-mpc');
+            
+            // Construir cabecera con botones de eliminación de columnas
+            let thHtml = `<tr><th>Factor Crítico de Éxito</th><th style="width:12%">Peso</th>`;
+            biz.mpc_competitors.forEach((comp, idx) => {
+                thHtml += `<th>
+                    <input type="text" class="input-text" style="font-weight:bold; text-align:center;" value="${comp}" onchange="storageData.projects[activeBizIndex].mpc_competitors[${idx}]=this.value; saveState();">
+                    ${idx > 0 ? `<button class="btn-col-del" onclick="deleteCompetitorColumn(${idx})">Eliminar</button>` : ''}
+                </th>`;
+            });
+            thHtml += `<th></th></tr>`;
+            thead.innerHTML = thHtml;
+
+            // Construir cuerpo de tabla
+            let trHtml = "";
+            let totals = new Array(biz.mpc_competitors.length).fill(0);
+            let totalWeight = 0;
+
+            biz.mpc_rows.forEach((row, rIdx) => {
+                totalWeight += row[1];
+                trHtml += `<tr>
+                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][0]=this.value; saveState();"></td>
+                    <td><input type="number" step="0.01" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][1]=parseFloat(this.value); saveState(); renderMPC();"></td>`;
+                
+                biz.mpc_competitors.forEach((_, cIdx) => {
+                    let val = row[2][cIdx] || 0;
+                    totals[cIdx] += row[1] * val;
+                    trHtml += `<td><input type="number" class="input-num" min="1" max="4" value="${val}" onchange="storageData.projects[activeBizIndex].mpc_rows[${rIdx}][2][${cIdx}]=parseInt(this.value); saveState(); renderMPC();"></td>`;
+                });
+
+                trHtml += `<td><button class="btn-del" onclick="deleteRowFromMPC(${rIdx})">×</button></td></tr>`;
+            });
+
+            // Fila de Resultados Totales
+            trHtml += `<tr style="background:#f1f5f9; font-weight:bold;"><td>Resultado Total Ponderado</td><td>${totalWeight.toFixed(2)}</td>`;
+            totals.forEach(t => {
+                trHtml += `<td>${t.toFixed(2)}</td>`;
+            });
+            trHtml += `<td></td></tr>`;
+            tbody.innerHTML = trHtml;
+
+            document.getElementById('mpc-alert').innerText = Math.abs(totalWeight - 1) > 0.01 ? `Alerta: Los pesos suman ${(totalWeight*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
+            document.getElementById('mpc-alert').style.color = Math.abs(totalWeight - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
+        }
+
+        function addCompetitorColumn() {
+            let biz = storageData.projects[activeBizIndex];
+            biz.mpc_competitors.push("Nuevo Competidor " + (biz.mpc_competitors.length));
+            biz.mpc_rows.forEach(row => {
+                row[2].push(3); // Calificación por defecto de 3
+            });
+            saveState();
+            renderMPC();
+        }
+
+        function deleteCompetitorColumn(idx) {
+            let biz = storageData.projects[activeBizIndex];
+            if(confirm(`¿Deseas eliminar la columna de competidor "${biz.mpc_competitors[idx]}"?`)){
+                biz.mpc_competitors.splice(idx, 1);
+                biz.mpc_rows.forEach(row => {
+                    row[2].splice(idx, 1);
+                });
+                saveState();
+                renderMPC();
+            }
+        }
+
+        function addNewRowToMPC() {
+            let biz = storageData.projects[activeBizIndex];
+            let newRatings = new Array(biz.mpc_competitors.length).fill(3);
+            biz.mpc_rows.push(["Nuevo Factor Estratégico Clave", 0.10, newRatings]);
+            saveState();
+            renderMPC();
+        }
+
+        function deleteRowFromMPC(idx) {
+            storageData.projects[activeBizIndex].mpc_rows.splice(idx, 1);
+            saveState();
+            renderMPC();
+        }
+
+        // --- GESTIÓN INTERACTIVA MATRIZ MPEC (COLUMNAS DINÁMICAS) ---
+        function renderMPEC() {
+            let biz = storageData.projects[activeBizIndex];
+            let thead = document.getElementById('thead-mpec');
+            let tbody = document.getElementById('tbody-mpec');
+
+            let thHtml = `<tr><th>Factor Crítico de Auditoría</th><th style="width:12%">Peso PA</th>`;
+            biz.mpec_strategies.forEach((strat, idx) => {
+                thHtml += `<th>
+                    <input type="text" class="input-text" style="font-weight:bold; text-align:center;" value="${strat}" onchange="storageData.projects[activeBizIndex].mpec_strategies[${idx}]=this.value; saveState();">
+                    ${idx > 0 ? `<button class="btn-col-del" onclick="deleteStrategyColumn(${idx})">Eliminar</button>` : ''}
+                </th>`;
+            });
+            thHtml += `<th></th></tr>`;
+            thead.innerHTML = thHtml;
+
+            let trHtml = "";
+            let totals = new Array(biz.mpec_strategies.length).fill(0);
+            let totalWeight = 0;
+
+            biz.mpec_rows.forEach((row, rIdx) => {
+                totalWeight += row[1];
+                trHtml += `<tr>
+                    <td><input type="text" class="input-text" value="${row[0]}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][0]=this.value; saveState();"></td>
+                    <td><input type="number" step="0.01" class="input-num" value="${row[1]}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][1]=parseFloat(this.value); saveState(); renderMPEC();"></td>`;
+                
+                biz.mpec_strategies.forEach((_, cIdx) => {
+                    let val = row[2][cIdx] || 0;
+                    totals[cIdx] += row[1] * val;
+                    trHtml += `<td><input type="number" class="input-num" min="1" max="4" value="${val}" onchange="storageData.projects[activeBizIndex].mpec_rows[${rIdx}][2][${cIdx}]=parseInt(this.value); saveState(); renderMPEC();"></td>`;
+                });
+
+                trHtml += `<td><button class="btn-del" onclick="deleteRowFromMPEC(${rIdx})">×</button></td></tr>`;
+            });
+
+            trHtml += `<tr style="background:#f1f5f9; font-weight:bold;"><td>Calificación Total de Atractivo</td><td>${totalWeight.toFixed(2)}</td>`;
+            totals.forEach(t => {
+                trHtml += `<td>${t.toFixed(2)}</td>`;
+            });
+            trHtml += `<td></td></tr>`;
+            tbody.innerHTML = trHtml;
+
+            document.getElementById('mpec-alert').innerText = Math.abs(totalWeight - 1) > 0.01 ? `Alerta: Los pesos suman ${(totalWeight*100).toFixed(0)}%/100%` : "✔ Pesos Validados";
+            document.getElementById('mpec-alert').style.color = Math.abs(totalWeight - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
+        }
+
+        function addStrategyColumn() {
+            let biz = storageData.projects[activeBizIndex];
+            biz.mpec_strategies.push("Alternativa Estratégica Nueva " + (biz.mpec_strategies.length));
+            biz.mpec_rows.forEach(row => {
+                row[2].push(3);
+            });
+            saveState();
+            renderMPEC();
+        }
+
+        function deleteStrategyColumn(idx) {
+            let biz = storageData.projects[activeBizIndex];
+            if(confirm(`¿Deseas eliminar la alternativa "${biz.mpec_strategies[idx]}"?`)){
+                biz.mpec_strategies.splice(idx, 1);
+                biz.mpec_rows.forEach(row => {
+                    row[2].splice(idx, 1);
+                });
+                saveState();
+                renderMPEC();
+            }
+        }
+
+        function addNewRowToMPEC() {
+            let biz = storageData.projects[activeBizIndex];
+            let newRatings = new Array(biz.mpec_strategies.length).fill(3);
+            biz.mpec_rows.push(["Nuevo Factor Crítico de Decisión", 0.10, newRatings]);
+            saveState();
+            renderMPEC();
+        }
+
+        function deleteRowFromMPEC(idx) {
+            storageData.projects[activeBizIndex].mpec_rows.splice(idx, 1);
+            saveState();
+            renderMPEC();
+        }
+
+        // --- DINAMISMO PEYEA ---
         function recalcPEYEAReal() {
             let biz = storageData.projects[activeBizIndex];
             let x = biz.peyea.fi + biz.peyea.vc;
@@ -568,13 +807,11 @@
 
                 let biz = storageData.projects[activeBizIndex];
                 
-                // Distribución proporcional matemática bidireccional inversa
                 biz.peyea.fi = 3.5 + (targetX / 2);
                 biz.peyea.vc = -3.5 + (targetX / 2);
                 biz.peyea.ff = 3.5 + (targetY / 2);
                 biz.peyea.ea = -3.5 + (targetY / 2);
 
-                // Imponer límites regulatorios normativos de las dimensiones
                 biz.peyea.ff = Math.max(1, Math.min(6, biz.peyea.ff));
                 biz.peyea.fi = Math.max(1, Math.min(6, biz.peyea.fi));
                 biz.peyea.vc = Math.max(-6, Math.min(-1, biz.peyea.vc));
@@ -594,6 +831,7 @@
             window.addEventListener('touchend', () => { isDraggingPEYEA = false; });
         }
 
+        // --- SISTEMA RESTANTE ---
         function renderPOACards() {
             let container = document.getElementById('poa-cards-container');
             let h = "";
