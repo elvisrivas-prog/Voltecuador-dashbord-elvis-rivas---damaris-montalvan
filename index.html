@@ -3,343 +3,691 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Estratégico - Voltecuador</title>
+    <title>Dashboard Estratégico Multimatriz Completo - Voltecuador</title>
     <style>
         :root {
-            --bg-main: #f4f6f9;
-            --bg-card: #ffffff;
             --primary: #1e3a8a;
+            --primary-dark: #0f172a;
             --primary-light: #3b82f6;
             --accent: #10b981;
-            --text-main: #1f2937;
-            --text-muted: #4b5563;
-            --border: #e5e7eb;
+            --accent-dark: #047857;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+            --foda-f: #f0fdf4; --border-f: #bbf7d0;
+            --foda-d: #fff7ed; --border-d: #ffedd5;
+            --foda-o: #eff6ff; --border-o: #bfdbfe;
+            --foda-a: #fef2f2; --border-a: #fee2e2;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); padding: 20px; }
-        header { background: linear-gradient(135deg, var(--primary), #0f172a); color: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; }
-        header h1 { font-size: 24px; margin-bottom: 5px; }
-        header p { color: #93c5fd; font-size: 14px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; margin-bottom: 25px; }
-        .card { background-color: var(--bg-card); border-radius: 12px; padding: 20px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .card h3 { color: var(--primary); font-size: 16px; margin-bottom: 15px; border-bottom: 2px solid var(--bg-main); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .badge { background-color: #dbeafe; color: var(--primary); padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
-        .badge-success { background-color: #d1fae5; color: #065f46; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background-color: #f8fafc; color: var(--text-muted); font-weight: 600; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); }
+        
+        .wrapper { display: flex; min-height: 100vh; }
+        
+        /* Barra de Navegación Lateral */
+        nav { width: 290px; background-color: var(--primary-dark); color: white; padding: 25px 15px; position: fixed; height: 100vh; overflow-y: auto; z-index: 100; }
+        nav h2 { font-size: 20px; text-align: center; margin-bottom: 25px; color: #93c5fd; border-bottom: 1px solid #334155; padding-bottom: 15px; }
+        nav a { display: block; color: #cbd5e1; padding: 11px 15px; text-decoration: none; border-radius: 8px; font-size: 13px; margin-bottom: 6px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background-color: var(--primary-light); color: white; font-weight: bold; }
+
+        /* Contenedor Principal */
+        main { margin-left: 290px; padding: 40px; width: calc(100% - 290px); }
+        header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 35px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        header h1 { font-size: 30px; margin-bottom: 8px; }
+        header p { color: #93c5fd; font-size: 15px; }
+
+        /* Componentes Comunes */
+        .section-panel { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
+        .section-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 25px; margin-bottom: 25px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 25px; }
+        
+        .card { background-color: var(--bg-card); border-radius: 12px; padding: 25px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .card h3 { color: var(--primary); font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid var(--bg-main); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .info-block { margin-bottom: 15px; line-height: 1.6; }
+        .info-block strong { color: var(--primary-dark); }
+
+        /* Tablas */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13.5px; background: white; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        th { background-color: #f1f5f9; color: var(--text-muted); font-weight: 600; border-top: 1px solid #cbd5e1; }
         tr:hover { background-color: #f8fafc; }
-        .summary-box { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .summary-item { background-color: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-light); }
-        .summary-item span { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
-        .summary-item strong { font-size: 14px; color: var(--primary); }
-        .foda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .foda-box { padding: 12px; border-radius: 8px; }
-        .foda-f { background-color: #ecfdf5; border: 1px solid #a7f3d0; }
-        .foda-d { background-color: #fff7ed; border: 1px solid #ffedd5; }
-        .foda-o { background-color: #eff6ff; border: 1px solid #bfdbfe; }
-        .foda-a { background-color: #fef2f2; border: 1px solid #fee2e2; }
-        .foda-title { font-weight: bold; margin-bottom: 5px; font-size: 13px; }
-        .foda-box ul { padding-left: 15px; font-size: 12px; color: var(--text-muted); }
-        .peyea-coord { text-align: center; background: #f0fdf4; border: 1px dashed #4ade80; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 14px; }
+        
+        /* Inputs Editables de Dashboard */
+        .editable { background-color: #fef08a; font-weight: bold; border-radius: 4px; padding: 2px 6px; cursor: pointer; border: 1px dashed #ca8a04; text-align: center; width: 55px; display: inline-block; }
+        .editable:focus { background-color: white; border: 1px solid var(--primary-light); outline: none; }
+        
+        /* Badges de Estado */
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        .badge-high { background-color: #fef2f2; color: #ef4444; }
+        .badge-med { background-color: #fff7ed; color: #f97316; }
+        .badge-low { background-color: #f0fdf4; color: #16a34a; }
+        
+        /* Gráficos en Canvas */
+        .canvas-container { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; background: #fafafa; border-radius: 8px; border: 1px dashed var(--border); text-align: center; }
+        canvas { background: white; border: 1px solid #cbd5e1; max-width: 100%; }
+
+        /* Bloques Especiales FODA */
+        .foda-box { padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid; }
+        .f-box { background: var(--foda-f); border-left-color: #22c55e; }
+        .d-box { background: var(--foda-d); border-left-color: #f97316; }
+        .o-box { background: var(--foda-o); border-left-color: #3b82f6; }
+        .a-box { background: var(--foda-a); border-left-color: #ef4444; }
+        .foda-title { font-weight: bold; margin-bottom: 8px; color: var(--primary-dark); }
+        .foda-box ul { padding-left: 20px; color: var(--text-muted); }
+
+        /* Barras de progreso */
+        .progress-bar-container { width: 100%; background-color: #e2e8f0; border-radius: 8px; height: 16px; margin-top: 5px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: var(--primary-light); width: 0%; transition: width 0.4s ease; }
+        
+        select.status-select { padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); font-size: 13px; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Voltecuador - Dashboard Estratégico</h1>
-        <p>Plataforma de Diagnóstico Multimatriz Integrada con tus Datos Reales</p>
-    </header>
+<div class="wrapper">
+    <!-- Menú Dinámico Lateral con todas las secciones del PDF -->
+    <nav>
+        <h2>VoltEcuador</h2>
+        <a href="#" class="nav-link active" onclick="switchPanel('empresa', this)">1. Información General e Identidad</a>
+        <a href="#" class="nav-link" onclick="switchPanel('diagnostico', this)">2. Diagnóstico Estratégico</a>
+        <a href="#" class="nav-link" onclick="switchPanel('multimatriz', this)">3. Dashboard Multimatriz</a>
+        <a href="#" class="nav-link" onclick="switchPanel('plan', this)">4. Plan Estratégico y Ejecución</a>
+        <a href="#" class="nav-link" onclick="switchPanel('smart', this)">5. Metas SMART / ESMART</a>
+        <a href="#" class="nav-link" onclick="switchPanel('kpis', this)">6. KPIs de Seguimiento</a>
+        <a href="#" class="nav-link" onclick="switchPanel('consolidado', this)">7. Consolidado y Recomendaciones</a>
+    </nav>
 
-    <div class="grid-3">
-        <div class="card">
-            <h3>Resumen del Entorno <span class="badge">Ecuador</span></h3>
-            <p style="font-size: 13px; line-height: 1.5; color: var(--text-muted);">
-                <strong>Situación general:</strong> La empresa presenta condiciones favorables para crecer, fortalecer su posicionamiento y ampliar su presencia comercial.<br><br>
-                <strong>Estrategia Central:</strong> Penetración de mercado.
-            </p>
-        </div>
-        <div class="card">
-            <h3>Diagnóstico de Cuadrantes <span class="badge-success badge">Consolidado</span></h3>
-            <div class="summary-box">
-                <div class="summary-item"><span>PEYEA</span><strong>Agresivo</strong></div>
-                <div class="summary-item"><span>BCG</span><strong>Estrella ⭐</strong></div>
-                <div class="summary-item"><span>McKinsey</span><strong>Invertir / Crecer</strong></div>
-                <div class="summary-item"><span>Gran Estrategia</span><strong>Cuadrante I</strong></div>
+    <!-- Contenido Principal -->
+    <main>
+        <header>
+            <h1 id="main-title">VoltEcuador - Dashboard Estratégico Multimatriz</h1>
+            <p>Estructura Analítica Corporativa Integral e Interactiva en Tiempo Real</p>
+        </header>
+
+        <!-- SECCIÓN 1: INFORMACIÓN GENERAL E IDENTIDAD -->
+        <div id="empresa" class="section-panel active">
+            <div class="card">
+                <h3>1. Información General de la Empresa</h3>
+                <table>
+                    <thead><tr><th>Campo</th><th>Información Consolidada</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Nombre</strong></td><td>VoltEcuador / Voltecuador</td></tr>
+                        <tr><td><strong>Sector</strong></td><td>Movilidad eléctrica y comercialización de vehículos eléctricos</td></tr>
+                        <tr><td><strong>Tamaño</strong></td><td>Pequeña empresa[cite: 3]</td></tr>
+                        <tr><td><strong>Ubicación</strong></td><td>Cuenca, Ecuador[cite: 3]</td></tr>
+                        <tr><td><strong>Años de operación</strong></td><td>5 años[cite: 3]</td></tr>
+                        <tr><td><strong>Mercado de referencia</strong></td><td>Ecuador[cite: 3]</td></tr>
+                        <tr><td><strong>Línea principal</strong></td><td>Motocicletas y scooters eléctricos[cite: 3]</td></tr>
+                        <tr><td><strong>Enfoque</strong></td><td>Movilidad eléctrica, sostenibilidad, transporte limpio, innovación y servicio al cliente[cite: 3]</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; line-height: 1.6; color: var(--text-muted);">
+                    Voltecuador es una pequeña empresa ubicada en Cuenca, Ecuador, dedicada a la comercialización de motocicletas y scooters eléctricos. Su propuesta se relaciona con movilidad sostenible, innovación, cuidado ambiental y alternativas de transporte eficientes y limpias. Opera en un sector con crecimiento potencial, pero enfrenta competencia, presión de precios, necesidad de posicionamiento y cambios en preferencias de clientes.[cite: 3]
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Misión</h3>
+                    <p style="line-height: 1.6; color: var(--text-muted); font-style: italic;">
+                        "Brindar soluciones de movilidad eléctrica mediante la comercialización de motocicletas y scooters eléctricos de alta calidad, ofreciendo un servicio confiable, innovador y sostenible que contribuya al cuidado del medio ambiente y a la satisfacción de nuestros clientes."[cite: 3]
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Visión</h3>
+                    <p style="line-height: 1.6; color: var(--text-muted); font-style: italic;">
+                        "Ser la empresa líder en movilidad eléctrica en la ciudad de Cuenca y una de las principales referencias del Ecuador, destacándose por su innovación, calidad, sostenibilidad y compromiso con el desarrollo de un transporte más limpio y eficiente."[cite: 3]
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Valores Corporativos</h3>
+                <table>
+                    <thead><tr><th>Valor</th><th>Descripción Institucional</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Innovación</strong></td><td>Promover soluciones modernas de movilidad eléctrica.[cite: 3]</td></tr>
+                        <tr><td><strong>Sostenibilidad</strong></td><td>Impulsar alternativas de transporte responsables con el ambiente.[cite: 3]</td></tr>
+                        <tr><td><strong>Responsabilidad ambiental</strong></td><td>Contribuir a la reducción de emisiones contaminantes.[cite: 3]</td></tr>
+                        <tr><td><strong>Calidad</strong></td><td>Ofrecer productos y servicios confiables.[cite: 3]</td></tr>
+                        <tr><td><strong>Compromiso con el cliente</strong></td><td>Priorizar satisfacción, atención y acompañamiento.[cite: 3]</td></tr>
+                        <tr><td><strong>Honestidad</strong></td><td>Actuar con transparencia.[cite: 3]</td></tr>
+                        <tr><td><strong>Trabajo en equipo</strong></td><td>Coordinar esfuerzos internos.[cite: 3]</td></tr>
+                        <tr><td><strong>Profesionalismo</strong></td><td>Mantener estándares adecuados de gestión.[cite: 3]</td></tr>
+                        <tr><td><strong>Seguridad</strong></td><td>Promover productos seguros.[cite: 3]</td></tr>
+                        <tr><td><strong>Mejora continua</strong></td><td>Evaluar resultados y optimizar procesos.[cite: 3]</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="card">
-            <h3>Coordenadas PEYEA</h3>
-            <div class="peyea-coord">
-                <strong>Vector de Dirección</strong><br>
-                Eje X (FI + VC): <strong>+2.2</strong><br>
-                Eje Y (FF + EA): <strong>+0.8</strong>
+
+        <!-- SECCIÓN 2: DIAGNÓSTICO ESTRATÉGICO -->
+        <div id="diagnostico" class="section-panel">
+            <div class="card">
+                <h3>Análisis de Macroentorno PESTAL</h3>
+                <table>
+                    <thead><tr><th>Factor</th><th>Análisis Aplicado al Caso de Voltecuador</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Político</strong></td><td>Impulso gubernamental o municipal hacia movilidad sostenible; regulaciones de tránsito, movilidad urbana o incentivos.[cite: 3]</td></tr>
+                        <tr><td><strong>Económico</strong></td><td>Precio de combustibles, poder adquisitivo y ahorro en transporte pueden incentivar compra; incertidumbre económica puede limitar demanda.[cite: 3]</td></tr>
+                        <tr><td><strong>Social</strong></td><td>Mayor interés por alternativas sostenibles, económicas y prácticas.[cite: 3]</td></tr>
+                        <tr><td><strong>Tecnológico</strong></td><td>Mejoras en baterías, autonomía, carga y tecnología crean oportunidades.[cite: 3]</td></tr>
+                        <tr><td><strong>Ambiental</strong></td><td>Reducción de emisiones y transporte limpio como argumentos fuertes.[cite: 3]</td></tr>
+                        <tr><td><strong>Legal</strong></td><td>Cumplimiento de normativas de comercialización, garantías, tránsito, homologación y seguridad.[cite: 3]</td></tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
 
-    <div class="grid-2">
-        <div class="card">
-            <h3>Metas SMART & KPIs Activos</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Objetivo Estratégico</th>
-                        <th>KPI Sugerido</th>
-                        <th>Meta Referencial</th>
-                        <th>Encargado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Incrementar presencia comercial</td>
-                        <td>Crecimiento de ventas</td>
-                        <td>Aumentar progresivamente las ventas mensuales.</td>
-                        <td>Ventas / Gestión comercial</td>
-                    </tr>
-                    <tr>
-                        <td>Fortalecer posicionamiento frente a competidores</td>
-                        <td>Participación de mercado</td>
-                        <td>Mejorar la posición competitiva y reconocimiento.</td>
-                        <td>Marketing</td>
-                    </tr>
-                    <tr>
-                        <td>Mejorar fidelización y recompra</td>
-                        <td>Tasa de clientes recurrentes</td>
-                        <td>Elevar la retención y satisfacción.</td>
-                        <td>Marketing y Atención</td>
-                    </tr>
-                    <tr>
-                        <td>Optimizar el uso de recursos</td>
-                        <td>Rentabilidad / control de costos</td>
-                        <td>Mantener crecimiento sin comprometer estabilidad.</td>
-                        <td>Finanzas</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Análisis de Microentorno: Las 5 Fuerzas de Porter</h3>
+                    <table>
+                        <thead><tr><th>Fuerza Competitiva</th><th>Nivel</th><th>Interpretación Estratégica</th></tr></thead>
+                        <tbody>
+                            <tr><td>Rivalidad entre competidores</td><td><span class="badge badge-high">Alta</span></td><td>Alternativas en movilidad, marcas y proveedores compiten por precio, calidad y reconocimiento.[cite: 3]</td></tr>
+                            <tr><td>Poder de proveedores</td><td><span class="badge badge-high">Alto</span></td><td>Dependencia de proveedores de vehículos, repuestos y baterías.[cite: 3]</td></tr>
+                            <tr><td>Poder de compradores</td><td><span class="badge badge-high">Alto</span></td><td>Clientes comparan precio, garantía, autonomía, calidad y postventa.[cite: 3]</td></tr>
+                            <tr><td>Nuevos entrantes</td><td><span class="badge badge-med">Media-alta</span></td><td>El crecimiento de movilidad eléctrica atrae competidores.[cite: 3]</td></tr>
+                            <tr><td>Sustitutos</td><td><span class="badge badge-high">Alta</span></td><td>Motos convencionales, bicicletas, transporte público, autos usados.[cite: 3]</td></tr>
+                            <tr style="background: #f1f5f9; font-weight: bold;">
+                                <td>Resultado Consolidado Porter</td>
+                                <td>4.41 / 5</td>
+                                <td>Sector altamente competitivo; requiere diferenciación y penetración de mercado.[cite: 3]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <div class="card">
-            <h3>Prioridades de Aplicación Estratégica</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Estrategia</th>
-                        <th>Aplicación Voltecuador</th>
-                        <th>Prioridad</th>
-                        <th>Encargado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Penetración de mercado</strong></td>
-                        <td>Aumentar ventas dentro del mercado actual mediante campañas y cobertura.</td>
-                        <td><span class="badge" style="background:#fef2f2; color:#ef4444;">Alta</span></td>
-                        <td>Marketing y Ventas</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Diferenciación</strong></td>
-                        <td>Competir por calidad, servicio, confianza y cercanía.</td>
-                        <td><span class="badge" style="background:#fef2f2; color:#ef4444;">Alta</span></td>
-                        <td>Marketing y Operaciones</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Desarrollo de mercado</strong></td>
-                        <td>Explorar nuevos segmentos, zonas o canales dentro de Ecuador.</td>
-                        <td><span class="badge">Media</span></td>
-                        <td>Gerencia general y Ventas</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="grid-2">
-        <div class="card">
-            <h3>Matriz FODA Estructurada</h3>
-            <div class="foda-grid">
-                <div class="foda-box foda-f">
-                    <div class="foda-title">Fortalezas</div>
-                    <ul>
-                        <li>Conocimiento del mercado local ecuatoriano.</li>
-                        <li>Capacidad para ofrecer atención cercana.</li>
-                        <li>Experiencia comercial y operativa.</li>
-                    </ul>
-                </div>
-                <div class="foda-box foda-d">
-                    <div class="foda-title">Debilidades</div>
-                    <ul>
-                        <li>Necesidad de fortalecer posicionamiento.</li>
-                        <li>Limitaciones en comunicación y visibilidad.</li>
-                        <li>Falta de indicadores constantes.</li>
-                    </ul>
-                </div>
-                <div class="foda-box foda-o">
-                    <div class="foda-title">Oportunidades</div>
-                    <ul>
-                        <li>Crecimiento de la demanda en segmentos.</li>
-                        <li>Uso de canales digitales para captar.</li>
-                        <li>Posibilidad de alianzas estratégicas.</li>
-                    </ul>
-                </div>
-                <div class="foda-box foda-a">
-                    <div class="foda-title">Amenazas</div>
-                    <ul>
-                        <li>Competencia intensa en el mercado.</li>
-                        <li>Cambios económicos que afectan consumo.</li>
-                        <li>Presión por precios bajos de competidores.</li>
-                    </ul>
+                <div class="card">
+                    <h3>Auditoría Interna y Externa Interactiva (EFI - EFE)</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Puedes editar los valores ponderados (campos amarillos) para simular cambios de entorno corporativo.</p>
+                    <table>
+                        <thead><tr><th>Matriz de Control</th><th>Resultado Actual</th><th>Interpretación del Escenario</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Matriz EFI</strong></td>
+                                <td><span contenteditable="true" class="editable" id="efi-val" oninput="evaluarEfiEfe()">2.98</span></td>
+                                <td id="efi-txt">Posición interna sólida; fortalezas superan debilidades.[cite: 3]</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Matriz EFE</strong></td>
+                                <td><span contenteditable="true" class="editable" id="efe-val" oninput="evaluarEfiEfe()">2.85</span></td>
+                                <td id="efe-txt">Respuesta externa ligeramente superior al promedio; aprovechar oportunidades y fortalecer estrategia competitiva.[cite: 3]</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <h3>Matriz de Perfil Competitivo (MPC)</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Factor Crítico de Éxito</th>
-                        <th>Peso</th>
-                        <th>Voltecuador</th>
-                        <th>Competidor A</th>
-                        <th>Competidor B</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Calidad del servicio</td>
-                        <td>0.20</td>
-                        <td><strong>4</strong></td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Precio competitivo</td>
-                        <td>0.15</td>
-                        <td><strong>3</strong></td>
-                        <td>4</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Reconocimiento de marca</td>
-                        <td>0.20</td>
-                        <td><strong>3</strong></td>
-                        <td>4</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Fidelización de clientes</td>
-                        <td>0.15</td>
-                        <td><strong>4</strong></td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Uso de canales digitales</td>
-                        <td>0.15</td>
-                        <td><strong>3</strong></td>
-                        <td>4</td>
-                        <td>3</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- SECCIÓN 3: DASHBOARD MULTIMATRIZ -->
+        <div id="multimatriz" class="section-panel">
+            <div class="grid-2">
+                <!-- FODA -->
+                <div class="card">
+                    <h3>Matriz FODA</h3>
+                    <div class="foda-box f-box">
+                        <div class="foda-title">Fortalezas (Internas)</div>
+                        <ul>
+                            <li>Conocimiento del mercado local ecuatoriano.[cite: 3]</li>
+                            <li>Capacidad para ofrecer atención cercana al cliente.[cite: 3]</li>
+                            <li>Experiencia comercial y operativa.[cite: 3]</li>
+                            <li>Flexibilidad para adaptar la oferta.[cite: 3]</li>
+                        </ul>
+                    </div>
+                    <div class="foda-box d-box">
+                        <div class="foda-title">Debilidades (Internas)</div>
+                        <ul>
+                            <li>Necesidad de fortalecer posicionamiento de marca.[cite: 3]</li>
+                            <li>Limitaciones en comunicación o visibilidad.[cite: 3]</li>
+                            <li>Dependencia de clientes, zonas o líneas.[cite: 3]</li>
+                            <li>Falta de indicadores constantes.[cite: 3]</li>
+                        </ul>
+                    </div>
+                    <div class="foda-box o-box">
+                        <div class="foda-title">Oportunidades (Externas)</div>
+                        <ul>
+                            <li>Crecimiento de la demanda en segmentos específicos.[cite: 3]</li>
+                            <li>Uso de canales digitales para captar y fidelizar clientes.[cite: 3]</li>
+                            <li>Posibilidad de alianzas con empresas, proveedores o instituciones.[cite: 3]</li>
+                            <li>Mayor interés por soluciones confiables y diferenciadas.[cite: 3]</li>
+                        </ul>
+                    </div>
+                    <div class="foda-box a-box">
+                        <div class="foda-title">Amenazas (Externas)</div>
+                        <ul>
+                            <li>Competencia intensa en Ecuador.[cite: 3]</li>
+                            <li>Cambios económicos que afectan consumo.[cite: 3]</li>
+                            <li>Presión por precios bajos.[cite: 3]</li>
+                            <li>Cambios en preferencias de clientes.[cite: 3]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- MPC INTERACTIVA -->
+                <div class="card">
+                    <h3>Matriz de Perfil Competitivo (MPC)</h3>
+                    <table id="mpc-table">
+                        <thead>
+                            <tr><th>Factor Crítico de Éxito</th><th>Peso</th><th>Voltecuador</th><th>Competidor A</th><th>Competidor B</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Calidad del servicio</td><td class="w-peso">0.20</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">4</span></td><td>3</td><td>3</td></tr>
+                            <tr><td>Precio competitivo</td><td class="w-peso">0.15</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">3</span></td><td>4</td><td>3</td></tr>
+                            <tr><td>Reconocimiento de marca</td><td class="w-peso">0.20</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">3</span></td><td>4</td><td>3</td></tr>
+                            <tr><td>Cobertura comercial</td><td class="w-peso">0.15</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">3</span></td><td>3</td><td>4</td></tr>
+                            <tr><td>Fidelización</td><td class="w-peso">0.15</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">4</span></td><td>3</td><td>3</td></tr>
+                            <tr><td>Canales digitales</td><td class="w-peso">0.15</td><td><span contenteditable="true" class="editable v-mpc" oninput="recalcMPC()">3</span></td><td>4</td><td>3</td></tr>
+                            <tr style="background:#f1f5f9; font-weight:bold;">
+                                <td>Resultado Total Ponderado</td>
+                                <td>1.00</td>
+                                <td id="total-voltecuador" style="color: var(--accent-dark);">3.35</td>
+                                <td>3.55</td>
+                                <td>3.15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size:12px; margin-top:10px; color:var(--text-muted);"><strong>Lectura Ejecutiva:</strong> Posición competitiva media-alta. Factores favorables, pero debe fortalecer marca, cobertura y canales digitales. Encargado: Marketing y Ventas.[cite: 3]</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- MATRIZ PEYEA INTERACTIVA Y GRÁFICO -->
+                <div class="card">
+                    <h3>Matriz PEYEA (Evaluación de Acción)</h3>
+                    <table style="font-size: 12px; margin-bottom:12px;">
+                        <thead><tr><th>Dimensión</th><th>Promedio</th><th>Cálculo Ejes</th><th>Resultado</th></tr></thead>
+                        <tbody>
+                            <tr><td>Fuerza Financiera (FF)</td><td><span contenteditable="true" class="editable" id="p-ff" oninput="recalcPEYEA()">4.0</span></td><td rowspan="2" style="vertical-align:middle; text-align:center; font-weight:bold; background:#fafafa;">Eje X (FI+VC):<br><span id="eje-x" style="color:var(--primary);">2.2</span></td><td rowspan="4" style="vertical-align:middle; text-align:center; font-weight:bold; background:#eff6ff; color:var(--primary-dark);">Cuadrante Agresivo[cite: 3]</td></tr>
+                            <tr><td>Fuerza de la Industria (FI)</td><td><span contenteditable="true" class="editable" id="p-fi" oninput="recalcPEYEA()">4.6</span></td></tr>
+                            <tr><td>Ventaja Competitiva (VC)</td><td><span contenteditable="true" class="editable" id="p-vc" oninput="recalcPEYEA()">-2.4</span></td><td rowspan="2" style="vertical-align:middle; text-align:center; font-weight:bold; background:#fafafa;">Eje Y (FF+EA):<br><span id="eje-y" style="color:var(--primary);">0.8</span></td></tr>
+                            <tr><td>Estabilidad Ambiental (EA)</td><td><span contenteditable="true" class="editable" id="p-ea" oninput="recalcPEYEA()">-3.2</span></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="canvas-container">
+                        <canvas id="peyeaCanvas" width="260" height="260"></canvas>
+                    </div>
+                </div>
+
+                <!-- MATRIZ BCG -->
+                <div class="card">
+                    <h3>Matriz BCG (Portafolio Corporativo)</h3>
+                    <table>
+                        <thead><tr><th>Unidad Estratégica</th><th>Crecimiento</th><th>Participación</th><th>Cuadrante</th><th>Estrategia Recomendada</th></tr></thead>
+                        <tbody>
+                            <tr style="background:#f0fdf4;"><td><strong>Línea principal</strong></td><td>Alto</td><td>Alta</td><td>⭐ Estrella</td><td>Invertir para fortalecer participación. (Mkt/Ventas/Finanzas)[cite: 3]</td></tr>
+                            <tr><td><strong>Servicios complementarios</strong></td><td>Alto</td><td>Media</td><td>❓ Interrogante</td><td>Evaluar potencial antes de invertir. (Gerencia/Mkt)[cite: 3]</td></tr>
+                            <tr style="background:#eff6ff;"><td><strong>Clientes recurrentes</strong></td><td>Medio</td><td>Alta</td><td>🐄 Vaca lechera</td><td>Mantener y fidelizar de forma continua. (Ventas/Atención)[cite: 3]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <!-- MATRIZ INTERNA EXTERNA IE -->
+                <div class="card">
+                    <h3>Matriz Interna-Externa (IE)</h3>
+                    <p style="font-size:13px; margin-bottom:8px;"><strong>Evaluación Interna:</strong> Media-alta[cite: 3]<br><strong>Evaluación Externa:</strong> Alta[cite: 3]</p>
+                    <div style="background: #eff6ff; padding: 12px; border: 1px solid #bfdbfe; border-radius: 6px; font-weight: bold; text-align: center; color: var(--primary);">
+                        📍 Región: Crecer y construir[cite: 3]
+                    </div>
+                    <p style="font-size:12px; margin-top:8px; color:var(--text-muted);">Acción: Invertir en acciones comerciales, posicionamiento y fidelización. Encargado: Gerencia y Finanzas.[cite: 3]</p>
+                </div>
+
+                <!-- MCKINSEY GE -->
+                <div class="card">
+                    <h3>Matriz McKinsey / GE</h3>
+                    <div style="background: #f0fdf4; padding: 12px; border: 1px solid #bbf7d0; border-radius: 6px; font-weight: bold; text-align: center; color: var(--accent-dark); margin-bottom:10px;">
+                        📈 Posición: Invertir / crecer[cite: 3]
+                    </div>
+                    <p style="font-size:12px; color:var(--text-muted); line-height:1.4;">
+                        <strong>Interpretación:</strong> Mercado atractivo y posición competitiva favorable. Invertir en campañas, fidelización, mejora del servicio y expansión.[cite: 3]<br><strong>Encargado:</strong> Gerencia general, Marketing y Finanzas.[cite: 3]
+                    </p>
+                </div>
+
+                <!-- GRAN ESTRATEGIA -->
+                <div class="card">
+                    <h3>Matriz Gran Estrategia</h3>
+                    <div style="background: #f8fafc; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: bold; text-align: center; margin-bottom:10px;">
+                        🧭 Ubicación: Cuadrante I[cite: 3]
+                    </div>
+                    <p style="font-size:12px; color:var(--text-muted); line-height:1.4;">
+                        <strong>Lectura:</strong> Posición favorable para crecer en mercado atractivo. Estrategias intensivas: Penetración, desarrollo de mercado, desarrollo de producto y alianzas.[cite: 3]
+                    </p>
+                </div>
+            </div>
+
+            <!-- MATRIZ CUANTITATIVA MCPE -->
+            <div class="card">
+                <h3>Matriz Cuantitativa de la Planificación Estratégica (MCPE)</h3>
+                <table>
+                    <thead>
+                        <tr><th>Factor Clave Evaluado</th><th>Peso</th><th>E1: Penetración de mercado</th><th>E2: Desarrollo mercado</th><th>E3: Diferenciación</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Conocimiento del mercado ecuatoriano</td><td>0.20</td><td>4</td><td>3</td><td>3</td></tr>
+                        <tr><td>Necesidad de mejorar posicionamiento</td><td>0.20</td><td>4</td><td>3</td><td>4</td></tr>
+                        <tr><td>Competencia intensa</td><td>0.15</td><td>3</td><td>3</td><td>4</td></tr>
+                        <tr><td>Oportunidad de captar clientes</td><td>0.20</td><td>4</td><td>4</td><td>3</td></tr>
+                        <tr><td>Capacidad financiera moderada</td><td>0.15</td><td>4</td><td>3</td><td>3</td></tr>
+                        <tr><td>Necesidad de fidelización</td><td>0.10</td><td>4</td><td>2</td><td>4</td></tr>
+                        <tr style="background:#f1f5f9; font-weight:bold;">
+                            <td>Puntaje Estimado Final</td>
+                            <td>1.00</td>
+                            <td style="color:var(--accent-dark)">Mayor Prioridad (Principal)[cite: 3]</td>
+                            <td>Prioridad Media[cite: 3]</td>
+                            <td>Prioridad Media-Alta[cite: 3]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="card" style="margin-bottom: 25px;">
-        <h3>Matriz Cuantitativa de Planificación Estratégica (MCPE)</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Factor Clave Sincronizado</th>
-                    <th>Peso</th>
-                    <th>E1: Penetración de Mercado</th>
-                    <th>E2: Desarrollo de Mercado</th>
-                    <th>E3: Diferenciación</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Conocimiento del mercado ecuatoriano</td>
-                    <td>0.20</td>
-                    <td>4</td>
-                    <td>3</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Necesidad de mejorar posicionamiento</td>
-                    <td>0.20</td>
-                    <td>4</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Competencia intensa</td>
-                    <td>0.15</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Oportunidad de captar más clientes</td>
-                    <td>0.20</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Necesidad de fidelización</td>
-                    <td>0.10</td>
-                    <td>4</td>
-                    <td>2</td>
-                    <td>4</td>
-                </tr>
-                <tr style="background-color: #f1f5f9; font-weight: bold;">
-                    <td>Prioridad Estratégica Resultante</td>
-                    <td>1.00</td>
-                    <td><span style="color:#10b981;">Principal (Mayor)</span></td>
-                    <td>Complementaria</td>
-                    <td>Secundaria</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <!-- SECCIÓN 4: PLAN ESTRATÉGICO Y CRONOGRAMA OPERATIVO -->
+        <div id="plan" class="section-panel">
+            <div class="card" style="border-left: 6px solid var(--primary-light);">
+                <h3>Objetivo Central Corporativo</h3>
+                <p style="font-size:15px; font-weight:bold; line-height:1.6;">
+                    Fortalecer la presencia comercial de Voltecuador en Ecuador mediante penetración de mercado, aprovechando conocimiento local, atención al cliente y oportunidades de crecimiento.[cite: 3]
+                </p>
+            </div>
 
-    <div class="card">
-        <h3>Estrategias FODA Cruzadas Ejecutivas</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Cruce</th>
-                    <th>Acción Recomendada</th>
-                    <th>Encargado Funcional</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>FO — Ofensiva</strong></td>
-                    <td>Usar el conocimiento del mercado local para lanzar campañas que aumenten ventas.</td>
-                    <td>Marketing y Ventas</td>
-                </tr>
-                <tr>
-                    <td><strong>DO — Reorientación</strong></td>
-                    <td>Mejorar visibilidad de marca mediante canales digitales y campañas segmentadas.</td>
-                    <td>Marketing</td>
-                </tr>
-                <tr>
-                    <td><strong>FA — Defensiva</strong></td>
-                    <td>Diferenciarse frente a competidores mediante calidad de servicio y atención.</td>
-                    <td>Operaciones y Atención</td>
-                </tr>
-                <tr>
-                    <td><strong>DA — Supervivencia</strong></td>
-                    <td>Controlar costos, medir resultados y priorizar las acciones comerciales.</td>
-                    <td>Finanzas y Gerencia</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <div class="card">
+                <h3>Plan Operativo Anual y Cronograma de Actividades</h3>
+                <table>
+                    <thead>
+                        <tr><th>Mes 2026</th><th>Actividad Ejecutiva</th><th>Estrategia Asociada</th><th>Responsable</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Enero</strong></td><td>Diseñar campañas digitales (Buyer persona, propuesta y calendario)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Marketing[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option>Por hacer</option><option selected>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Febrero</strong></td><td>Programa de referidos (Incentivos y reglas listos)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Marketing y Ventas[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Marzo</strong></td><td>Campaña movilidad sostenible (Primera activación ejecutada)[cite: 3]</td><td>Alianzas[cite: 3]</td><td>Marketing y Gerencia[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Abril</strong></td><td>Convenios con universidades (Propuestas enviadas)[cite: 3]</td><td>Alianzas[cite: 3]</td><td>Gerencia[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Mayo</strong></td><td>Participación en ferias (Logística y demostraciones comerciales)[cite: 3]</td><td>Desarrollo mercado[cite: 3]</td><td>Ventas y Marketing[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Junio</strong></td><td>Seguimiento postventa (Protocolos y mantenimientos)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Atención y Operaciones[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Julio</strong></td><td>Encuesta de satisfacción (Datos recolectados y plan de mejora)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Atención al cliente[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Agosto</strong></td><td>Segunda campaña digital (Pauta optimizada en canales)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Marketing[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Septiembre</strong></td><td>Evaluación KPIs (Revisión interna profunda y ajustes)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Analítica[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Octubre</strong></td><td>Campaña promocional final (Cierre de año multicanal)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Marketing y Ventas[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Noviembre</strong></td><td>Medición de resultados (Resultados comerciales consolidados)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Analítica[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                        <tr><td><strong>Diciembre</strong></td><td>Informe anual estratégico (Conclusiones y proyección del ciclo)[cite: 3]</td><td>Penetración[cite: 3]</td><td>Gerencia[cite: 3]</td><td><select class="status-select" onchange="updSel(this)"><option selected>Por hacer</option><option>En progreso</option><option>Completado</option></select></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 5: METAS SMART / ESMART -->
+        <div id="smart" class="section-panel">
+            <div class="card">
+                <h3>8. Metas SMART / ESMART Corporativas</h3>
+                <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:15px;">
+                    <strong>Metodología de Control:</strong> <b>E/S</b>: Específica (Qué), <b>M</b>: Medible (Cómo), <b>A</b>: Alcanzable (Por qué), <b>R</b>: Relevante (Importancia), <b>T</b>: Temporal (Plazo).[cite: 3]
+                </p>
+                <table>
+                    <thead>
+                        <tr><th>Meta Institucional</th><th>E/S (Específica)</th><th>M (Medible)</th><th>A (Alcanzable)</th><th>R (Relevante)</th><th>T (Plazo) / Tiempo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Incrementar ventas 12%</strong>[cite: 3]</td>
+                            <td>Aumentar ventas de motos y scooters eléctricos en Cuenca.[cite: 3]</td>
+                            <td>% de ventas vs. base anterior.[cite: 3]</td>
+                            <td>Campañas, referidos y ferias.[cite: 3]</td>
+                            <td>Mejora ingresos y participación.[cite: 3]</td>
+                            <td>2026-12-31 (12 meses: ene-dic)[cite: 3]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interacción redes +20%</strong>[cite: 3]</td>
+                            <td>Aumentar likes, comentarios, mensajes y consultas.[cite: 3]</td>
+                            <td>Interacciones mensuales vs. línea base.[cite: 3]</td>
+                            <td>2 campañas digitales y contenido.[cite: 3]</td>
+                            <td>Aumenta visibilidad y leads.[cite: 3]</td>
+                            <td>2026-12-31 (12 meses con revisión)[cite: 3]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Clientes recurrentes +10%</strong>[cite: 3]</td>
+                            <td>Aumentar recompra / postventa / referidos.[cite: 3]</td>
+                            <td>% clientes recurrentes.[cite: 3]</td>
+                            <td>Seguimiento postventa y encuestas.[cite: 3]</td>
+                            <td>Mejora fidelización y LTV.[cite: 3]</td>
+                            <td>2026-12-31 (7 meses: jun-dic)[cite: 3]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3 alianzas estratégicas</strong>[cite: 3]</td>
+                            <td>Convenios con universidades, empresas o municipio.[cite: 3]</td>
+                            <td>Número de alianzas firmadas.[cite: 3]</td>
+                            <td>Gestión directa y propuesta clara.[cite: 3]</td>
+                            <td>Amplía canales y confianza.[cite: 3]</td>
+                            <td>2026-12-31 (10 meses: mar-dic)[cite: 3]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4 campañas movilidad sostenible</strong>[cite: 3]</td>
+                            <td>Campañas educativas / promocionales en Cuenca.[cite: 3]</td>
+                            <td>Número de campañas con evidencia.[cite: 3]</td>
+                            <td>Calendario trimestral y aliados.[cite: 3]</td>
+                            <td>Refuerza posicionamiento y demanda.[cite: 3]</td>
+                            <td>2026-12-31 (12 meses: 1 por trimestre)[cite: 3]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 6: KPIS DE SEGUIMIENTO -->
+        <div id="kpis" class="section-panel">
+            <div class="card">
+                <h3>10. KPIs de Control Estratégico (Interactivos)</h3>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Modifica directamente los <strong>Valores Actuales (campos amarillos)</strong> para actualizar las barras y estados en tiempo real de forma dinámica.</p>
+                <table id="kpi-table">
+                    <thead>
+                        <tr><th>Indicador</th><th>Unidad</th><th>Meta</th><th>Valor Actual</th><th>Frecuencia</th><th>Estado</th><th>Progreso Visual</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Crecimiento de ventas[cite: 3]</td><td>%[cite: 3]</td><td>12[cite: 3]</td>
+                            <td><span contenteditable="true" class="editable kpi-in" oninput="runKPIs(this, 12)">4.5</span></td>
+                            <td>Mensual[cite: 3]</td><td class="kpi-status">En seguimiento</td>
+                            <td><div class="progress-bar-container"><div class="progress-bar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Interacción redes[cite: 3]</td><td>%[cite: 3]</td><td>20[cite: 3]</td>
+                            <td><span contenteditable="true" class="editable kpi-in" oninput="runKPIs(this, 20)">12</span></td>
+                            <td>Mensual[cite: 3]</td><td class="kpi-status">En seguimiento</td>
+                            <td><div class="progress-bar-container"><div class="progress-bar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Clientes recurrentes[cite: 3]</td><td>%[cite: 3]</td><td>10[cite: 3]</td>
+                            <td><span contenteditable="true" class="editable kpi-in" oninput="runKPIs(this, 10)">0</span></td>
+                            <td>Trimestral[cite: 3]</td><td class="kpi-status">Sin medir</td>
+                            <td><div class="progress-bar-container"><div class="progress-bar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Campañas ejecutadas[cite: 3]</td><td>Número[cite: 3]</td><td>4[cite: 3]</td>
+                            <td><span contenteditable="true" class="editable kpi-in" oninput="runKPIs(this, 4)">2</span></td>
+                            <td>Trimestral[cite: 3]</td><td class="kpi-status">En seguimiento</td>
+                            <td><div class="progress-bar-container"><div class="progress-bar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Alianzas estratégicas[cite: 3]</td><td>Número[cite: 3]</td><td>3[cite: 3]</td>
+                            <td><span contenteditable="true" class="editable kpi-in" oninput="runKPIs(this, 3)">1</span></td>
+                            <td>Semestral[cite: 3]</td><td class="kpi-status">En seguimiento</td>
+                            <td><div class="progress-bar-container"><div class="progress-bar"></div></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 7: CONSOLIDADO Y RECOMENDACIONES -->
+        <div id="consolidado" class="section-panel">
+            <div class="card" style="background-color: #fafbfd; border-left: 6px solid var(--accent);">
+                <h3>11. Consolidado Final y Recomendación Estratégica</h3>
+                <p style="font-size:15.5px; font-weight:bold; color:var(--primary-dark); margin-bottom:12px;">
+                    Estrategia Principal Validada: Penetración de mercado (Estrategias intensivas de ventas, fidelización y cobertura).[cite: 3]
+                </p>
+                <p style="font-size:13.5px; color:var(--text-muted); line-height:1.6;">
+                    <strong>Lectura Ejecutiva General:</strong> Voltecuador debe concentrar sus esfuerzos en aumentar la participación dentro del mercado ecuatoriano actual, reforzando ventas, marca, servicio, fidelización y diferenciación frente a competidores.[cite: 3] Las herramientas de análisis (FODA, MPC, IE, BCG, PEYEA, McKinsey, Gran Estrategia) convergen en que la empresa posee una posición interna favorable en un mercado sumamente atractivo, haciendo que la inyección comercial enfocada sea el camino de menor riesgo y mayor rentabilidad.[cite: 3]
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Asignación de Encargos por Área Funcional</h3>
+                <div class="grid-3">
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Gerencia General</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Aprobar estrategia, coordinar ejecución general y firmar convenios institucionales.[cite: 3]</span>
+                    </div>
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Marketing y Ventas</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Campañas, posicionamiento de marca, redes sociales, conversión y captación.[cite: 3]</span>
+                    </div>
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Finanzas</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Control de presupuestos, rentabilidad, viabilidad y costos operativos.[cite: 3]</span>
+                    </div>
+                </div>
+                <div class="grid-3" style="margin-top:15px;">
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Recursos Humanos</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Capacitación del personal y fortalecimiento de capacidades de servicio.[cite: 3]</span>
+                    </div>
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Operaciones y Servicio</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Calidad de soporte técnico, garantías y entrega segura.[cite: 3]</span>
+                    </div>
+                    <div style="background:#f8fafc; padding:15px; border-radius:8px; border:1px solid #e2e8f0;">
+                        <strong>Atención y Analítica</strong><br>
+                        <span style="font-size:12.5px; color:var(--text-muted);">Medición de satisfacción postventa, KPIs y actualización de sistemas.[cite: 3]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // Navegación de pestañas
+    function switchPanel(panelId, btn) {
+        document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        
+        document.getElementById(panelId).classList.add('active');
+        btn.classList.add('active');
+
+        if(panelId === 'multimatriz') {
+            setTimeout(drawPEYEA, 100);
+        }
+    }
+
+    // Recálculo interactivo de la MPC
+    function recalcMPC() {
+        let rows = document.querySelectorAll('#mpc-table tbody tr');
+        let vTotal = 0;
+        rows.forEach((row, i) => {
+            if(i < rows.length - 1) {
+                let w = parseFloat(row.querySelector('.w-peso').innerText);
+                let v = parseFloat(row.querySelector('.v-mpc').innerText) || 0;
+                vTotal += (w * v);
+            }
+        });
+        document.getElementById('total-voltecuador').innerText = vTotal.toFixed(2);
+    }
+
+    // Recálculo interactivo EFI - EFE
+    function evaluarEfiEfe() {
+        let efi = parseFloat(document.getElementById('efi-val').innerText) || 0;
+        let efe = parseFloat(document.getElementById('efe-val').innerText) || 0;
+        
+        document.getElementById('efi-txt').innerText = efi >= 2.5 ? "Posición interna sólida; fortalezas superan debilidades." : "Debilidades internas preocupantes.";
+        document.getElementById('efe-txt').innerText = efe >= 2.5 ? "Respuesta externa superior al promedio." : "El entorno presenta amenazas críticas.";
+    }
+
+    // Control y render dinámico de PEYEA
+    function recalcPEYEA() {
+        let ff = parseFloat(document.getElementById('p-ff').innerText) || 0;
+        let fi = parseFloat(document.getElementById('p-fi').innerText) || 0;
+        let vc = parseFloat(document.getElementById('p-vc').innerText) || 0;
+        let ea = parseFloat(document.getElementById('p-ea').innerText) || 0;
+
+        let x = fi + vc;
+        let y = ff + ea;
+
+        document.getElementById('eje-x').innerText = x.toFixed(1);
+        document.getElementById('eje-y').innerText = y.toFixed(1);
+        drawPEYEA();
+    }
+
+    function drawPEYEA() {
+        let cv = document.getElementById('peyeaCanvas');
+        if(!cv) return;
+        let ctx = cv.getContext('2d');
+        ctx.clearRect(0,0,260,260);
+        let cx = 130; let cy = 130;
+
+        // Ejes
+        ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(10, cy); ctx.lineTo(250, cy); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, 10); ctx.lineTo(cx, 250); ctx.stroke();
+
+        // Cuadrantes
+        ctx.font = '10px sans-serif'; ctx.fillStyle = '#94a3b8';
+        ctx.fillText('Conservador', 15, 30); ctx.fillText('Agresivo', 180, 30);
+        ctx.fillText('Defensivo', 15, 240); ctx.fillText('Competitivo', 180, 240);
+
+        // Vector dinámico
+        let x = parseFloat(document.getElementById('eje-x').innerText) || 0;
+        let y = parseFloat(document.getElementById('eje-y').innerText) || 0;
+
+        let targetX = cx + (x * 18);
+        let targetY = cy - (y * 18);
+
+        ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(targetX, targetY); ctx.stroke();
+        ctx.fillStyle = '#1e3a8a'; ctx.beginPath(); ctx.arc(targetX, targetY, 5, 0, 2*Math.PI); ctx.fill();
+    }
+
+    // Sistema dinámico de KPIs y barras
+    function runKPIs(el, target) {
+        let row = el.closest('tr');
+        let val = parseFloat(el.innerText) || 0;
+        let pct = Math.min((val / target) * 100, 100);
+        let bar = row.querySelector('.progress-bar');
+        let st = row.querySelector('.kpi-status');
+        
+        bar.style.width = pct + '%';
+        
+        if(val === 0) {
+            st.innerText = "Sin medir"; st.style.color = '#64748b'; bar.style.backgroundColor = '#cbd5e1';
+        } else if(pct >= 100) {
+            st.innerText = "Cumplido"; st.style.color = '#16a34a'; bar.style.backgroundColor = '#10b981';
+        } else {
+            st.innerText = "En seguimiento"; st.style.color = '#3b82f6'; bar.style.backgroundColor = '#3b82f6';
+        }
+    }
+
+    function updSel(sel) {
+        if(sel.value === 'Completado') sel.style.background = '#d1fae5';
+        else if(sel.value === 'En progreso') sel.style.background = '#dbeafe';
+        else sel.style.background = '#f1f5f9';
+    }
+
+    window.onload = function() {
+        document.querySelectorAll('.kpi-in').forEach(s => {
+            let tr = s.closest('tr');
+            let t = parseFloat(tr.cells[2].innerText) || 1;
+            runKPIs(s, t);
+        });
+        document.querySelectorAll('.status-select').forEach(sel => updSel(sel));
+    };
+</script>
 
 </body>
 </html>
