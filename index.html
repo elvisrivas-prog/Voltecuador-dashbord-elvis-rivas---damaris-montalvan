@@ -3,135 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCuenca Project Manager - Enterprise Strategy Suite</title>
+    <title>Enterprise Strategy Suite - VoltEcuador</title>
     <style>
         :root {
-            --uc-blue: #0f2a4a;
-            --uc-red: #a81c1c;
-            --uc-light: #f4f6f9;
-            --uc-white: #ffffff;
-            --uc-border: #cbd5e1;
+            --brand-blue: #0f2a4a;
+            --brand-red: #a81c1c;
+            --brand-light: #f4f6f9;
+            --brand-white: #ffffff;
+            --brand-border: #cbd5e1;
             --text-main: #1e293b;
             --success: #10b981;
             --warning: #f59e0b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--uc-light); color: var(--text-main); min-height: 100vh; }
+        body { background-color: var(--brand-light); color: var(--text-main); min-height: 100vh; }
 
-        /* PANTALLA DE CONTROL: MULTI-PROYECTOS */
+        /* MULTI-PROJECT HUB */
         #project-hub { padding: 50px; max-width: 1200px; margin: 0 auto; }
-        .hub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 4px solid var(--uc-blue); padding-bottom: 20px; }
-        .hub-header h1 { color: var(--uc-blue); font-size: 28px; font-weight: 800; }
+        .hub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 4px solid var(--brand-blue); padding-bottom: 20px; }
+        .hub-header h1 { color: var(--brand-blue); font-size: 28px; font-weight: 800; }
         
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .project-card { background: var(--uc-white); border-radius: 12px; border: 1px solid var(--uc-border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); padding: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
-        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(15,42,74,0.1); border-color: var(--uc-red); }
-        .project-card h3 { color: var(--uc-blue); font-size: 20px; margin-bottom: 10px; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .project-card { background: var(--brand-white); border-radius: 12px; border: 1px solid var(--brand-border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 30px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px rgba(15,42,74,0.1); border-color: var(--brand-red); }
+        .project-card h3 { color: var(--brand-blue); font-size: 20px; margin-bottom: 10px; }
         .project-card p { color: #64748b; font-size: 13px; margin-bottom: 20px; line-height: 1.5; }
-        .project-badge { display: inline-block; background: #e2e8f0; color: var(--uc-blue); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
+        .project-badge { display: inline-block; background: #e2e8f0; color: var(--brand-blue); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
         
-        .btn-primary { background: var(--uc-blue); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; }
+        .btn-primary { background: var(--brand-blue); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
         .btn-primary:hover { background: #1a3e68; }
-        .btn-accent { background: var(--uc-red); color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-accent { background: var(--brand-red); color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; }
 
-        /* ESPACIO DE TRABAJO ESTRATÉGICO DEL PROYECTO */
+        /* ESPACIO DE TRABAJO */
         #workspace-container { display: none; }
-        nav { width: 300px; background-color: var(--uc-blue); color: white; padding: 30px 20px; position: fixed; height: 100vh; overflow-y: auto; border-right: 4px solid var(--uc-red); z-index: 100; }
-        nav .back-hub { display: block; color: var(--uc-white); background: rgba(255,255,255,0.1); text-align: center; padding: 10px; border-radius: 6px; font-weight: bold; text-decoration: none; margin-bottom: 25px; font-size: 12px; }
+        nav { width: 320px; background-color: var(--brand-blue); color: white; padding: 30px 20px; position: fixed; height: 100vh; overflow-y: auto; border-right: 4px solid var(--brand-red); z-index: 100; }
+        nav .back-hub { display: block; color: var(--brand-white); background: rgba(255,255,255,0.1); text-align: center; padding: 10px; border-radius: 6px; font-weight: bold; text-decoration: none; margin-bottom: 25px; font-size: 12px; }
         nav h2 { font-size: 18px; text-align: center; margin-bottom: 5px; text-transform: uppercase; }
         nav p { font-size: 11px; text-align: center; margin-bottom: 25px; color: #94a3b8; border-bottom: 1px solid #1e3a5f; padding-bottom: 15px; }
         nav a { display: block; color: #cbd5e1; padding: 12px 15px; text-decoration: none; border-radius: 6px; font-size: 13px; margin-bottom: 8px; border-left: 3px solid transparent; }
-        nav a:hover, nav a.active { background-color: rgba(255,255,255,0.08); color: white; border-left-color: var(--uc-red); font-weight: 600; }
+        nav a:hover, nav a.active { background-color: rgba(255,255,255,0.08); color: white; border-left-color: var(--brand-red); font-weight: 600; }
 
-        main { margin-left: 300px; padding: 40px; width: calc(100% - 300px); }
-        header { background: var(--uc-white); padding: 25px 35px; border-radius: 8px; margin-bottom: 30px; border-bottom: 3px solid var(--uc-blue); box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        header h1 { font-size: 24px; color: var(--uc-blue); font-weight: 800; }
+        main { margin-left: 320px; padding: 40px; width: calc(100% - 320px); }
+        header { background: var(--brand-white); padding: 25px 35px; border-radius: 8px; margin-bottom: 30px; border-bottom: 3px solid var(--brand-blue); box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 24px; color: var(--brand-blue); font-weight: 800; }
 
         .panel { display: none; animation: fadeIn 0.2s ease-in-out forwards; }
         .panel.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ARQUITECTURA DISTRIBUIDA (DATOS IZQUIERDA / INTERACTIVOS DERECHA) */
         .split-container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; margin-bottom: 30px; align-items: start; }
-        .card { background: var(--uc-white); border-radius: 8px; border: 1px solid var(--uc-border); padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .card h3 { color: var(--uc-blue); font-size: 16px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid var(--uc-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        .card { background: var(--brand-white); border-radius: 8px; border: 1px solid var(--brand-border); padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .card h3 { color: var(--brand-blue); font-size: 16px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid var(--brand-light); text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* TABLAS E INPUTS EDITABLES */
+        /* SECCIÓN DE ENTRADAS IDENTIDAD */
+        .identity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .identity-field { display: flex; flex-direction: column; gap: 6px; }
+        .identity-field label { font-size: 12px; font-weight: bold; color: var(--brand-blue); text-transform: uppercase; }
+
+        /* FORMULARIOS EDITABLES */
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background: #f1f5f9; color: var(--uc-blue); font-weight: 700; }
+        th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f1f5f9; color: var(--brand-blue); font-weight: 700; }
         
-        .input-text { width: 100%; border: 1px dashed transparent; padding: 5px; background: transparent; font-size: 13px; color: var(--text-main); }
-        .input-text:hover { border-color: var(--uc-border); background: #fffbfa; }
-        .input-text:focus { border-color: var(--uc-blue); background: white; outline: none; border-style: solid; }
+        .input-text { width: 100%; border: 1px dashed transparent; padding: 6px; background: transparent; font-size: 13px; color: var(--text-main); }
+        .input-text:hover { border-color: var(--brand-border); background: #fffbfa; }
+        .input-text:focus { border-color: var(--brand-blue); background: white; outline: none; border-style: solid; }
         
-        .input-num { width: 60px; text-align: center; padding: 4px; border: 1px solid var(--uc-border); border-radius: 4px; font-weight: bold; color: var(--uc-blue); background: #fffbeb; }
+        .input-num { width: 65px; text-align: center; padding: 5px; border: 1px solid var(--brand-border); border-radius: 4px; font-weight: bold; color: var(--brand-blue); background: #fffbeb; }
 
-        /* CUADRANTE DINÁMICO PEYEA / GRÁFICOS */
-        .visual-display { background: #fafafa; border: 1px dashed var(--uc-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 340px; }
-        .coordinate-label { font-size: 13px; font-weight: bold; color: var(--uc-blue); margin-bottom: 10px; background: #e2e8f0; padding: 4px 12px; border-radius: 12px; }
+        /* CANVAS INTERACTIVO BIDIRECCIONAL */
+        .visual-display { background: #fafafa; border: 1px dashed var(--brand-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 360px; }
+        .coordinate-label { font-size: 13px; font-weight: bold; color: var(--brand-blue); margin-bottom: 10px; background: #e2e8f0; padding: 4px 12px; border-radius: 12px; }
         .matrix-status-box { width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; text-align: center; font-size: 13px; margin-top: 15px; border: 1px solid; }
+        
+        #peyeaCanvasReal { cursor: crosshair; background: #ffffff; border: 1px solid #e2e8f0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
 
-        /* GRID RESPONSIVE DE 7 TARJETAS DEL POA */
-        .poa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .poa-card { background: var(--uc-white); border: 1px solid var(--uc-border); border-radius: 8px; padding: 20px; transition: transform 0.2s, box-shadow 0.2s; }
-        .poa-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(15,42,74,0.08); border-color: var(--uc-red); }
-        .poa-icon { font-size: 24px; margin-bottom: 10px; }
-        .poa-card h4 { color: var(--uc-blue); margin-bottom: 8px; font-size: 15px; }
-        .poa-meta { margin-top: 12px; background: #fee2e2; color: var(--uc-red); font-size: 12px; padding: 4px 8px; border-radius: 4px; font-weight: bold; display: inline-block; }
+        /* GRID DEL PLAN OPERATIVO ANUAL (7 TARJETAS) */
+        .poa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .poa-card { background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 8px; padding: 25px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .poa-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px rgba(15,42,74,0.08); border-color: var(--brand-red); }
+        .poa-icon { font-size: 26px; margin-bottom: 12px; }
+        .poa-card h4 { color: var(--brand-blue); margin-bottom: 8px; font-size: 16px; font-weight: 700; }
+        .poa-meta { margin-top: 15px; background: #fee2e2; color: var(--brand-red); font-size: 12px; padding: 6px 10px; border-radius: 4px; font-weight: bold; display: inline-block; width: 100%; }
 
-        /* CRONOGRAMA MENSUAL */
-        .timeline-container { display: flex; justify-content: space-between; background: var(--uc-white); border: 1px solid var(--uc-border); border-radius: 8px; padding: 20px; overflow-x: auto; margin-bottom: 35px; }
-        .timeline-month { flex: 1; min-width: 120px; text-align: center; padding: 10px; border-right: 1px solid #e2e8f0; }
+        /* LINEA DE TIEMPO */
+        .timeline-container { display: flex; justify-content: space-between; background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 8px; padding: 20px; overflow-x: auto; margin-bottom: 35px; }
+        .timeline-month { flex: 1; min-width: 140px; text-align: center; padding: 10px; border-right: 1px solid #e2e8f0; }
         .timeline-month:last-child { border-right: none; }
-        .timeline-month h5 { color: var(--uc-blue); font-size: 14px; margin-bottom: 8px; border-bottom: 2px solid var(--uc-red); padding-bottom: 4px; }
+        .timeline-month h5 { color: var(--brand-blue); font-size: 14px; margin-bottom: 8px; border-bottom: 3px solid var(--brand-red); padding-bottom: 4px; text-transform: uppercase; font-weight: bold; }
 
-        /* REJILLA DE MATRIZ FODA */
+        /* DIAGNÓSTICO FODA */
         .foda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .foda-box { padding: 20px; border-radius: 8px; border: 1px solid var(--uc-border); }
+        .foda-box { padding: 20px; border-radius: 8px; border: 1px solid var(--brand-border); }
         .foda-f { background: #ecfdf5; border-left: 5px solid var(--success); }
-        .foda-d { background: #fff5f5; border-left: 5px solid var(--uc-red); }
+        .foda-d { background: #fff5f5; border-left: 5px solid var(--brand-red); }
         .foda-o { background: #eff6ff; border-left: 5px solid #3b82f6; }
         .foda-a { background: #fffbeb; border-left: 5px solid var(--warning); }
-        .foda-box h4 { margin-bottom: 10px; color: var(--uc-blue); font-size: 15px; }
+        .foda-box h4 { margin-bottom: 10px; color: var(--brand-blue); font-size: 15px; text-transform: uppercase; }
 
-        /* CONTROLES ADICIONALES */
-        .btn-add { background: #f1f5f9; color: var(--uc-blue); border: 1px solid var(--uc-border); padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-add:hover { background: var(--uc-blue); color: white; }
-        .btn-del { color: var(--uc-red); cursor: pointer; font-weight: bold; border: none; background: none; font-size: 14px; margin-left: 8px; }
-        .weight-alert { font-size: 11px; font-weight: bold; margin-top: 5px; }
+        .btn-add { background: #f1f5f9; color: var(--brand-blue); border: 1px solid var(--brand-border); padding: 8px 14px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 12px; }
+        .btn-add:hover { background: var(--brand-blue); color: white; }
+        .btn-del { color: var(--brand-red); cursor: pointer; font-weight: bold; border: none; background: none; font-size: 14px; margin-left: 8px; }
+        .weight-alert { font-size: 12px; font-weight: bold; margin-top: 8px; }
         
         .progress-bar-container { background: #e2e8f0; border-radius: 10px; height: 12px; overflow: hidden; margin-top: 8px; }
-        .progress-bar-fill { background: linear-gradient(90deg, var(--uc-blue), var(--uc-red)); height: 100%; width: 0%; transition: width 0.3s; }
+        .progress-bar-fill { background: linear-gradient(90deg, var(--brand-blue), var(--brand-red)); height: 100%; width: 0%; transition: width 0.3s; }
     </style>
 </head>
 <body>
 
-    <!-- CONTROL HUB: SELECCIÓN DE PROYECTO -->
+    <!-- HUB DE PROYECTOS GLOBAL -->
     <div id="project-hub">
         <div class="hub-header">
             <div>
-                <h1>Gestor de Modelos de Planificación Estratégica</h1>
-                <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Universidad de Cuenca - Facultad de Ciencias Económicas y Administrativas</p>
+                <h1>Suite de Dirección Estratégica</h1>
+                <p style="color: #64748b; font-size: 14px; margin-top: 4px;">Modelos Integrados de Control Operativo y Financiero Empresarial</p>
             </div>
-            <button class="btn-primary" onclick="createNewProject()">+ Crear Nuevo Dashboard Corporativo</button>
+            <button class="btn-primary" onclick="createNewProject()">+ Crear Nuevo Entorno Corporativo</button>
         </div>
-        <div class="project-grid" id="hub-grid">
-            <!-- Inyección dinámica de dashboards de empresas de usuario -->
-        </div>
+        <div class="project-grid" id="hub-grid"></div>
     </div>
 
-    <!-- WORKSPACE COMPLETO DEL DASHBOARD SELECCIONADO -->
+    <!-- CONTENEDOR DEL ESPACIO DE TRABAJO ACTIVO -->
     <div id="workspace-container">
         <nav>
-            <a href="#" class="back-hub" onclick="exitWorkspace()">← Cambiar de Proyecto</a>
-            <h2 id="nav-project-title">Empresa Activa</h2>
-            <p>Dashboard de Gestión Estratégica</p>
+            <a href="#" class="back-hub" onclick="exitWorkspace()">← Volver al Panel Global</a>
+            <h2 id="nav-project-title">Cargando...</h2>
+            <p>Planificación Corporativa</p>
             <a href="#" class="nav-item active" onclick="showPanel('identidad', this)">1. Identidad Organizacional</a>
-            <a href="#" class="nav-item" onclick="showPanel('foda-analisis', this)">2. Análisis Estructural FODA</a>
+            <a href="#" class="nav-item" onclick="showPanel('foda-analisis', this)">2. Matriz de Diagnóstico FODA</a>
             <a href="#" class="nav-item" onclick="showPanel('matrices-auditoria', this)">3. Matrices EFI y EFE</a>
-            <a href="#" class="nav-item" onclick="showPanel('peyea-panel', this)">4. Matriz PEYEA Tridimensional</a>
+            <a href="#" class="nav-item" onclick="showPanel('peyea-panel', this)">4. Matriz PEYEA Interactiva</a>
             <a href="#" class="nav-item" onclick="showPanel('poa-panel', this)">5. Plan Operativo Anual (POA)</a>
             <a href="#" class="nav-item" onclick="showPanel('kpis-panel', this)">6. Cuadro de Mando & KPIs</a>
         </nav>
@@ -139,112 +142,123 @@
         <main>
             <header>
                 <div>
-                    <h1 id="main-project-title">Cargando Estrategia Corporativa...</h1>
-                    <div style="font-size:12px; color:var(--uc-gray); margin-top:4px;">Entorno Analítico Editable Integrado</div>
+                    <h1 id="main-project-title">Iniciando Dashboard...</h1>
+                    <div style="font-size:12px; color:#64748b; margin-top:4px;">Control de Vectores en Tiempo Real y Planificación de Objetivos</div>
                 </div>
-                <button class="btn-accent" onclick="deleteCurrentProject()">Eliminar Este Proyecto</button>
+                <button class="btn-accent" onclick="deleteCurrentProject()">Eliminar Entorno</button>
             </header>
 
-            <!-- SECCIÓN 1: IDENTIDAD -->
+            <!-- SECCIÓN 1: IDENTIDAD ORGANIZACIONAL -->
             <div id="identidad" class="panel active">
                 <div class="card">
-                    <h3>Perfil Institucional de la Organización</h3>
-                    <table>
-                        <thead><tr><th style="width:30%">Dimensión Estructural</th><th>Descripción Operativa Corporativa (Haga Clic para Editar)</th></tr></thead>
-                        <tbody>
-                            <tr><td><strong>Nombre de la Empresa</strong></td><td><input type="text" class="input-text" id="edit-biz-name" oninput="updateCurrentBizData('name', this.value)"></td></tr>
-                            <tr><td><strong>Sector de Operación</strong></td><td><input type="text" class="input-text" id="edit-biz-sector" oninput="updateCurrentBizData('sector', this.value)"></td></tr>
-                            <tr><td><strong>Área de Cobertura Comercial</strong></td><td><input type="text" class="input-text" id="edit-biz-scope" oninput="updateCurrentBizData('scope', this.value)"></td></tr>
-                        </tbody>
-                    </table>
+                    <h3>Atributos Corporativos de Identidad</h3>
+                    <div class="identity-grid">
+                        <div class="identity-field">
+                            <label>Nombre de la Organización</label>
+                            <input type="text" class="input-text" id="edit-biz-name" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('name', this.value)">
+                        </div>
+                        <div class="identity-field">
+                            <label>Sector / Giro del Negocio</label>
+                            <input type="text" class="input-text" id="edit-biz-sector" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('sector', this.value)">
+                        </div>
+                        <div class="identity-field">
+                            <label>Línea Comercial / Solución Clave</label>
+                            <input type="text" class="input-text" id="edit-biz-product" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('star_product', this.value)">
+                        </div>
+                        <div class="identity-field">
+                            <label>Alcance del Mercado</label>
+                            <input type="text" class="input-text" id="edit-biz-scope" style="border:1px solid var(--brand-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('scope', this.value)">
+                        </div>
+                    </div>
                 </div>
                 <div class="split-container">
                     <div class="card">
-                        <h3>Misión Corporativa</h3>
-                        <textarea class="input-text" id="edit-biz-mision" style="height:100px; border:1px solid var(--uc-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('mision', this.value)"></textarea>
+                        <h3>Misión Declarativa</h3>
+                        <textarea class="input-text" id="edit-biz-mision" style="height:120px; border:1px solid var(--brand-border); border-radius:6px; padding:10px; line-height:1.5;" oninput="updateCurrentBizData('mision', this.value)"></textarea>
                     </div>
                     <div class="card">
-                        <h3>Visión de Largo Plazo</h3>
-                        <textarea class="input-text" id="edit-biz-vision" style="height:100px; border:1px solid var(--uc-border); border-radius:6px; padding:10px;" oninput="updateCurrentBizData('vision', this.value)"></textarea>
+                        <h3>Visión Estratégica</h3>
+                        <textarea class="input-text" id="edit-biz-vision" style="height:120px; border:1px solid var(--brand-border); border-radius:6px; padding:10px; line-height:1.5;" oninput="updateCurrentBizData('vision', this.value)"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 2: FODA -->
+            <!-- SECCIÓN 2: DIAGNÓSTICO FODA -->
             <div id="foda-analisis" class="panel">
                 <div class="card">
-                    <h3>Matriz FODA de Diagnóstico Situacional</h3>
+                    <h3>Análisis de Matriz FODA</h3>
                     <div class="foda-grid">
                         <div class="foda-box foda-f">
-                            <h4>Fortalezas Internas</h4>
-                            <textarea class="input-text" id="edit-foda-f" style="height:120px;" oninput="updateCurrentBizData('foda_f', this.value)"></textarea>
+                            <h4>Fortalezas (Internas)</h4>
+                            <textarea class="input-text" id="edit-foda-f" style="height:140px; line-height:1.6;" oninput="updateCurrentBizData('foda_f', this.value)"></textarea>
                         </div>
                         <div class="foda-box foda-d">
-                            <h4>Debilidades Estructurales</h4>
-                            <textarea class="input-text" id="edit-foda-d" style="height:120px;" oninput="updateCurrentBizData('foda_d', this.value)"></textarea>
+                            <h4>Debilidades (Internas)</h4>
+                            <textarea class="input-text" id="edit-foda-d" style="height:140px; line-height:1.6;" oninput="updateCurrentBizData('foda_d', this.value)"></textarea>
                         </div>
                         <div class="foda-box foda-o">
-                            <h4>Oportunidades de Entorno</h4>
-                            <textarea class="input-text" id="edit-foda-o" style="height:120px;" oninput="updateCurrentBizData('foda_o', this.value)"></textarea>
+                            <h4>Oportunidades (Externas)</h4>
+                            <textarea class="input-text" id="edit-foda-o" style="height:140px; line-height:1.6;" oninput="updateCurrentBizData('foda_o', this.value)"></textarea>
                         </div>
                         <div class="foda-box foda-a">
-                            <h4>Amenazas de Mercado</h4>
-                            <textarea class="input-text" id="edit-foda-a" style="height:120px;" oninput="updateCurrentBizData('foda_a', this.value)"></textarea>
+                            <h4>Amenazas (Externas)</h4>
+                            <textarea class="input-text" id="edit-foda-a" style="height:140px; line-height:1.6;" oninput="updateCurrentBizData('foda_a', this.value)"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 3: EFI Y EFE -->
+            <!-- SECCIÓN 3: MATRICES EFI Y EFE -->
             <div id="matrices-auditoria" class="panel">
                 <div class="split-container">
                     <div class="card">
-                        <h3>Matriz EFI (Auditoría de Factores Internos)</h3>
+                        <h3>Matriz EFI (Auditoría Interna)</h3>
                         <table id="table-efi">
-                            <thead><tr><th>Factor de Fuerza / Debilidad</th><th style="width:20%">Peso</th><th style="width:20%">Calif</th></tr></thead>
+                            <thead><tr><th>Factor Interno Crave</th><th style="width:22%">Peso</th><th style="width:22%">Calif</th><th></th></tr></thead>
                             <tbody></tbody>
                         </table>
                         <div id="efi-alert" class="weight-alert"></div>
-                        <button class="btn-add" onclick="addNewRowToDataset('efi', ['Nuevo factor analítico interno', 0.20, 3])">+ Añadir Factor Interno</button>
+                        <button class="btn-add" onclick="addNewRowToDataset('efi', ['Nuevo factor interno estratégico', 0.10, 3])">+ Añadir Elemento EFI</button>
                     </div>
                     <div class="card">
-                        <h3>Resultado de Desempeño Interno</h3>
+                        <h3>Resultado Balanceado EFI</h3>
                         <div class="visual-display">
-                            <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR PONDERADO EFI</div>
-                            <div id="score-efi" style="font-size:48px; font-weight:800; color:var(--uc-blue);">0.00</div>
-                            <div id="status-efi" class="matrix-status-box">Calculando...</div>
+                            <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR SINTETIZADO EFI</div>
+                            <div id="score-efi" style="font-size:48px; font-weight:800; color:var(--brand-blue);">0.00</div>
+                            <div id="status-efi" class="matrix-status-box">...</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="split-container">
                     <div class="card">
-                        <h3>Matriz EFE (Auditoría de Factores Externos)</h3>
+                        <h3>Matriz EFE (Auditoría Externa)</h3>
                         <table id="table-efe">
-                            <thead><tr><th>Oportunidad / Amenaza de Entorno</th><th style="width:20%">Peso</th><th style="width:20%">Calif</th></tr></thead>
+                            <thead><tr><th>Factor Externo Crítico</th><th style="width:22%">Peso</th><th style="width:22%">Calif</th><th></th></tr></thead>
                             <tbody></tbody>
                         </table>
                         <div id="efe-alert" class="weight-alert"></div>
-                        <button class="btn-add" onclick="addNewRowToDataset('efe', ['Nuevo factor analítico externo', 0.20, 3])">+ Añadir Factor Externo</button>
+                        <button class="btn-add" onclick="addNewRowToDataset('efe', ['Nuevo factor externo del entorno', 0.10, 3])">+ Añadir Elemento EFE</button>
                     </div>
                     <div class="card">
-                        <h3>Resultado de Cobertura Externa</h3>
+                        <h3>Resultado Balanceado EFE</h3>
                         <div class="visual-display">
-                            <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR PONDERADO EFE</div>
-                            <div id="score-efe" style="font-size:48px; font-weight:800; color:var(--uc-blue);">0.00</div>
-                            <div id="status-efe" class="matrix-status-box">Calculando...</div>
+                            <div style="font-size:12px; color:#64748b; margin-bottom:5px;">VALOR SINTETIZADO EFE</div>
+                            <div id="score-efe" style="font-size:48px; font-weight:800; color:var(--brand-blue);">0.00</div>
+                            <div id="status-efe" class="matrix-status-box">...</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 4: PEYEA DINÁMICA -->
+            <!-- SECCIÓN 4: MATRIZ PEYEA INTERACTIVA BIDIRECCIONAL -->
             <div id="peyea-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
                         <h3>Vectores de Posicionamiento PEYEA</h3>
+                        <p style="font-size:12px; color:#64748b; margin-bottom:15px;">Modifica los números directamente en la tabla o arrastra el punto rojo en el gráfico cartesiano. Ambos se actualizarán en cadena de forma automática.</p>
                         <table>
-                            <thead><tr><th>Dimensión de la Matriz</th><th style="width:35%">Calificación Promedio</th></tr></thead>
+                            <thead><tr><th>Dimensión de la Matriz</th><th style="width:40%">Calificación Promedio</th></tr></thead>
                             <tbody>
                                 <tr><td>Fuerza Financiera (FF) [1 a 6]</td><td><input type="number" step="0.1" min="1" max="6" class="input-num" id="input-peyea-ff" oninput="updatePEYEANum('ff', this.value)"></td></tr>
                                 <tr><td>Fuerza de la Industria (FI) [1 a 6]</td><td><input type="number" step="0.1" min="1" max="6" class="input-num" id="input-peyea-fi" oninput="updatePEYEANum('fi', this.value)"></td></tr>
@@ -252,13 +266,12 @@
                                 <tr><td>Estabilidad Ambiental (EA) [-6 a -1]</td><td><input type="number" step="0.1" min="-6" max="-1" class="input-num" id="input-peyea-ea" oninput="updatePEYEANum('ea', this.value)"></td></tr>
                             </tbody>
                         </table>
-                        <p style="font-size:11px; color:#64748b; margin-top:15px; line-height:1.4;">Modifique los valores para observar el desplazamiento paramétrico instantáneo del vector de competencia.</p>
                     </div>
                     <div class="card">
-                        <h3>Plano Cartesiano de Dirección Estratégica</h3>
+                        <h3>Plano Cartesiano PEYEA Dinámico</h3>
                         <div class="visual-display">
-                            <div class="coordinate-label" id="peyea-coords">Vector (X: 0.0, Y: 0.0)</div>
-                            <canvas id="peyeaCanvasReal" width="260" height="260"></canvas>
+                            <div class="coordinate-label" id="peyea-coords">Vector de Posición (X: 0.0, Y: 0.0)</div>
+                            <canvas id="peyeaCanvasReal" width="280" height="280"></canvas>
                             <div id="status-peyea" class="matrix-status-box">...</div>
                         </div>
                     </div>
@@ -268,36 +281,30 @@
             <!-- SECCIÓN 5: PLAN OPERATIVO ANUAL (POA) -->
             <div id="poa-panel" class="panel">
                 <div class="card">
-                    <h3>Líneas Operativas de Ejecución Táctica (POA)</h3>
-                    <div class="poa-grid" id="poa-cards-container">
-                        <!-- Inyección de las 7 Tarjetas con Hover -->
-                    </div>
+                    <h3>Líneas Estratégicas y Objetivos Tácticos del POA</h3>
+                    <div class="poa-grid" id="poa-cards-container"></div>
                 </div>
 
                 <div class="card">
-                    <h3>Cronograma de Despliegue de Estrategias (2026)</h3>
-                    <div class="timeline-container" id="timeline-wrapper">
-                        <!-- Inyección dinámica de meses de Julio a Diciembre -->
-                    </div>
+                    <h3>Línea de Tiempo de Ejecución Física (Julio - Diciembre 2026)</h3>
+                    <div class="timeline-container" id="timeline-wrapper"></div>
                 </div>
             </div>
 
-            <!-- SECCIÓN 6: KPIS Y SEGUIMIENTO -->
+            <!-- SECCIÓN 6: CUADRO DE MANDO & KPIS -->
             <div id="kpis-panel" class="panel">
                 <div class="split-container">
                     <div class="card">
-                        <h3>Métricas e Indicadores Clave de Rendimiento</h3>
+                        <h3>Tablero Integral de Control e Indicadores</h3>
                         <table id="table-kpis">
-                            <thead><tr><th>Indicador KPI</th><th style="width:20%">Meta</th><th style="width:25%">Valor Real</th></tr></thead>
+                            <thead><tr><th>Indicador Estratégico</th><th style="width:22%">Meta Anual</th><th style="width:25%">Avance Real</th></tr></thead>
                             <tbody></tbody>
                         </table>
-                        <button class="btn-add" onclick="addNewRowToDataset('kpis', ['Nueva Métrica de Negocio', 100, 45])">+ Vincular Nuevo KPI</button>
+                        <button class="btn-add" onclick="addNewRowToDataset('kpis', ['Nuevo Indicador de Gestión', 100, 0])">+ Agregar Métrica KPI</button>
                     </div>
                     <div class="card">
-                        <h3>Visualización Gráfica de Cumplimiento de Objetivos</h3>
-                        <div class="visual-display" id="kpi-progress-bars" style="justify-content: flex-start; align-items: stretch; gap: 15px;">
-                            <!-- Inyección dinámica de barras de progreso -->
-                        </div>
+                        <h3>Análisis de Brecha de Rendimiento</h3>
+                        <div class="visual-display" id="kpi-progress-bars" style="justify-content: flex-start; align-items: stretch; gap: 15px;"></div>
                     </div>
                 </div>
             </div>
@@ -306,86 +313,85 @@
     </div>
 
     <script>
-        // ESTRUCTURA DE PLANTILLA EN BLANCO PARA MULTI-DASHBOARDS INDEPENDIENTES
+        // DATOS DE FÁBRICA ORIGINALES DEL CASO VOLTECUADOR
         const BUSINESS_TEMPLATE = {
-            name: "Nueva Empresa Eléctrica",
-            sector: "Movilidad Sostenible",
-            scope: "Nacional / Cuenca",
-            mision: "Ingresar la misión estratégica de la organización corporativa.",
-            vision: "Ingresar la visión de posicionamiento futuro.",
-            foda_f: "1. Ventaja tecnológica en baterías.\n2. Alianzas locales.",
-            foda_d: "1. Bajo reconocimiento inicial de marca.\n2. Recursos limitados.",
-            foda_o: "1. Crecimiento del mercado verde.\n2. Incentivos de transporte.",
-            foda_a: "1. Competidores globales consolidados.",
-            porter_avg: 3.2,
-            peyea: { ff: 4.5, fi: 4.0, vc: -2.0, ea: -2.5 },
+            name: "VoltEcuador S.A.",
+            sector: "Energía y Soluciones de Movilidad Sostenible",
+            star_product: "Ecosistema de Carga Rápida Corporativa",
+            scope: "Regional / Cobertura de Infraestructura Eléctrica",
+            mision: "Impulsar la transición energética en el sector automotriz e industrial del país a través de soluciones eficientes de carga eléctrica, garantizando continuidad operativa con altos estándares tecnológicos y responsabilidad ambiental.",
+            vision: "Ser el operador líder de infraestructura de recarga energética comercial y corporativa para el año 2028, consolidando una red integrada inteligente y accesible.",
+            foda_f: "1. Alianzas estratégicas con proveedores de tecnología internacional.\n2. Equipo técnico certificado en alta tensión y redes inteligentes.\n3. Modelos flexibles de financiamiento comercial.",
+            foda_d: "1. Altos costos de inversión inicial en equipamiento de carga rápida.\n2. Dependencia de regulaciones gubernamentales de distribución eléctrica.",
+            foda_o: "1. Crecimiento acelerado de flotas logísticas e industriales de vehículos eléctricos.\n2. Incentivos fiscales locales para proyectos corporativos verdes.",
+            foda_a: "1. Fluctuaciones en las tarifas del mercado eléctrico regulado.\n2. Ingreso de competidores internacionales directos de gran escala.",
+            peyea: { ff: 4.2, fi: 4.8, vc: -2.0, ea: -2.5 },
             efi: [
-                ["Capacidad tecnológica innovadora de producto", 0.40, 4],
-                ["Soporte técnico especializado", 0.20, 3],
-                ["Canales de comercialización en desarrollo", 0.40, 2]
+                ["Capacidad técnica certificada en infraestructura eléctrica avanzada", 0.40, 4],
+                ["Acuerdos estables de proveeduría de equipos de carga rápida", 0.35, 4],
+                ["Limitación en la cobertura física de mantenimiento inmediato regional", 0.25, 2]
             ],
             efe: [
-                ["Incentivos locales para movilidad eléctrica", 0.50, 4],
-                ["Competencia con ventajas de escala de costos", 0.50, 2]
+                ["Aumento en la tasa de adopción de flotas comerciales eléctricas", 0.45, 4],
+                ["Marco regulatorio ambiental favorable a la movilidad limpia", 0.30, 3],
+                ["Inestabilidad de costos en insumos críticos de importación tecnológica", 0.25, 2]
             ],
             poa: [
-                { id: 1, icon: "📣", title: "Marketing Digital", desc: "Desarrollo de campañas de pauta estructuradas y creación de contenido visual.", meta: "Aumentar reconocimiento de marca en 30%" },
-                { id: 2, icon: "💰", title: "Promociones Comerciales", desc: "Planes de financiamiento flexible y bonos de descuento por lanzamiento.", meta: "Incrementar ventas en 20%" },
-                { id: 3, icon: "⚡", title: "Infraestructura de Carga", desc: "Alianzas logísticas para posicionamiento de estaciones de carga rápida.", meta: "Instalar 10 nuevos puntos de carga" },
-                { id: 4, icon: "🤝", title: "Fidelización de Clientes", desc: "Programas de referidos y soporte VIP de mantenimiento preventivo.", meta: "Aumentar fidelización en 25%" },
-                { id: 5, icon: "🛠️", title: "Servicio Postventa", desc: "Garantías ampliadas de celdas de litio y atención técnica express.", meta: "Satisfacción superior al 90%" },
-                { id: 6, icon: "📊", title: "Control y Gestión", desc: "Auditoría mensual de indicadores contables y de eficiencia operativa.", meta: "Generar 6 informes de gestión" },
-                { id: 7, icon: "🚀", title: "Innovación Tecnológica", desc: "Optimización de software de rendimiento de carga para scooters.", meta: "Implementar 2 mejoras tecnológicas" }
+                { id: 1, icon: "📣", title: "Marketing Digital", desc: "Desarrollo y posicionamiento de campañas B2B para flotas corporativas en canales digitales dirigidos.", meta: "Generar 40 leads empresariales calificados" },
+                { id: 2, icon: "💰", title: "Promociones Comerciales", desc: "Estrategias de incentivo de introducción y paquetes integrados de instalación inicial para industrias.", meta: "Cerrar 15 nuevos contratos corporativos" },
+                { id: 3, icon: "⚡", title: "Infraestructura de Carga", desc: "Despliegue operativo y obra civil de estaciones de carga en puntos clave de distribución.", meta: "Instalar 10 nuevos puntos de carga" },
+                { id: 4, icon: "🤝", title: "Fidelización de Clientes", desc: "Monitoreo preventivo del estado de las estaciones y soporte prioritario de red continua.", meta: "Renovación del 90% de contratos de servicio" },
+                { id: 5, icon: "🛠️", title: "Servicio Postventa", desc: "Soporte técnico inmediato en sitio ante incidencias operativas de conectividad energética.", meta: "Tiempo de respuesta menor a 3 horas" },
+                { id: 6, icon: "📊", title: "Control y Gestión", desc: "Elaboración del Estado de Resultados bajo Visión Contable y Económica para analizar el retorno real por estación.", meta: "Entregar 6 informes financieros mensuales" },
+                { id: 7, icon: "🚀", title: "Innovación Tecnológica", desc: "Desarrollo del software de telemetría y balance dinámico de energía en la nube corporativa.", meta: "Lanzamiento de la versión 2.0 del firmware" }
             ],
             timeline: {
-                "Julio": "Diseño de campañas de Marketing y setup inicial.",
-                "Agosto": "Despliegue de promociones y venta retail.",
-                "Septiembre": "Instalación de las primeras 4 estaciones de carga.",
-                "Octubre": "Activación de programas de fidelización premium.",
-                "Noviembre": "Auditorías funcionales y reportes de gestión.",
-                "Diciembre": "Cierre de metas anuales y mejoras de software."
+                "Julio": "Maquetación del embudo B2B digital y firma de las órdenes de importación de transformadores.",
+                "Agosto": "Despliegue de campañas digitales comerciales enfocadas en gestores de flotas.",
+                "Septiembre": "Inicio de obra civil en los primeros 4 nodos de infraestructura rápida seleccionados.",
+                "Octubre": "Cierre de balances operativos bajo visión económica y contable del primer trimestre.",
+                "Noviembre": "Fase de pruebas y conexiones de red inteligente con clientes corporativos firmados.",
+                "Diciembre": "Auditoría integral del POA 2026, KPIs anuales y cierre contable centralizado."
             },
             kpis: [
-                ["Reconocimiento de Marca (%)", 30, 18],
-                ["Incremento de Ventas Mensuales (%)", 20, 14],
-                ["Puntos de Carga Instalados", 10, 4],
-                ["Nivel de Retención de Clientes (%)", 25, 22]
+                ["Estaciones de Recarga Desplegadas", 10, 3],
+                ["Leads Comerciales B2B Captados", 40, 12],
+                ["Informes Financieros (Contable/Económico)", 6, 2],
+                ["Tasa de Disponibilidad de Red (%)", 98, 97.5]
             ]
         };
 
         let storageData = { projects: [] };
         let activeBizIndex = null;
+        let isDraggingPEYEA = false;
 
-        // MANEJO DE SESIÓN Y PERSISTENCIA
         function initApp() {
-            let stored = localStorage.getItem('uc_multi_project_store');
+            let stored = localStorage.getItem('voltecuador_suite_store_v4');
             if (stored) {
                 storageData = JSON.parse(stored);
             } else {
                 let defaultBiz = JSON.parse(JSON.stringify(BUSINESS_TEMPLATE));
-                defaultBiz.name = "VoltEcuador Corporate";
                 storageData.projects.push(defaultBiz);
-                localStorage.setItem('uc_multi_project_store', JSON.stringify(storageData));
+                localStorage.setItem('voltecuador_suite_store_v4', JSON.stringify(storageData));
             }
             renderProjectHub();
+            setupCanvasInteraction();
         }
 
         function saveState() {
-            localStorage.setItem('uc_multi_project_store', JSON.stringify(storageData));
+            localStorage.setItem('voltecuador_suite_store_v4', JSON.stringify(storageData));
         }
 
-        // CONTROLADOR DE PANTALLA PRINCIPAL (HUB)
         function renderProjectHub() {
             document.getElementById('project-hub').style.display = 'block';
             document.getElementById('workspace-container').style.display = 'none';
-            
             let grid = document.getElementById('hub-grid');
             let h = "";
             storageData.projects.forEach((proj, idx) => {
                 h += `<div class="project-card" onclick="enterWorkspace(${idx})">
                     <h3>${proj.name}</h3>
-                    <p><strong>Sector:</strong> ${proj.sector}<br><strong>Alcance:</strong> ${proj.scope}</p>
-                    <span class="project-badge">Modelo Estratégico Activo</span>
+                    <p><strong>Operación:</strong> ${proj.sector}<br><strong>Solución:</strong> ${proj.star_product}</p>
+                    <span class="project-badge">Dashboard Estratégico Activo</span>
                 </div>`;
             });
             grid.innerHTML = h;
@@ -393,8 +399,7 @@
 
         function createNewProject() {
             let newBiz = JSON.parse(JSON.stringify(BUSINESS_TEMPLATE));
-            let num = storageData.projects.length + 1;
-            newBiz.name = "Nueva Marca / Proyecto " + num;
+            newBiz.name = "Nueva Unidad Corporativa " + (storageData.projects.length + 1);
             storageData.projects.push(newBiz);
             saveState();
             renderProjectHub();
@@ -405,13 +410,13 @@
             document.getElementById('project-hub').style.display = 'none';
             document.getElementById('workspace-container').style.display = 'block';
             
-            // Cargar datos en los campos inputs correspondientes
             let biz = storageData.projects[activeBizIndex];
             document.getElementById('nav-project-title').innerText = biz.name;
             document.getElementById('main-project-title').innerText = biz.name;
             
             document.getElementById('edit-biz-name').value = biz.name;
             document.getElementById('edit-biz-sector').value = biz.sector;
+            document.getElementById('edit-biz-product').value = biz.star_product;
             document.getElementById('edit-biz-scope').value = biz.scope;
             document.getElementById('edit-biz-mision').value = biz.mision;
             document.getElementById('edit-biz-vision').value = biz.vision;
@@ -421,12 +426,16 @@
             document.getElementById('edit-foda-o').value = biz.foda_o;
             document.getElementById('edit-foda-a').value = biz.foda_a;
 
-            document.getElementById('input-peyea-ff').value = biz.peyea.ff;
-            document.getElementById('input-peyea-fi').value = biz.peyea.fi;
-            document.getElementById('input-peyea-vc').value = biz.peyea.vc;
-            document.getElementById('input-peyea-ea').value = biz.peyea.ea;
-
+            updatePEYEAInputFields();
             renderWorkspacePanels();
+        }
+
+        function updatePEYEAInputFields() {
+            let biz = storageData.projects[activeBizIndex];
+            document.getElementById('input-peyea-ff').value = biz.peyea.ff.toFixed(1);
+            document.getElementById('input-peyea-fi').value = biz.peyea.fi.toFixed(1);
+            document.getElementById('input-peyea-vc').value = biz.peyea.vc.toFixed(1);
+            document.getElementById('input-peyea-ea').value = biz.peyea.ea.toFixed(1);
         }
 
         function exitWorkspace() {
@@ -435,14 +444,13 @@
         }
 
         function deleteCurrentProject() {
-            if(confirm("¿Está seguro de que desea eliminar permanentemente este dashboard estratégico?")) {
+            if(confirm("¿Seguro que deseas eliminar este entorno corporativo definitivamente?")) {
                 storageData.projects.splice(activeBizIndex, 1);
                 saveState();
                 exitWorkspace();
             }
         }
 
-        // EDICIÓN EN TIEMPO REAL
         function updateCurrentBizData(field, val) {
             storageData.projects[activeBizIndex][field] = val;
             saveState();
@@ -453,27 +461,22 @@
         }
 
         function updatePEYEANum(field, val) {
-            storageData.projects[activeBizIndex].peyea[field] = parseFloat(val) || 0;
+            let num = parseFloat(val);
+            if (field === 'ff' || field === 'fi') { num = Math.max(1, Math.min(6, num)); }
+            if (field === 'vc' || field === 'ea') { num = Math.max(-6, Math.min(-1, num)); }
+            
+            storageData.projects[activeBizIndex].peyea[field] = num || 0;
             saveState();
             recalcPEYEAReal();
         }
 
-        // REDIBUJAR ENTORNO DE TRABAJO
         function renderWorkspacePanels() {
             let biz = storageData.projects[activeBizIndex];
-            
-            // Render EFI
             renderTableWithCalculations('table-efi', biz.efi, 'efi');
-            // Render EFE
             renderTableWithCalculations('table-efe', biz.efe, 'efe');
-            // Render KPIs
             renderKPITable();
-            // Render POA Cards
             renderPOACards();
-            // Render Cronograma
             renderTimeline();
-
-            // Cálculos lógicos matemáticos
             recalcAudits();
             recalcPEYEAReal();
         }
@@ -492,119 +495,132 @@
             tbody.innerHTML = h;
         }
 
-        function addNewRowToDataset(type, template) {
-            storageData.projects[activeBizIndex][type].push(template);
-            saveState();
-            renderWorkspacePanels();
-        }
-
-        function deleteRowFromDataset(type, idx) {
-            storageData.projects[activeBizIndex][type].splice(idx, 1);
-            saveState();
-            renderWorkspacePanels();
-        }
-
-        // LÓGICA DE AUDITORÍAS SINOPSIS (EFI / EFE)
         function recalcAudits() {
             let biz = storageData.projects[activeBizIndex];
             
-            // EFI Calculo
             let wEfi = biz.efi.reduce((a,b)=>a+b[1], 0);
-            let alertEfi = document.getElementById('efi-alert');
-            alertEfi.innerText = Math.abs(wEfi - 1) > 0.01 ? `Alert: Pesos suman ${(wEfi*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
-            alertEfi.style.color = Math.abs(wEfi - 1) > 0.01 ? varCss('--uc-red') : varCss('--success');
-            
+            document.getElementById('efi-alert').innerText = Math.abs(wEfi - 1) > 0.01 ? `Alerta: Pesos suman ${(wEfi*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
+            document.getElementById('efi-alert').style.color = Math.abs(wEfi - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
             let scoreEfi = biz.efi.reduce((a,b)=>a+(b[1]*b[2]), 0);
             document.getElementById('score-efi').innerText = scoreEfi.toFixed(2);
-            let sBoxEfi = document.getElementById('status-efi');
-            sBoxEfi.innerText = scoreEfi >= 2.5 ? "CAPACIDAD INTERNA FUERTE" : "VULNERABILIDAD INTERNA TÁCTICA";
-            sBoxEfi.style.color = scoreEfi >= 2.5 ? varCss('--success') : varCss('--uc-red');
+            document.getElementById('status-efi').innerText = scoreEfi >= 2.5 ? "FORTALEZA INTERNA" : "DEBILIDAD INTERNA";
+            document.getElementById('status-efi').style.color = scoreEfi >= 2.5 ? varCss('--success') : varCss('--brand-red');
 
-            // EFE Calculo
             let wEfe = biz.efe.reduce((a,b)=>a+b[1], 0);
-            let alertEfe = document.getElementById('efe-alert');
-            alertEfe.innerText = Math.abs(wEfe - 1) > 0.01 ? `Alert: Pesos suman ${(wEfe*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
-            alertEfe.style.color = Math.abs(wEfe - 1) > 0.01 ? varCss('--uc-red') : varCss('--success');
-            
+            document.getElementById('efe-alert').innerText = Math.abs(wEfe - 1) > 0.01 ? `Alerta: Pesos suman ${(wEfe*100).toFixed(0)}%/100%` : "✔ Pesos Validados (100%)";
+            document.getElementById('efe-alert').style.color = Math.abs(wEfe - 1) > 0.01 ? varCss('--brand-red') : varCss('--success');
             let scoreEfe = biz.efe.reduce((a,b)=>a+(b[1]*b[2]), 0);
             document.getElementById('score-efe').innerText = scoreEfe.toFixed(2);
-            let sBoxEfe = document.getElementById('status-efe');
-            sBoxEfe.innerText = scoreEfe >= 2.5 ? "ESTRATEGIA ADAPTADA AL ENTORNO" : "SITUACIÓN EXTERNA DEFICITARIA";
-            sBoxEfe.style.color = scoreEfe >= 2.5 ? varCss('--success') : varCss('--uc-red');
+            document.getElementById('status-efe').innerText = scoreEfe >= 2.5 ? "ENTORNO FAVORABLE" : "ENTORNO AMENAZANTE";
+            document.getElementById('status-efe').style.color = scoreEfe >= 2.5 ? varCss('--success') : varCss('--brand-red');
         }
 
-        // REDISEÑO RENDERING GRÁFICO DINÁMICO DE PEYEA HASTA 2026
         function recalcPEYEAReal() {
             let biz = storageData.projects[activeBizIndex];
-            let x = biz.peyea.fi + biz.peyea.vc; // Eje X
-            let y = biz.peyea.ff + biz.peyea.ea; // Eje Y
+            let x = biz.peyea.fi + biz.peyea.vc;
+            let y = biz.peyea.ff + biz.peyea.ea;
 
-            document.getElementById('peyea-coords').innerText = `Vector Resultante (X: ${x.toFixed(1)}, Y: ${y.toFixed(1)})`;
+            document.getElementById('peyea-coords').innerText = `Vector Resultante: (X: ${x.toFixed(2)}, Y: ${y.toFixed(2)})`;
 
             let box = document.getElementById('status-peyea');
-            if(x >= 0 && y >= 0) { box.innerText = "CUADRANTE AGRESIVO: Crecimiento Orgánico"; box.style.color=varCss('--success'); }
-            else if(x < 0 && y >= 0) { box.innerText = "CUADRANTE CONSERVADOR: Enfoque Modular"; box.style.color=varCss('--warning'); }
-            else if(x >= 0 && y < 0) { box.innerText = "CUADRANTE COMPETITIVO: Expansión de Canales"; box.style.color=varCss('--uc-blue'); }
-            else { box.innerText = "CUADRANTE DEFENSIVO: Desinversión / Reestructuración"; box.style.color=varCss('--uc-red'); }
+            if(x >= 0 && y >= 0) { box.innerText = "PERFIL AGRESIVO (Desarrollo y Expansión)"; box.style.color=varCss('--success'); }
+            else if(x < 0 && y >= 0) { box.innerText = "PERFIL CONSERVADOR (Estabilidad Básica)"; box.style.color=varCss('--warning'); }
+            else if(x >= 0 && y < 0) { box.innerText = "PERFIL COMPETITIVO (Inversión Agresiva)"; box.style.color=varCss('--brand-blue'); }
+            else { box.innerText = "PERFIL DEFENSIVO (Estrategias de Retracción)"; box.style.color=varCss('--brand-red'); }
 
-            // Renderizado vectorial Canvas Avanzado
             let cv = document.getElementById('peyeaCanvasReal'); if(!cv) return;
-            let ctx = cv.getContext('2d'); ctx.clearRect(0,0,260,260);
+            let ctx = cv.getContext('2d'); ctx.clearRect(0,0,280,280);
 
-            // Rejilla de Fondo Blanco Corporativo
-            ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,260,260);
-            
-            // Dibujar Plano Cartesiano de Cruce
-            ctx.strokeStyle = varCss('--uc-border'); ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(130, 10); ctx.lineTo(130, 250); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(10, 130); ctx.lineTo(250, 130); ctx.stroke();
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,280,280);
+            ctx.strokeStyle = varCss('--brand-border'); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(140, 10); ctx.lineTo(140, 270); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(10, 140); ctx.lineTo(270, 140); ctx.stroke();
 
-            // Títulos de cuadrantes discretos
-            ctx.fillStyle = "#94a3b8"; ctx.font = "9px Arial";
-            ctx.fillText("Financiero (FF)", 135, 22);
-            ctx.fillText("Industrial (FI)", 195, 125);
+            ctx.fillStyle = "#94a3b8"; ctx.font = "10px sans-serif";
+            ctx.fillText("FF", 145, 20); ctx.fillText("FI", 255, 135);
+            ctx.fillText("VC", 15, 135); ctx.fillText("EA", 145, 265);
 
-            // Dibujar Vector Direccional en Color Rojo de la UCuenca
-            let mapX = 130 + (x * 18);
-            let mapY = 130 - (y * 18); // Invertido para plano cartesiano tradicional
+            let mapX = 140 + (x * 20);
+            let mapY = 140 - (y * 20);
 
-            ctx.strokeStyle = varCss('--uc-red'); ctx.lineWidth = 3.5;
-            ctx.beginPath(); ctx.moveTo(130, 130); ctx.lineTo(mapX, mapY); ctx.stroke();
+            ctx.strokeStyle = varCss('--brand-red'); ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(140, 140); ctx.lineTo(mapX, mapY); ctx.stroke();
 
-            // Nodo de Intersección Final
-            ctx.fillStyle = varCss('--uc-blue'); ctx.beginPath(); ctx.arc(mapX, mapY, 6, 0, 2 * Math.PI); ctx.fill();
+            ctx.fillStyle = varCss('--brand-blue'); ctx.beginPath(); ctx.arc(mapX, mapY, 7, 0, 2 * Math.PI); ctx.fill();
         }
 
-        // INTERFAZ DE TARJETAS POA
+        function setupCanvasInteraction() {
+            let cv = document.getElementById('peyeaCanvasReal');
+            
+            function handlePointer(e) {
+                if(!activeBizIndex) return;
+                let rect = cv.getBoundingClientRect();
+                let clientX = e.clientX || e.touches[0].clientX;
+                let clientY = e.clientY || e.touches[0].clientY;
+                let xPx = clientX - rect.left;
+                let yPx = clientY - rect.top;
+
+                let targetX = (xPx - 140) / 20;
+                let targetY = (140 - yPx) / 20;
+
+                targetX = Math.max(-5, Math.min(5, targetX));
+                targetY = Math.max(-5, Math.min(5, targetY));
+
+                let biz = storageData.projects[activeBizIndex];
+                
+                // Distribución proporcional matemática bidireccional inversa
+                biz.peyea.fi = 3.5 + (targetX / 2);
+                biz.peyea.vc = -3.5 + (targetX / 2);
+                biz.peyea.ff = 3.5 + (targetY / 2);
+                biz.peyea.ea = -3.5 + (targetY / 2);
+
+                // Imponer límites regulatorios normativos de las dimensiones
+                biz.peyea.ff = Math.max(1, Math.min(6, biz.peyea.ff));
+                biz.peyea.fi = Math.max(1, Math.min(6, biz.peyea.fi));
+                biz.peyea.vc = Math.max(-6, Math.min(-1, biz.peyea.vc));
+                biz.peyea.ea = Math.max(-6, Math.min(-1, biz.peyea.ea));
+
+                saveState();
+                updatePEYEAInputFields();
+                recalcPEYEAReal();
+            }
+
+            cv.addEventListener('mousedown', (e) => { isDraggingPEYEA = true; handlePointer(e); });
+            window.addEventListener('mousemove', (e) => { if(isDraggingPEYEA) handlePointer(e); });
+            window.addEventListener('mouseup', () => { isDraggingPEYEA = false; });
+
+            cv.addEventListener('touchstart', (e) => { isDraggingPEYEA = true; handlePointer(e); });
+            window.addEventListener('touchmove', (e) => { if(isDraggingPEYEA) handlePointer(e); });
+            window.addEventListener('touchend', () => { isDraggingPEYEA = false; });
+        }
+
         function renderPOACards() {
             let container = document.getElementById('poa-cards-container');
             let h = "";
             storageData.projects[activeBizIndex].poa.forEach((card, idx) => {
                 h += `<div class="poa-card">
                     <div class="poa-icon">${card.icon}</div>
-                    <h4><input type="text" class="input-text" style="font-weight:bold; color:var(--uc-blue);" value="${card.title}" onchange="storageData.projects[activeBizIndex].poa[${idx}].title=this.value; saveState();"></h4>
-                    <p><input type="text" class="input-text" value="${card.desc}" onchange="storageData.projects[activeBizIndex].poa[${idx}].desc=this.value; saveState();"></p>
-                    <div class="poa-meta"><input type="text" class="input-text" style="color:var(--uc-red); font-weight:bold; font-size:11px;" value="${card.meta}" onchange="storageData.projects[activeBizIndex].poa[${idx}].meta=this.value; saveState(); renderWorkspacePanels();"></div>
+                    <h4><input type="text" class="input-text" style="font-weight:bold; color:var(--brand-blue);" value="${card.title}" onchange="storageData.projects[activeBizIndex].poa[${idx}].title=this.value; saveState();"></h4>
+                    <p><input type="text" class="input-text" style="color:#475569; font-size:12px; line-height:1.4;" value="${card.desc}" onchange="storageData.projects[activeBizIndex].poa[${idx}].desc=this.value; saveState();"></p>
+                    <div class="poa-meta"><input type="text" class="input-text" style="color:var(--brand-red); font-weight:bold; font-size:11px;" value="${card.meta}" onchange="storageData.projects[activeBizIndex].poa[${idx}].meta=this.value; saveState(); renderWorkspacePanels();"></div>
                 </div>`;
             });
             container.innerHTML = h;
         }
 
-        // CRONOGRAMA DE EJECUCIÓN TÁCTICA
         function renderTimeline() {
             let wrapper = document.getElementById('timeline-wrapper');
-            let biz = storageData.projects[activeBizIndex];
             let h = "";
+            let biz = storageData.projects[activeBizIndex];
             for (let month in biz.timeline) {
                 h += `<div class="timeline-month">
                     <h5>${month}</h5>
-                    <textarea class="input-text" style="font-size:12px; height:60px;" onchange="storageData.projects[activeBizIndex].timeline['${month}']=this.value; saveState();">${biz.timeline[month]}</textarea>
+                    <textarea class="input-text" style="font-size:12px; height:65px; line-height:1.3;" onchange="storageData.projects[activeBizIndex].timeline['${month}']=this.value; saveState();">${biz.timeline[month]}</textarea>
                 </div>`;
             }
             wrapper.innerHTML = h;
         }
 
-        // TABLA E INDICADORES DE KPIS
         function renderKPITable() {
             let tbody = document.getElementById('table-kpis').querySelector('tbody');
             let h = "";
@@ -621,14 +637,13 @@
 
         function updateKPIProgressDisplay() {
             let container = document.getElementById('kpi-progress-bars');
-            let h = `<h4 style="font-size:12px; font-weight:bold; color:var(--uc-blue); text-transform:uppercase;">Monitor de Brechas de Metas</h4>`;
-            
+            let h = `<h4 style="font-size:12px; font-weight:bold; color:var(--brand-blue); text-transform:uppercase; margin-bottom:10px;">Cumplimiento Físico de Metas</h4>`;
             storageData.projects[activeBizIndex].kpis.forEach(k => {
                 let pct = Math.min((k[2] / k[1]) * 100, 100);
-                h += `<div>
+                h += `<div style="width:100%">
                     <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
                         <span>${k[0]}</span>
-                        <span style="color:var(--uc-red);">${pct.toFixed(0)}%</span>
+                        <span style="color:var(--brand-red);">${pct.toFixed(0)}%</span>
                     </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar-fill" style="width: ${pct}%"></div>
@@ -638,10 +653,20 @@
             container.innerHTML = h;
         }
 
-        // COMPONENTE HELPER CSS VARIÁBLES
+        function addNewRowToDataset(type, template) {
+            storageData.projects[activeBizIndex][type].push(template);
+            saveState();
+            renderWorkspacePanels();
+        }
+
+        function deleteRowFromDataset(type, idx) {
+            storageData.projects[activeBizIndex][type].splice(idx, 1);
+            saveState();
+            renderWorkspacePanels();
+        }
+
         function varCss(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
-        // MENÚ DE NAVEGACIÓN EN PANELES
         function showPanel(id, link) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
